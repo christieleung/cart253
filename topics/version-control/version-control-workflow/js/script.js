@@ -40,11 +40,11 @@ function draw() {
         // Set the grey shade of the level based on its number
         // e.g. level 1 will get a shade of 10 (dark gray), 
         // level 10 will be 255(white)
-        const shade = map(level, 1, levels, 10, 255);
+        const shade = map(level, 1, levels, 100, 255);
         // No line around the levels
         noStroke();
         // Set the fill colour to our shade (RGB)
-        fill(shade, shade, 0);
+        fill(0, shade, shade);
         // Draw rectangles from the centre
         rectMode(CENTER);
         // Draw the rectangle in the centre of the canvas
