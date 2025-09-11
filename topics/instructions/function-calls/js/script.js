@@ -1,24 +1,22 @@
 /**
- * Title of Project
- * Author Name
+ * Function Calls
+ * Christie Leung
  * 
- * HOW EMBARRASSING! I HAVE NO DESCRIPTION OF MY PROJECT!
- * PLEASE REMOVE A GRADE FROM MY WORK IF IT'S GRADED!
+ * Working on the function calls examples.
  */
 
 "use strict";
 
-/**
- * OH LOOK I DIDN'T DESCRIBE SETUP!!
-*/
-function setup() {
 
+function setup() {
+    // Will happen once at the beginning of the program
+    createCanvas(640, 480);
 }
 
-
-/**
- * OOPS I DIDN'T DESCRIBE WHAT MY DRAW DOES!
-*/
 function draw() {
-
+    // Will happen every frame that the program runs
+    background(255, 100, 100);
+    // RGB colour model (between 0 and 255)
+    rect(200, 80, 240, 320);
+    // Function to draw rectangles (x, y, width, height)
 }
