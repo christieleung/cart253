@@ -1,8 +1,10 @@
 /**
- * Rainbow Mountains
+ * Sunset on Tar Lake
  * Frid and Christie
  * 
- * A sunset landscape of a mountain range.
+ * A sunset landscape of a mountain range with an evil
+ * tar monster shooting into the sky.
+ * 
  * 
  */
 
@@ -21,9 +23,9 @@ function setup() {
 */
 function draw() {
     drawSky();
-    drawOcean();
+    drawLake();
     drawSun();
-    drawEvilShadow();
+    drawTarMonster();
     drawMountainBack();
     drawMountainMiddle();
     drawMountainFront();
@@ -38,9 +40,9 @@ function drawSky() {
 }
 
 /**
- * Drawing the ocean
+ * Drawing the tar lake
  */
-function drawOcean() {
+function drawLake() {
     push();
     noStroke();
     fill("black");
@@ -132,9 +134,9 @@ function drawMountainBack() {
 }
 
 /**
- * Drawing ominous shadow behind the mountains
+ * Drawing the tar monster
  */
-function drawEvilShadow() {
+function drawTarMonster() {
     push();
     noStroke();
     fill("black");
