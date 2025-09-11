@@ -20,7 +20,7 @@ function setup() {
  * Drawing our landscape scene
 */
 function draw() {
-    drawSunset();
+    drawSky();
     drawOcean();
     drawSun();
     drawEvilShadow();
@@ -33,8 +33,8 @@ function draw() {
 /**
  * Making the sky
  */
-function drawSunset() {
-    background("#FF724C")
+function drawSky() {
+    background("#b62779")
 }
 
 /**
@@ -43,11 +43,10 @@ function drawSunset() {
 function drawOcean() {
     push();
     noStroke();
-    fill("#3AAA88");
+    fill("black");
     rect(0, 400, 500, 100);
     pop();
 }
-
 
 /**
  * Drawing the first mountain range
@@ -56,14 +55,14 @@ function drawMountainFrontest() {
     // Mountain base
     push();
     noStroke();
-    fill("purple");
+    fill("#872657");
     rect(0, 350, 500, 50);
     pop(); 
     
     // Mountain shade
     push();
     noStroke();
-    fill("purple");
+    fill("#872657");
     triangle(250, 350, 330, 300, 200, 250); 
     pop();
 }
@@ -75,14 +74,14 @@ function drawMountainFront() {
     // Mountain base
     push();
     noStroke();
-    fill("brown");
+    fill("orange");
     rect(0, 300, 500, 100);
     pop();
     
     // Mountain peak
     push();
     noStroke();
-    fill("brown");
+    fill("orange");
     triangle(0, 300, 250, 300, 200, 250); 
     pop();
 }
@@ -94,14 +93,14 @@ function drawMountainMiddle() {
     // Mountain base
     push();
     noStroke();
-    fill("red");
+    fill("#CC5500");
     rect(0, 270, 500, 70);
     pop();
     
     // Mountain peak
     push();
     noStroke();
-    fill("red");
+    fill("#CC5500");
     triangle(230, 270, 420, 140, 500, 270); 
     pop();
 }
@@ -113,21 +112,21 @@ function drawMountainBack() {
     // Mountain base
     push();
     noStroke();
-    fill("green");
+    fill("#1b4b4b");
     rect(0, 220, 500, 50);
     pop();
     
     // Mountain peak
     push();
     noStroke();
-    fill("green");
+    fill("#1b4b4b");
     triangle(0, 220, 110, 130, 350, 240); 
     pop();
     
     // Mountain shade
     push();
     noStroke();
-    fill("green");
+    fill("#1b4b4b");
     triangle(420, 140, 300, 220, 500, 220); 
     pop();
 }
@@ -149,7 +148,7 @@ function drawEvilShadow() {
 function drawSun() {
     push();
     noStroke();
-    fill("yellow");
+    fill("orange");
     ellipse(100, 100, 100);
     pop();
 }
