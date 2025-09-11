@@ -23,6 +23,7 @@ function draw() {
     drawSunset();
     drawOcean();
     drawSun();
+    drawEvilShadow();
     drawMountainBack();
     drawMountainMiddle();
     drawMountainFront();
@@ -58,6 +59,13 @@ function drawMountainFrontest() {
     fill("purple");
     rect(0, 350, 500, 50);
     pop(); 
+    
+    // Mountain shade
+    push();
+    noStroke();
+    fill("purple");
+    triangle(250, 350, 330, 300, 200, 250); 
+    pop();
 }
 
 /**
@@ -109,11 +117,29 @@ function drawMountainBack() {
     rect(0, 220, 500, 50);
     pop();
     
-    // // Mountain peak
+    // Mountain peak
     push();
     noStroke();
     fill("green");
-    triangle(0, 220, 110, 130, 230, 240); 
+    triangle(0, 220, 110, 130, 350, 240); 
+    pop();
+    
+    // Mountain shade
+    push();
+    noStroke();
+    fill("green");
+    triangle(420, 140, 300, 220, 500, 220); 
+    pop();
+}
+
+/**
+ * Drawing ominous shadow behind the mountains
+ */
+function drawEvilShadow() {
+    push();
+    noStroke();
+    fill("black");
+    triangle(0, 140, 300, 220, 500, 220); 
     pop();
 }
 
