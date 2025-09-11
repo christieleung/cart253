@@ -43,7 +43,7 @@ function drawSunset() {
 function drawOcean() {
     push();
     noStroke();
-    fill("blue");
+    fill("#3AAA88");
     rect(0, 400, 500, 100);
     pop();
 }
@@ -102,7 +102,7 @@ function drawMountainMiddle() {
     push();
     noStroke();
     fill("red");
-    triangle(250, 270, 420, 140, 500, 270); 
+    triangle(230, 270, 420, 140, 500, 270); 
     pop();
 }
 
