@@ -1,9 +1,8 @@
 /**
- * Title of Project
- * Author Name
+ * Introducing Variables
+ * Christie Leung
  * 
- * HOW EMBARRASSING! I HAVE NO DESCRIPTION OF MY PROJECT!
- * PLEASE REMOVE A GRADE FROM MY WORK IF IT'S GRADED!
+ * Learning what a variable is and does!
  */
 
 "use strict";
