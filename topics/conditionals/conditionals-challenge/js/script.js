@@ -55,7 +55,7 @@ function draw() {
   // if we (user) overlap with the puck
   if (doCirclesOverlap(user, puck, dist)) {
     // then the puck will move
-    let angle = Math.atan2(user.y - puck.y, user.x - puck.x)
+    let angle = Math.atan2(Math.abs(user.y - puck.y), Math.abs(user.x - puck.x))
     let overlap = howMuchDoCirclesOverlap(user, puck, dist)
     movePuck(puck, overlap, angle)
   }
