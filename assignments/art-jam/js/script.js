@@ -28,6 +28,8 @@ function draw() {
     maskCurls();   
     drawHair();
     drawFace();
+    drawEar();
+    drawEarCurl();
     drawBangs();
     
     // drawSnow();
@@ -55,7 +57,7 @@ function drawHair() {
     ellipse(160, 210, 277); // behind head
     ellipse(80, 405, 400); // hair bottom left
     ellipse(298, 280, 120, 190); // hair top right
-    ellipse(390, 468, 360); // hair bottom right
+    ellipse(363, 465, 360); // hair bottom right
     pop();
 }
 
@@ -65,12 +67,13 @@ function drawHair() {
 function drawCurls() {
     push();
     noStroke();
-    fill("black"); 
+    fill("#000000"); 
     ellipse(140, 80, 60); // top curl
     ellipse(45, 130, 60); // top left curl
     ellipse(20, 200, 57); // bottom left curl
     ellipse(295, 170, 50); // top right curl
-    ellipse(370, 270, 50); // bottom right curl
+    ellipse(370, 265, 60); // bottom right curl
+    ellipse(480, 320, 65); // end curl
     pop();  
 }
 
@@ -85,7 +88,8 @@ function maskCurls() {
     ellipse(40, 90, 80); // top left curl mask
     ellipse(7, 165, 41); // bottom left curl mask
     ellipse(300, 150, 40); // top right curl mask
-    ellipse(380, 250, 50); // bottom right curl mask
+    ellipse(380, 240, 54); // bottom right curl mask
+    ellipse(473, 288, 60); // end curl mask
     pop();
 }
 
@@ -97,7 +101,30 @@ function drawBangs() {
     noStroke();
     fill("#000000");
     ellipse(200, 145, 150, 100); // right bang
-    ellipse(85, 170, 110); // left bang
+    ellipse(85, 175, 110); // left bang
     pop();
 }
 
+/**
+ * Draws the ear
+ */
+function drawEar() {
+    push();
+    noStroke();
+    fill("#E5C298");
+    ellipse(67, 265, 35);
+    pop();
+
+/**
+ * Draws the curl in front of the ear (uses the colour masking method again)
+ */
+function drawEarCurl() {
+    push();
+    noStroke();
+    fill("#000000");
+    ellipse(110, 250, 85);
+    // ear curl mask
+    fill("#E5C298");
+    ellipse(140, 230, 90);
+    pop();
+}
