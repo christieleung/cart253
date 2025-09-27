@@ -7,6 +7,146 @@
 
 "use strict";
 
+const face = {
+    x: 165,
+    y: 220,
+    size: 180,
+    fill: "#E5C298" // tan
+};
+
+const hair = {
+    parts: {
+        behindHead: {
+            x: 160,
+            y: 210,
+            size: 277
+        },
+
+        bottomLeft: {
+            x: 80,
+            y: 405,
+            size: 400
+        },
+       
+        topRight: {
+            x: 298,
+            y: 280,
+            width: 120,
+            height: 190
+        },
+        
+        bottomRight: {
+            x: 363,
+            y: 465,
+            size: 360
+        }
+    },
+    fill: "#000000" // black
+};
+
+const curls = {
+    place: {
+        top: {
+            x: 140,
+            y: 80,
+            size: 60
+        },
+        topLeft: {
+            x: 45,
+            y: 130,
+            size: 60
+        },
+        bottomLeft: {
+            x: 20,
+            y: 200,
+            size: 57
+        },
+        topRight: {
+            x: 295,
+            y: 170,
+            size: 50
+        },
+        bottomRight: {
+            x: 370,
+            y: 265,
+            size: 60
+        },
+        end: {
+            x: 480,
+            y: 320,
+            size: 65
+        }
+    }
+};
+
+const curlMask = {
+    place: {
+        top: {
+            x: 160,
+            y: 70,
+            size: 50
+        },
+        topLeft: {
+            x: 40,
+            y: 90,
+            size: 80
+        },
+        bottomLeft: {
+            x: 7,
+            y: 165,
+            size: 41
+        },
+        topRight: {
+            x: 300,
+            y: 150,
+            size: 40
+        },
+        bottomRight: {
+            x: 380,
+            y: 240,
+            size: 54
+        },
+        end: {
+            x: 473,
+            y: 288,
+            size: 60
+        },
+    }
+};
+
+const bang = {
+    left: {
+        x: 85,
+        y: 175,
+        size: 110
+    },
+    right: {
+        x: 200,
+        y: 145,
+        width: 150,
+        height: 100
+    },
+};
+
+const ear = {
+    x: 67,
+    y: 265,
+    size: 35
+};
+
+const earCurl = {
+    x: 110,
+    y: 250,
+    size: 85
+};
+
+const earCurlMask = {
+    x: 140,
+    y: 230,
+    size: 90
+};
+
+
 /**
  * Creates the canvas
 */
@@ -30,6 +170,7 @@ function draw() {
     drawFace();
     drawEar();
     drawEarCurl();
+    maskEarlCurl();
     drawBangs();
     
     // drawSnow();
@@ -42,22 +183,22 @@ function draw() {
 function drawFace() {
     push();
     noStroke();
-    fill("#E5C298");
-    ellipse(165, 220, 180);
+    fill(face.fill);
+    ellipse(face.x, face.y, face.size);
     pop();
 }
 
 /**
- * Draws the hair
+ * Draws the hair (in sections)
 */
 function drawHair() {
     push();
     noStroke();
-    fill("#000000"); // black
-    ellipse(160, 210, 277); // behind head
-    ellipse(80, 405, 400); // hair bottom left
-    ellipse(298, 280, 120, 190); // hair top right
-    ellipse(363, 465, 360); // hair bottom right
+    fill(hair.fill);
+    ellipse(hair.parts.behindHead.x, hair.parts.behindHead.y, hair.parts.behindHead.size); // behind head
+    ellipse(hair.parts.bottomLeft.x, hair.parts.bottomLeft.y, hair.parts.bottomLeft.size); // hair bottom left
+    ellipse(hair.parts.topRight.x, hair.parts.topRight.y, hair.parts.topRight.width, hair.parts.topRight.height); // hair top right
+    ellipse(hair.parts.bottomRight.x, hair.parts.bottomRight.y, hair.parts.bottomRight.size); // hair bottom right
     pop();
 }
 
@@ -67,41 +208,41 @@ function drawHair() {
 function drawCurls() {
     push();
     noStroke();
-    fill("#000000"); 
-    ellipse(140, 80, 60); // top curl
-    ellipse(45, 130, 60); // top left curl
-    ellipse(20, 200, 57); // bottom left curl
-    ellipse(295, 170, 50); // top right curl
-    ellipse(370, 265, 60); // bottom right curl
-    ellipse(480, 320, 65); // end curl
+    fill(hair.fill); 
+    ellipse(curls.place.top.x, curls.place.top.y, curls.place.top.size); // top curl
+    ellipse(curls.place.topLeft.x, curls.place.topLeft.y, curls.place.topLeft.size); // top left curl
+    ellipse(curls.place.bottomLeft.x, curls.place.bottomLeft.y, curls.place.bottomLeft.size); // bottom left curl
+    ellipse(curls.place.topRight.x, curls.place.topRight.y, curls.place.topRight.size); // top right curl
+    ellipse(curls.place.bottomRight.x, curls.place.bottomRight.y, curls.place.bottomRight.size); // bottom right curl
+    ellipse(curls.place.end.x, curls.place.end.y, curls.place.end.size); // end curl
     pop();  
 }
 
 /**
- * Makes the curl (masks part of black circles with bg colour circles)
+ * Makes the curls (masks part of the black circles with bg colour circles)
 */
 function maskCurls() {
     push();
     noStroke();
     fill("#ADD8E6");
-    ellipse(160, 70, 50); // top curl mask
-    ellipse(40, 90, 80); // top left curl mask
-    ellipse(7, 165, 41); // bottom left curl mask
-    ellipse(300, 150, 40); // top right curl mask
-    ellipse(380, 240, 54); // bottom right curl mask
-    ellipse(473, 288, 60); // end curl mask
+    ellipse(curlMask.place.top.x, curlMask.place.top.y, curlMask.place.top.size); // top curl mask
+    ellipse(curlMask.place.topLeft.x, curlMask.place.topLeft.y, curlMask.place.topLeft.size); // top left curl mask
+    ellipse(curlMask.place.bottomLeft.x, curlMask.place.bottomLeft.y, curlMask.place.bottomLeft.size); // bottom left curl mask
+    ellipse(curlMask.place.topRight.x, curlMask.place.topRight.y, curlMask.place.topRight.size); // top right curl mask
+    ellipse(curlMask.place.bottomRight.x, curlMask.place.bottomRight.y, curlMask.place.bottomRight.size); // bottom right curl mask
+    ellipse(curlMask.place.end.x, curlMask.place.end.y, curlMask.place.end.size); // end curl mask
     pop();
 }
 
 /**
- * Draws the slightly side-parted bangs
+ * Draws the slightly side-parted bangs (left and right side)
 */
 function drawBangs() {
     push();
     noStroke();
-    fill("#000000");
-    ellipse(200, 145, 150, 100); // right bang
-    ellipse(85, 175, 110); // left bang
+    fill(hair.fill);
+    ellipse(bang.left.x, bang.left.y, bang.left.size); // left bang
+    ellipse(bang.right.x, bang.right.y, bang.right.width, bang.right.height); // right bang
     pop();
 }
 
@@ -111,20 +252,30 @@ function drawBangs() {
 function drawEar() {
     push();
     noStroke();
-    fill("#E5C298");
-    ellipse(67, 265, 35);
+    fill(face.fill);
+    ellipse(ear.x, ear.y, ear.size);
     pop();
+}
 
 /**
- * Draws the curl in front of the ear (uses the colour masking method again)
+ * Draws the curl placement in front of the ear 
  */
 function drawEarCurl() {
     push();
     noStroke();
-    fill("#000000");
-    ellipse(110, 250, 85);
-    // ear curl mask
-    fill("#E5C298");
-    ellipse(140, 230, 90);
+    fill(hair.fill);
+    ellipse(earCurl.x, earCurl.y, earCurl.size);
     pop();
 }
+
+/**
+ * Makes the curl in front of the ear (uses the colour-masking method again)
+ */
+function maskEarlCurl() {
+    push();
+    noStroke();
+    fill(face.fill);
+    ellipse(earCurlMask.x, earCurlMask.y, earCurlMask.size);
+    pop();
+}
+
