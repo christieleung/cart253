@@ -20,9 +20,11 @@ after a lot of deliberating, i've chosen to attempt:
     - they start to change as the mouse moves across the canvas
     - a winter into spring scene!! (which is fun because one of the characters of my chinese name means snow)
     - as the seasons change, the cheeks get rosier (happier because i love flowers)
-    - the background colour can change too!
+    - the background colour changes too! (from light blue to light green?)
 
-    - or maybe as mouseX goes from left to right, the dots change into flowers and as mouseY goes up and down (constrained to the hair), the cheeks get redder because it simulates the hair being played with and that feels comforting and nice?
+    > other possible interactions:
+      - maybe as mouseX goes from left to right, the dots change into flowers and as mouseY goes up and down (constrained to the hair), the cheeks get redder because it simulates the hair being played with and that feels comforting and nice?
+      - the cheeks get redder as you click on them to simulate being pinched
 
 ...feels a little ambitious considering my lack of js experience but i will try
 
@@ -38,10 +40,12 @@ after a lot of deliberating, i've chosen to attempt:
   - circles again!
 - draw flowers
   - more circles!
-- track mouse positioning (mouseX, mouseY)
-- write conditional statements for if the mouse position goes more towards the right, then the dots will change into flowers and the cheeks will get rosier
+- write conditional statements:
+  - if the mouse position moves across the canvas (both mouseX and mouseY), then the dots will change into flowers and the background colour will shift
+  - if the mouse is clicked, then the cheeks will turn redder (constrain to face)
 
 # p5 functions to try?
 
 - arc() for the facial features
 - lerpColor() for transitioning the background colours
+- map() for changing the background colours and dots into flowers
