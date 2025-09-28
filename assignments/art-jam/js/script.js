@@ -8,7 +8,7 @@
 "use strict";
 
 const face = {
-    x: 168,
+    x: 170,
     y: 220,
     size: 180,
     fill: "#E5C298" // tan
@@ -129,7 +129,7 @@ const bang = {
 };
 
 const ear = {
-    x: 68,
+    x: 70,
     y: 255,
     size: 35
 };
@@ -157,10 +157,7 @@ function setup() {
  * Fills the background and displays the face, hair, polka dots, and flowers
 */
 function draw() {
-    background("#ADD8E6"); // temporary blue bg colour
-  
-    // drawCheeks();
-    
+    background("#ADD8E6"); // temporary blue bg colour    
     drawCurls();
     maskCurls();   
     drawHair();
@@ -168,6 +165,7 @@ function draw() {
     drawEar();
     drawEarCurl();
     maskEarlCurl();
+    drawCheeks();
     drawBangs();
     drawEyes();
     drawMouth();
@@ -184,6 +182,18 @@ function drawFace() {
     noStroke();
     fill(face.fill);
     ellipse(face.x, face.y, face.size);
+    pop();
+}
+
+/**
+ * Draws the cheeks (left and right)
+ */
+function drawCheeks() {
+    push();
+    noStroke();
+    fill("#F2ACB9");
+    ellipse(146, 273, 30, 22); // left cheek
+    ellipse(229, 262, 30, 22); // right cheek
     pop();
 }
 
