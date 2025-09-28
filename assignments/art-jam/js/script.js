@@ -11,7 +11,52 @@ const face = {
     x: 170,
     y: 220,
     size: 180,
-    fill: "#E5C298" // tan
+    fill: "#E5C298", // tan
+    features: {
+        strokeColour: "#000000", // black
+        strokeWeight: 3
+    }
+};
+
+let cheeks = {
+    left: {
+        x: 146,
+        y: 273,
+    },
+    right: {
+        x: 229,
+        y: 262
+    },
+    width: 30,
+    height: 22,
+    fill: "#F2ACB9" // pink
+};
+
+const eyes = {
+    left: {
+        x: 140,
+        y: 235,
+        start: Math.PI / 4,
+        stop: 3.2 * Math.PI / 4
+    },
+    
+    right: {
+        x: 218,
+        y: 225,
+        start: -11.3 * Math.PI / 6,
+        stop: -4.3 * Math.PI / 3
+    },
+    width: 50,
+    height: 35
+};
+
+const mouth = {
+    x: 188,
+    y: 265,
+    width: 32,
+    height: 28,
+    start: Math.PI / 8,
+    stop: 6.3 * Math.PI / 8
 };
 
 const hair = {
@@ -191,9 +236,9 @@ function drawFace() {
 function drawCheeks() {
     push();
     noStroke();
-    fill("#F2ACB9");
-    ellipse(146, 273, 30, 22); // left cheek
-    ellipse(229, 262, 30, 22); // right cheek
+    fill(cheeks.fill);
+    ellipse(cheeks.left.x, cheeks.left.y, cheeks.width, cheeks.height); // left cheek
+    ellipse(cheeks.right.x, cheeks.right.y, cheeks.width, cheeks.height); // right cheek
     pop();
 }
 
@@ -202,11 +247,11 @@ function drawCheeks() {
  */
 function drawEyes() {
     push();
-    stroke("#000000");
-    strokeWeight(3);
+    stroke(face.features.strokeColour);
+    strokeWeight(face.features.strokeWeight);
     noFill();
-    arc(140, 235, 50, 35, PI / 4, 3.2 * PI / 4); // left eye
-    arc(218, 225, 50, 35, -11.3 * PI / 6, -4.3 * PI / 3); // right eye
+    arc(eyes.left.x, eyes.left.y, eyes.width, eyes.height, eyes.left.start, eyes.left.stop); // left eye
+    arc(eyes.right.x, eyes.right.y, eyes.width, eyes.height, eyes.right.start, eyes.right.stop); // right eye
     pop();
 }
 
@@ -215,10 +260,10 @@ function drawEyes() {
  */
 function drawMouth() {
     push();
-    stroke("#000000");
-    strokeWeight(3);
+    stroke(face.features.strokeColour);
+    strokeWeight(face.features.strokeWeight);
     noFill();
-    arc(188, 265, 32, 28, PI / 8, 6.3 * PI / 8);
+    arc(mouth.x, mouth.y, mouth.width, mouth.height, mouth.start, mouth.stop);
     pop();
 }
 
