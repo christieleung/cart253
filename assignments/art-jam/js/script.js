@@ -8,7 +8,7 @@
 "use strict";
 
 const face = {
-    x: 165,
+    x: 168,
     y: 220,
     size: 180,
     fill: "#E5C298" // tan
@@ -63,7 +63,7 @@ const curls = {
         },
         topRight: {
             x: 295,
-            y: 170,
+            y: 165,
             size: 50
         },
         bottomRight: {
@@ -88,7 +88,7 @@ const curlMask = {
         },
         topLeft: {
             x: 40,
-            y: 90,
+            y: 93,
             size: 80
         },
         bottomLeft: {
@@ -98,7 +98,7 @@ const curlMask = {
         },
         topRight: {
             x: 300,
-            y: 150,
+            y: 145,
             size: 40
         },
         bottomRight: {
@@ -116,36 +116,35 @@ const curlMask = {
 
 const bang = {
     left: {
-        x: 85,
-        y: 175,
+        x: 90,
+        y: 170,
         size: 110
     },
     right: {
-        x: 200,
-        y: 145,
+        x: 205,
+        y: 150,
         width: 150,
-        height: 100
+        height: 95
     },
 };
 
 const ear = {
-    x: 67,
-    y: 265,
+    x: 68,
+    y: 255,
     size: 35
 };
 
 const earCurl = {
     x: 110,
-    y: 250,
+    y: 235,
     size: 85
 };
 
 const earCurlMask = {
-    x: 140,
-    y: 230,
-    size: 90
+    x: 143,
+    y: 225,
+    size: 100
 };
-
 
 /**
  * Creates the canvas
@@ -160,8 +159,6 @@ function setup() {
 function draw() {
     background("#ADD8E6"); // temporary blue bg colour
   
-    // drawEyes();
-    // drawMouth();
     // drawCheeks();
     
     drawCurls();
@@ -172,6 +169,8 @@ function draw() {
     drawEarCurl();
     maskEarlCurl();
     drawBangs();
+    drawEyes();
+    drawMouth();
     
     // drawSnow();
     // drawFlowers();
@@ -185,6 +184,31 @@ function drawFace() {
     noStroke();
     fill(face.fill);
     ellipse(face.x, face.y, face.size);
+    pop();
+}
+
+/**
+ * Draws the eyes (left and right)
+ */
+function drawEyes() {
+    push();
+    stroke("#000000");
+    strokeWeight(3);
+    noFill();
+    arc(140, 235, 50, 35, PI / 4, 3.2 * PI / 4); // left eye
+    arc(218, 225, 50, 35, -11.3 * PI / 6, -4.3 * PI / 3); // right eye
+    pop();
+}
+
+/**
+ * Draws the mouth
+ */
+function drawMouth() {
+    push();
+    stroke("#000000");
+    strokeWeight(3);
+    noFill();
+    arc(188, 265, 32, 28, PI / 8, 6.3 * PI / 8);
     pop();
 }
 
@@ -278,4 +302,3 @@ function maskEarlCurl() {
     ellipse(earCurlMask.x, earCurlMask.y, earCurlMask.size);
     pop();
 }
-
