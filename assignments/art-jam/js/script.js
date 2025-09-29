@@ -195,6 +195,24 @@ const earCurlMask = {
     size: 100
 };
 
+let skyColour = {
+    blue: {
+        r: 173,
+        g: 216,
+        b: 230
+    },
+    green: {
+        r: 163,
+        g: 212,
+        b: 104
+    }
+};
+
+// Variables updated in function changeSkyColour()
+let skyColourR = undefined;
+let skyColourG = undefined;
+let skyColourB = undefined;
+
 /**
  * Creates the canvas
 */
@@ -205,8 +223,9 @@ function setup() {
 /**
  * Fills the background and displays the face, hair, polka dots, and flowers
 */
-function draw() {
-    background("#ADD8E6"); // temporary blue bg colour    
+function draw() { 
+    changeSkyColour();
+    background(skyColourR, skyColourG, skyColourB);
     drawCurls();
     maskCurls();   
     drawHair();
@@ -323,7 +342,7 @@ function drawCurls() {
 function maskCurls() {
     push();
     noStroke();
-    fill("#ADD8E6");
+    fill(skyColourR, skyColourG, skyColourB); // blends in with background colour
     ellipse(curlMask.place.top.x, curlMask.place.top.y, curlMask.place.top.size); // top curl mask
     ellipse(curlMask.place.topLeft.x, curlMask.place.topLeft.y, curlMask.place.topLeft.size); // top left curl mask
     ellipse(curlMask.place.bottomLeft.x, curlMask.place.bottomLeft.y, curlMask.place.bottomLeft.size); // bottom left curl mask
@@ -376,4 +395,14 @@ function maskEarlCurl() {
     fill(face.fill);
     ellipse(earCurlMask.x, earCurlMask.y, earCurlMask.size);
     pop();
+}
+
+/**
+ * Changes the background colour from blue (173, 216, 230) to green (163, 212, 104)
+ * as the mouse moves from the left edge to the right edge of the canvas
+ */
+function changeSkyColour() {
+    skyColourR = map(mouseX, 0, width, skyColour.blue.r, skyColour.green.r);
+    skyColourG = map(mouseX, 0, width, skyColour.blue.g, skyColour.green.g);
+    skyColourB = map(mouseX, 0, width, skyColour.blue.b, skyColour.green.b);
 }
