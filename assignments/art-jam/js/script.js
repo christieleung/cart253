@@ -29,7 +29,11 @@ let cheeks = {
     },
     width: 30,
     height: 22,
-    fill: "#F2ACB9" // pink
+    fill: {
+        r: 243,
+        g: 172,
+        b: 183
+    }
 };
 
 const eyes = {
@@ -236,10 +240,26 @@ function drawFace() {
 function drawCheeks() {
     push();
     noStroke();
-    fill(cheeks.fill);
+    fill(cheeks.fill.r, cheeks.fill.g, cheeks.fill.b);
     ellipse(cheeks.left.x, cheeks.left.y, cheeks.width, cheeks.height); // left cheek
     ellipse(cheeks.right.x, cheeks.right.y, cheeks.width, cheeks.height); // right cheek
     pop();
+}
+
+/**
+ * Checks if the mouse is within the face, and if it is, make the cheeks redder with every mouse press 
+ */
+function mousePressed() {
+    // Get the distance between the mouse and the face
+    const d = dist(mouseX, mouseY, face.x, face.y);
+    // Check if there is overlap (the mouse is within the face)
+    const mouseIsInsideFace = (d <= face.size / 2);
+    if (mouseIsInsideFace) {
+        // If there is overlap, g and b values go down by 5 every time the mouse is pressed
+        // Constrain g and b values to not go below 125 (min) or above 255 (max)
+        cheeks.fill.g = constrain(cheeks.fill.g - 5, 125, 255); 
+        cheeks.fill.b = constrain(cheeks.fill.b - 5, 125, 255);   
+    }
 }
 
 /**
