@@ -413,9 +413,12 @@ function maskEarlCurl() {
  * as the mouse moves from the left edge to the right edge of the canvas
  */
 function changeSkyColour() {
-    skyColourR = map(mouseX, 0, width, skyColour.blue.r, skyColour.green.r);
-    skyColourG = map(mouseX, 0, width, skyColour.blue.g, skyColour.green.g);
-    skyColourB = map(mouseX, 0, width, skyColour.blue.b, skyColour.green.b);
+    // Constrain the colour change to the canvas width
+    let constrainedMouseX = constrain(mouseX, 0, width); 
+    
+    skyColourR = map(constrainedMouseX, 0, width, skyColour.blue.r, skyColour.green.r);
+    skyColourG = map(constrainedMouseX, 0, width, skyColour.blue.g, skyColour.green.g);
+    skyColourB = map(constrainedMouseX, 0, width, skyColour.blue.b, skyColour.green.b);
 }
 
 /**
