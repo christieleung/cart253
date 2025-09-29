@@ -11,9 +11,17 @@ const face = {
     x: 170,
     y: 220,
     size: 180,
-    fill: "#E5C298", // tan
+    fill: {
+        r: 229,
+        g: 194,
+        b: 152
+    }, // tan
     features: {
-        strokeColour: "#000000", // black
+        strokeColour: {
+            r: 0,
+            g: 0,
+            b: 0
+        }, // black
         strokeWeight: 3
     }
 };
@@ -90,7 +98,11 @@ const hair = {
             size: 360
         }
     },
-    fill: "#000000" // black
+    fill: {
+        r: 0,
+        g: 0,
+        b: 0
+    }
 };
 
 const curls = {
@@ -248,7 +260,7 @@ function draw() {
 function drawFace() {
     push();
     noStroke();
-    fill(face.fill);
+    fill(face.fill.r, face.fill.g, face.fill.b);
     ellipse(face.x, face.y, face.size);
     pop();
 }
@@ -286,7 +298,7 @@ function mousePressed() {
  */
 function drawEyes() {
     push();
-    stroke(face.features.strokeColour);
+    stroke(face.features.strokeColour.r, face.features.strokeColour.g, face.features.strokeColour.b);
     strokeWeight(face.features.strokeWeight);
     noFill();
     arc(eyes.left.x, eyes.left.y, eyes.width, eyes.height, eyes.left.start, eyes.left.stop); // left eye
@@ -299,7 +311,7 @@ function drawEyes() {
  */
 function drawMouth() {
     push();
-    stroke(face.features.strokeColour);
+    stroke(face.features.strokeColour.r, face.features.strokeColour.g, face.features.strokeColour.b);
     strokeWeight(face.features.strokeWeight);
     noFill();
     arc(mouth.x, mouth.y, mouth.width, mouth.height, mouth.start, mouth.stop);
@@ -312,7 +324,7 @@ function drawMouth() {
 function drawHair() {
     push();
     noStroke();
-    fill(hair.fill);
+    fill(hair.fill.r, hair.fill.g, hair.fill.b);
     ellipse(hair.parts.behindHead.x, hair.parts.behindHead.y, hair.parts.behindHead.size); // behind head
     ellipse(hair.parts.bottomLeft.x, hair.parts.bottomLeft.y, hair.parts.bottomLeft.size); // hair bottom left
     ellipse(hair.parts.topRight.x, hair.parts.topRight.y, hair.parts.topRight.width, hair.parts.topRight.height); // hair top right
@@ -326,7 +338,7 @@ function drawHair() {
 function drawCurls() {
     push();
     noStroke();
-    fill(hair.fill); 
+    fill(hair.fill.r, hair.fill.g, hair.fill.b); 
     ellipse(curls.place.top.x, curls.place.top.y, curls.place.top.size); // top curl
     ellipse(curls.place.topLeft.x, curls.place.topLeft.y, curls.place.topLeft.size); // top left curl
     ellipse(curls.place.bottomLeft.x, curls.place.bottomLeft.y, curls.place.bottomLeft.size); // bottom left curl
@@ -358,7 +370,7 @@ function maskCurls() {
 function drawBangs() {
     push();
     noStroke();
-    fill(hair.fill);
+    fill(hair.fill.r, hair.fill.g, hair.fill.b);
     ellipse(bang.left.x, bang.left.y, bang.left.size); // left bang
     ellipse(bang.right.x, bang.right.y, bang.right.width, bang.right.height); // right bang
     pop();
@@ -370,7 +382,7 @@ function drawBangs() {
 function drawEar() {
     push();
     noStroke();
-    fill(face.fill);
+    fill(face.fill.r, face.fill.g, face.fill.b);
     ellipse(ear.x, ear.y, ear.size);
     pop();
 }
@@ -381,7 +393,7 @@ function drawEar() {
 function drawEarCurl() {
     push();
     noStroke();
-    fill(hair.fill);
+    fill(hair.fill.r, hair.fill.g, hair.fill.b);
     ellipse(earCurl.x, earCurl.y, earCurl.size);
     pop();
 }
@@ -392,7 +404,7 @@ function drawEarCurl() {
 function maskEarlCurl() {
     push();
     noStroke();
-    fill(face.fill);
+    fill(face.fill.r, face.fill.g, face.fill.b);
     ellipse(earCurlMask.x, earCurlMask.y, earCurlMask.size);
     pop();
 }
