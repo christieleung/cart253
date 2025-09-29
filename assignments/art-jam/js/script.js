@@ -249,8 +249,7 @@ function draw() {
     drawBangs();
     drawEyes();
     drawMouth();
-    
-    // drawSnow();
+    drawSnow();
     // drawFlowers();
 }
 
@@ -417,4 +416,24 @@ function changeSkyColour() {
     skyColourR = map(mouseX, 0, width, skyColour.blue.r, skyColour.green.r);
     skyColourG = map(mouseX, 0, width, skyColour.blue.g, skyColour.green.g);
     skyColourB = map(mouseX, 0, width, skyColour.blue.b, skyColour.green.b);
+}
+
+/**
+ * Draws the snow! (white polka dots)
+ * Dots are numbered from first to ninth according to increasing x-value
+ */
+function drawSnow() {
+    push();
+    noStroke();
+    fill("#ffffff");
+    ellipse(50, 65, 12); // first dot
+    ellipse(75, 370, 12); // second dot
+    ellipse(225, 445, 12); // third dot
+    ellipse(235, 33, 12); // fourth dot
+    ellipse(305, 300, 12); // fifth dot
+    ellipse(365, 118, 12); // sixth dot
+    ellipse(430, 395, 12); // seventh dot
+    ellipse(455, 225, 12); // eighth dot
+    ellipse(460, 45, 12); // ninth dot
+    pop();
 }
