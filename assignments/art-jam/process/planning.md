@@ -28,11 +28,28 @@ after a lot of deliberating, i've chosen to attempt:
 
 ...feels a little ambitious considering my lack of js experience but i will try
 
+# updated interaction
+
+the above section was getting a little messy so here is the updated list of interactions:
+
+> winter into spring scene:
+
+    - changing background colour from light blue to light green using mouseX
+    - changing snow into flowers using mouseX
+
+> blushing:
+
+    - changing the cheeks from light pink to a pinkish-red using keyPressed
+
+> animated flowers:
+
+    - rotating the flowers once they all appear on the canvas using mouseY
+
 # things to do:
 
 - draw face
   - circles for face, ears, and cheeks
-  - arcs (?) for the eyes and mouth
+  - arcs for the eyes and mouth
 - draw hair
   - lots of circles layered on top of each other
   - for the curls, overlap circles (one hair colour, one background colour)
@@ -41,8 +58,11 @@ after a lot of deliberating, i've chosen to attempt:
 - draw flowers
   - more circles!
 - write conditional statements:
-  - if the mouse position moves across the canvas (both mouseX and mouseY), then the dots will change into flowers and the background colour will shift
-  - if the mouse is clicked, then the cheeks will turn redder (constrain to face)
+  - if mouseX moves across the canvas, then the snow will change into flowers
+  - if mouseX moves across the canvas, then the sky colour will shift from blue to green
+  <!-- - if the mouse is clicked, then the cheeks will turn redder (constrain to face) -->
+  - if keyPressed, then the cheeks will turn redder
+  - if mouseY moves up and down the canvas once all the flowers are displayed, then the flowers will rotate
 
 # p5 functions to try?
 
