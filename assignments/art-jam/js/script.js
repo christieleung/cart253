@@ -11,17 +11,19 @@ const face = {
     x: 170,
     y: 220,
     size: 180,
+    // tan
     fill: {
         r: 229,
         g: 194,
         b: 152
-    }, // tan
+    },
     features: {
+        // black
         strokeColour: {
             r: 0,
             g: 0,
             b: 0
-        }, // black
+        }, 
         strokeWeight: 3
     }
 };
@@ -37,6 +39,7 @@ let cheeks = {
     },
     width: 30,
     height: 22,
+    // pink
     fill: {
         r: 243,
         g: 172,
@@ -224,6 +227,59 @@ let skyColour = {
 let skyColourR = undefined;
 let skyColourG = undefined;
 let skyColourB = undefined;
+
+let dot = {
+    // x-coordinates of dots
+    x: {
+        first: 50,
+        second: 75,
+        third: 225,
+        fourth: 235,
+        fifth: 305,
+        sixth: 365,
+        seventh: 430,
+        eighth: 455,
+        ninth: 460
+    },
+    // y-coordinates of dots
+    y: {
+        first: 65,
+        second: 370,
+        third: 445,
+        fourth: 33,
+        fifth: 300,
+        sixth: 118,
+        seventh: 395,
+        eighth: 225,
+        ninth: 45
+    },
+    fill: {
+         // white
+        snow: {
+            r: 255,
+            g: 255,
+            b: 255
+        }, 
+        // yellow
+        center: {
+            r: 255,
+            g: 222,
+            b: 33
+        } 
+    },
+    size: 12
+}
+
+let petal = {
+    // pink
+    fill: {
+        r: 238,
+        g: 135,
+        b: 166
+    },
+    size: 10,
+    offset: 11
+}
 
 /**
  * Creates the canvas
@@ -419,8 +475,8 @@ function changeSkyColour() {
 function drawSnow(x, y) {
     push();
     noStroke();
-    fill("#ffffff"); 
-    ellipse(x, y, 12); // white snow dot
+    fill(dot.fill.snow.r, dot.fill.snow.g, dot.fill.snow.b); 
+    ellipse(x, y, dot.size); // white snow dot
     pop();
 }
 
@@ -430,72 +486,73 @@ function drawSnow(x, y) {
 function drawFlower(x, y) {
     push();
     noStroke();
-    fill("yellow");
-    ellipse(x, y, 12); // yellow flower dot (center)
-    fill("pink");
-    ellipse(x - 11, y, 10); // left petal
-    ellipse(x + 11, y, 10); // right petal
-    ellipse(x, y + 11, 10); // top petal
-    ellipse(x, y - 11, 10); // bottom petal
+    fill(dot.fill.center.r, dot.fill.center.g, dot.fill.center.b);
+    ellipse(x, y, dot.size); // yellow flower dot (center)
+    fill(petal.fill.r, petal.fill.g, petal.fill.b);
+    ellipse(x - petal.offset, y, petal.size); // left petal
+    ellipse(x + petal.offset, y, petal.size); // right petal
+    ellipse(x, y + petal.offset, petal.size); // top petal
+    ellipse(x, y - petal.offset, petal.size); // bottom petal
     pop();
 }
 
 /**
  * Draws either snow or a flower depending on where the mouse's x-position is along the canvas
+ * As soon as the x-coordinate of the dot is passed, the snow dot turns into a flower dot
  */
 function drawSnowOrFlower() {
-     if (mouseX < 50) {
-        drawSnow(50, 65);
+     if (mouseX < dot.x.first) {
+        drawSnow(dot.x.first, dot.y.first);
     } else {
-        drawFlower(50, 65);
+        drawFlower(dot.x.first, dot.y.first);
     }
 
-    if (mouseX < 75) {
-        drawSnow(75, 370);
+    if (mouseX < dot.x.second) {
+        drawSnow(dot.x.second, dot.y.second);
     } else {
-        drawFlower(75, 370);
+        drawFlower(dot.x.second, dot.y.second);
     }
 
-    if (mouseX < 225) {
-        drawSnow(225, 445);
+    if (mouseX < dot.x.third) {
+        drawSnow(dot.x.third, dot.y.third);
     } else {
-        drawFlower(225, 445);
+        drawFlower(dot.x.third, dot.y.third);
     }
 
-    if (mouseX < 235) {
-        drawSnow(235, 33);
+    if (mouseX < dot.x.fourth) {
+        drawSnow(dot.x.fourth, dot.y.fourth);
     } else {
-        drawFlower(235, 33);
+        drawFlower(dot.x.fourth, dot.y.fourth);
     }
 
-    if (mouseX < 305) {
-        drawSnow(305, 300);
+    if (mouseX < dot.x.fifth) {
+        drawSnow(dot.x.fifth, dot.y.fifth);
     } else {
-        drawFlower(305, 300);
+        drawFlower(dot.x.fifth, dot.y.fifth);
     }
 
-    if (mouseX < 365) {
-        drawSnow(365, 118);
+    if (mouseX < dot.x.sixth) {
+        drawSnow(dot.x.sixth, dot.y.sixth);
     } else {
-        drawFlower(365, 118);
+        drawFlower(dot.x.sixth, dot.y.sixth);
     }
 
-    if (mouseX < 430) {
-        drawSnow(430, 395);
+    if (mouseX < dot.x.seventh) {
+        drawSnow(dot.x.seventh, dot.y.seventh);
     } else {
-        drawFlower(430, 395);
+        drawFlower(dot.x.seventh, dot.y.seventh);
     }
 
-    if (mouseX < 455) {
-        drawSnow(455, 225);
+    if (mouseX < dot.x.eighth) {
+        drawSnow(dot.x.eighth, dot.y.eighth);
     } else {
-        drawFlower(455, 225);
+        drawFlower(dot.x.eighth, dot.y.eighth);
     }
 
-    if (mouseX < 460) {
-        drawSnow(460, 45);
+    if (mouseX < dot.x.ninth) {
+        drawSnow(dot.x.ninth, dot.y.ninth);
     } else {
-        drawFlower(460, 45);
+        drawFlower(dot.x.ninth, dot.y.ninth);
     }
 }
 
