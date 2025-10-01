@@ -249,8 +249,7 @@ function draw() {
     drawBangs();
     drawEyes();
     drawMouth();
-    drawSnow();
-    // drawFlowers();
+    drawSnowOrFlower();
 }
 
 /**
@@ -422,21 +421,109 @@ function changeSkyColour() {
 }
 
 /**
+ * Draws the snow! (white dots)
+ */
+function drawSnow(x, y) {
+    push();
+    noStroke();
+    fill("#ffffff"); 
+    ellipse(x, y, 12); // white snow dot
+    pop();
+}
+
+/**
+ * Draws the flowers! (yellow centers, four pink petals)
+ */
+function drawFlower(x, y) {
+    push();
+    noStroke();
+    fill("yellow");
+    ellipse(x, y, 12); // yellow flower dot (center)
+    fill("pink");
+    ellipse(x - 11, y, 10); // left petal
+    ellipse(x + 11, y, 10); // right petal
+    ellipse(x, y + 11, 10); // top petal
+    ellipse(x, y - 11, 10); // bottom petal
+    pop();
+}
+
+/**
+ * Draws either snow or a flower depending on where the mouse's x-position is along the canvas
+ */
+function drawSnowOrFlower() {
+     if (mouseX < 50) {
+        drawSnow(50, 65);
+    } else {
+        drawFlower(50, 65);
+    }
+
+    if (mouseX < 75) {
+        drawSnow(75, 370);
+    } else {
+        drawFlower(75, 370);
+    }
+
+    if (mouseX < 225) {
+        drawSnow(225, 445);
+    } else {
+        drawFlower(225, 445);
+    }
+
+    if (mouseX < 235) {
+        drawSnow(235, 33);
+    } else {
+        drawFlower(235, 33);
+    }
+
+    if (mouseX < 305) {
+        drawSnow(305, 300);
+    } else {
+        drawFlower(305, 300);
+    }
+
+    if (mouseX < 365) {
+        drawSnow(365, 118);
+    } else {
+        drawFlower(365, 118);
+    }
+
+    if (mouseX < 430) {
+        drawSnow(430, 395);
+    } else {
+        drawFlower(430, 395);
+    }
+
+    if (mouseX < 455) {
+        drawSnow(455, 225);
+    } else {
+        drawFlower(455, 225);
+    }
+
+    if (mouseX < 460) {
+        drawSnow(460, 45);
+    } else {
+        drawFlower(460, 45);
+    }
+}
+
+/**
+ * Keeping this here for now...
+ * 
  * Draws the snow! (white polka dots)
  * Dots are numbered from first to ninth according to increasing x-value
  */
-function drawSnow() {
-    push();
-    noStroke();
-    fill("#ffffff");
-    ellipse(50, 65, 12); // first dot
-    ellipse(75, 370, 12); // second dot
-    ellipse(225, 445, 12); // third dot
-    ellipse(235, 33, 12); // fourth dot
-    ellipse(305, 300, 12); // fifth dot
-    ellipse(365, 118, 12); // sixth dot
-    ellipse(430, 395, 12); // seventh dot
-    ellipse(455, 225, 12); // eighth dot
-    ellipse(460, 45, 12); // ninth dot
-    pop();
-}
+// function drawSnow() {
+//     push();
+//     noStroke();
+//     fill("#ffffff");
+//     ellipse(50, 65, 12); // first dot
+//     ellipse(75, 370, 12); // second dot
+//     ellipse(225, 445, 12); // third dot
+//     ellipse(235, 33, 12); // fourth dot
+//     ellipse(305, 300, 12); // fifth dot
+//     ellipse(365, 118, 12); // sixth dot
+//     ellipse(430, 395, 12); // seventh dot
+//     ellipse(455, 225, 12); // eighth dot
+//     ellipse(460, 45, 12); // ninth dot
+//     pop();
+// }    
