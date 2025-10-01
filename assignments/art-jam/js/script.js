@@ -229,7 +229,7 @@ let skyColourG = undefined;
 let skyColourB = undefined;
 
 let dot = {
-    // x-coordinates of dots
+    // x-coordinates of dots (snow, flowers, rotating flowers)
     x: {
         first: 50,
         second: 75,
@@ -241,7 +241,7 @@ let dot = {
         eighth: 455,
         ninth: 460
     },
-    // y-coordinates of dots
+    // y-coordinates of dots (snow, flowers, rotating flowers)
     y: {
         first: 65,
         second: 370,
@@ -497,63 +497,103 @@ function drawFlower(x, y) {
 }
 
 /**
- * Draws either snow or a flower depending on where the mouse's x-position is along the canvas
- * As soon as the x-coordinate of the dot is passed, the snow dot turns into a flower dot
+ * Rotates the flowers!
+ */
+function rotateFlower(x, y) {
+    push();
+    // Change origin from (0,0) to (x, y) to rotate around dot position
+    translate(x, y); 
+    // Rotate based on the mouse's vertical position
+    rotate(mouseY * 0.01); 
+    noStroke();
+    fill(dot.fill.center.r, dot.fill.center.g, dot.fill.center.b);
+    // Change (x, y) in the ellipses to (0, 0) as origin has changed to dot position
+    ellipse(0, 0, dot.size); // rotating flower dot (center)
+    fill(petal.fill.r, petal.fill.g, petal.fill.b);
+    ellipse(0 - petal.offset, 0, petal.size); // left petal
+    ellipse(0 + petal.offset, 0, petal.size); // right petal
+    ellipse(0, 0 + petal.offset, petal.size); // top petal
+    ellipse(0, 0 - petal.offset, petal.size); // bottom petal
+    pop();
+}
+
+/**
+ * Draws either snow or a flower depending on where the mouse's horizontal position is along the canvas 
+ * (move the mouse from left to right to change the snow into a flower and vice versa) 
+ * Once all the snow has been transformed into flowers (after the ninth dot), the flowers can be
+ * rotated using the mouse's vertical position (move the mouse up and down to spin!)
  */
 function drawSnowOrFlower() {
-     if (mouseX < dot.x.first) {
+    // The snow, flowers, and rotating flowers all have the same position values (same dot)
+    
+    let allFlowersOnScreen = mouseX >= dot.x.ninth;
+    
+    if (allFlowersOnScreen) {
+        rotateFlower(dot.x.first, dot.y.first);
+        rotateFlower(dot.x.second, dot.y.second);
+        rotateFlower(dot.x.third, dot.y.third);
+        rotateFlower(dot.x.fourth, dot.y.fourth);
+        rotateFlower(dot.x.fifth, dot.y.fifth);
+        rotateFlower(dot.x.sixth, dot.y.sixth);
+        rotateFlower(dot.x.seventh, dot.y.seventh);
+        rotateFlower(dot.x.eighth, dot.y.eighth);
+        rotateFlower(dot.x.ninth, dot.y.ninth);
+    }
+    else {
+        if (mouseX < dot.x.first) {
         drawSnow(dot.x.first, dot.y.first);
-    } else {
+        } else {
         drawFlower(dot.x.first, dot.y.first);
-    }
+        }
 
-    if (mouseX < dot.x.second) {
+        if (mouseX < dot.x.second) {
         drawSnow(dot.x.second, dot.y.second);
-    } else {
-        drawFlower(dot.x.second, dot.y.second);
-    }
+        } else {
+            drawFlower(dot.x.second, dot.y.second);
+        }
 
-    if (mouseX < dot.x.third) {
-        drawSnow(dot.x.third, dot.y.third);
-    } else {
-        drawFlower(dot.x.third, dot.y.third);
-    }
+        if (mouseX < dot.x.third) {
+            drawSnow(dot.x.third, dot.y.third);
+        } else {
+            drawFlower(dot.x.third, dot.y.third);
+        }
 
-    if (mouseX < dot.x.fourth) {
-        drawSnow(dot.x.fourth, dot.y.fourth);
-    } else {
-        drawFlower(dot.x.fourth, dot.y.fourth);
-    }
+        if (mouseX < dot.x.fourth) {
+            drawSnow(dot.x.fourth, dot.y.fourth);
+        } else {
+            drawFlower(dot.x.fourth, dot.y.fourth);
+        }
 
-    if (mouseX < dot.x.fifth) {
-        drawSnow(dot.x.fifth, dot.y.fifth);
-    } else {
-        drawFlower(dot.x.fifth, dot.y.fifth);
-    }
+        if (mouseX < dot.x.fifth) {
+            drawSnow(dot.x.fifth, dot.y.fifth);
+        } else {
+            drawFlower(dot.x.fifth, dot.y.fifth);
+        }
 
-    if (mouseX < dot.x.sixth) {
-        drawSnow(dot.x.sixth, dot.y.sixth);
-    } else {
-        drawFlower(dot.x.sixth, dot.y.sixth);
-    }
+        if (mouseX < dot.x.sixth) {
+            drawSnow(dot.x.sixth, dot.y.sixth);
+        } else {
+            drawFlower(dot.x.sixth, dot.y.sixth);
+        }
 
-    if (mouseX < dot.x.seventh) {
-        drawSnow(dot.x.seventh, dot.y.seventh);
-    } else {
-        drawFlower(dot.x.seventh, dot.y.seventh);
-    }
+        if (mouseX < dot.x.seventh) {
+            drawSnow(dot.x.seventh, dot.y.seventh);
+        } else {
+            drawFlower(dot.x.seventh, dot.y.seventh);
+        }
 
-    if (mouseX < dot.x.eighth) {
-        drawSnow(dot.x.eighth, dot.y.eighth);
-    } else {
-        drawFlower(dot.x.eighth, dot.y.eighth);
-    }
+        if (mouseX < dot.x.eighth) {
+            drawSnow(dot.x.eighth, dot.y.eighth);
+        } else {
+            drawFlower(dot.x.eighth, dot.y.eighth);
+        }
 
-    if (mouseX < dot.x.ninth) {
-        drawSnow(dot.x.ninth, dot.y.ninth);
-    } else {
-        drawFlower(dot.x.ninth, dot.y.ninth);
-    }
+        if (mouseX < dot.x.ninth) {
+            drawSnow(dot.x.ninth, dot.y.ninth);
+        } else {
+            drawFlower(dot.x.ninth, dot.y.ninth);
+        }
+    }    
 }
 
 
