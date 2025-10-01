@@ -276,19 +276,12 @@ function drawCheeks() {
 }
 
 /**
- * Checks if the mouse is within the face, and if it is, make the cheeks redder with every mouse press 
+ * Turns the cheeks a bit redder every time a key is pressed
  */
-function mousePressed() {
-    // Get the distance between the mouse and the face
-    const d = dist(mouseX, mouseY, face.x, face.y);
-    // Check if there is overlap (the mouse is within the face)
-    const mouseIsInsideFace = (d <= face.size / 2);
-    if (mouseIsInsideFace) {
-        // If there is overlap, g and b values go down by 5 every time the mouse is pressed
-        // Constrain g and b values to not go below 125 (min) or above 255 (max)
+function keyPressed() {
+    // Constrain g and b values to not go below 125 (min) or above 255 (max)
         cheeks.fill.g = constrain(cheeks.fill.g - 5, 125, 255); 
-        cheeks.fill.b = constrain(cheeks.fill.b - 5, 125, 255);   
-    }
+        cheeks.fill.b = constrain(cheeks.fill.b - 5, 125, 255);
 }
 
 /**
@@ -506,24 +499,20 @@ function drawSnowOrFlower() {
     }
 }
 
-/**
- * Keeping this here for now...
- * 
- * Draws the snow! (white polka dots)
- * Dots are numbered from first to ninth according to increasing x-value
- */
-// function drawSnow() {
-//     push();
-//     noStroke();
-//     fill("#ffffff");
-//     ellipse(50, 65, 12); // first dot
-//     ellipse(75, 370, 12); // second dot
-//     ellipse(225, 445, 12); // third dot
-//     ellipse(235, 33, 12); // fourth dot
-//     ellipse(305, 300, 12); // fifth dot
-//     ellipse(365, 118, 12); // sixth dot
-//     ellipse(430, 395, 12); // seventh dot
-//     ellipse(455, 225, 12); // eighth dot
-//     ellipse(460, 45, 12); // ninth dot
-//     pop();
-// }    
+
+// Can't bring myself to delete this so I'm keeping the old blushing function here...
+    /**
+      * Checks if the mouse is within the face, and if it is, make the cheeks redder with every mouse press 
+      */
+// function mousePressed() {
+//     // Get the distance between the mouse and the face
+//     const d = dist(mouseX, mouseY, face.x, face.y);
+//     // Check if there is overlap (the mouse is within the face)
+//     const mouseIsInsideFace = (d <= face.size / 2);
+//     if (mouseIsInsideFace) {
+//         // If there is overlap, g and b values go down by 5 every time the mouse is pressed
+//         // Constrain g and b values to not go below 125 (min) or above 255 (max)
+//         cheeks.fill.g = constrain(cheeks.fill.g - 5, 125, 255); 
+//         cheeks.fill.b = constrain(cheeks.fill.b - 5, 125, 255);   
+//     }
+// }
