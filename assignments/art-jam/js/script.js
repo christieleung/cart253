@@ -51,7 +51,11 @@ const cheeks = {
     },
     minValue: 125,
     maxValue: 255,
-    colourChange: 5
+    colourChange: 5,
+    keys: {
+        blush: 67,
+        reset: 82
+    }
 };
 
 const eyes = {
@@ -340,17 +344,17 @@ function drawCheeks() {
 }
 
 /**
- * Turns the cheeks a bit redder every time the 'c' key is pressed
- * Resets to the original pink when the 'r' key is pressed
+ * Makes the blush more intense (redder) every time the 'c' or 'C' key is pressed
+ * Resets the blush to the original pink colour when the 'r' or 'R' key is pressed
  */
-function keyPressed() {
-    // Constrains g and b values within the defined min and max range
-    if (key === 'c') {
+function keyPressed(event) {
+    // Cheeks get redder, g and b values constrained within the defined min and max range
+    if (event.keyCode === cheeks.keys.blush) {
         cheeks.fill.g = constrain(cheeks.fill.g - cheeks.colourChange, cheeks.minValue, cheeks.maxValue); 
         cheeks.fill.b = constrain(cheeks.fill.b - cheeks.colourChange, cheeks.minValue, cheeks.maxValue);
     }
     // Resets the cheek colour
-    else if (key === 'r') {
+    else if (event.keyCode === cheeks.keys.reset) {
         cheeks.fill.g = cheeks.fills.g;
         cheeks.fill.b = cheeks.fills.b;
     }
