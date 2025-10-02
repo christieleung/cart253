@@ -28,7 +28,7 @@ const face = {
     }
 };
 
-let cheeks = {
+const cheeks = {
     left: {
         x: 146,
         y: 273,
@@ -41,10 +41,17 @@ let cheeks = {
     height: 22,
     // pink
     fill: {
-        r: 243,
-        g: 172,
-        b: 183
-    }
+        r: 240,
+        g: 165,
+        b: 160
+    },
+    fills: {
+        g: 165,
+        b: 160
+    },
+    minValue: 125,
+    maxValue: 255,
+    colourChange: 5
 };
 
 const eyes = {
@@ -278,6 +285,7 @@ let petal = {
         b: 166
     },
     size: 10,
+    // distance between the flower center and the flower petal 
     offset: 11
 }
 
@@ -332,12 +340,20 @@ function drawCheeks() {
 }
 
 /**
- * Turns the cheeks a bit redder every time a key is pressed
+ * Turns the cheeks a bit redder every time the 'c' key is pressed
+ * Resets to the original pink when the 'r' key is pressed
  */
 function keyPressed() {
-    // Constrain g and b values to not go below 125 (min) or above 255 (max)
-        cheeks.fill.g = constrain(cheeks.fill.g - 5, 125, 255); 
-        cheeks.fill.b = constrain(cheeks.fill.b - 5, 125, 255);
+    // Constrains g and b values within the defined min and max range
+    if (key === 'c') {
+        cheeks.fill.g = constrain(cheeks.fill.g - cheeks.colourChange, cheeks.minValue, cheeks.maxValue); 
+        cheeks.fill.b = constrain(cheeks.fill.b - cheeks.colourChange, cheeks.minValue, cheeks.maxValue);
+    }
+    // Resets the cheek colour
+    else if (key === 'r') {
+        cheeks.fill.g = cheeks.fills.g;
+        cheeks.fill.b = cheeks.fills.b;
+    }
 }
 
 /**
