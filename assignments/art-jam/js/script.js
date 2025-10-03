@@ -2,7 +2,22 @@
  * Self-Portrait
  * Christie Leung
  * 
- * My self-portrait!
+ * A self-portrait of me with my eyes closed and smiling, surrounded by long, 
+ * flowy (and slightly messy) black hair, feeling serene as the scene shifts
+ * from a snowy winter to a flowery spring. My cheeks are slightly 
+ * flushed – maybe from the cold, maybe from the joy of being surrounded 
+ * by flowers...maybe both?
+ * 
+ * Controls:
+ *  - Move the mouse along the x-axis to change seasons
+ *  - Once all the flowers have bloomed, move the mouse along the y-axis 
+ *    (at the right edge of canvas or right outside it) to spin them!
+ *  - Press 'c'/'C' to makes the cheeks redder
+ *  - Press 'r'/'R' to reset the blush colour
+ * 
+ * Uses: 
+ * p5.js
+ * https://p5js.org
  */
 
 "use strict";
@@ -52,6 +67,7 @@ const cheeks = {
     minValue: 125,
     maxValue: 255,
     colourChange: 5,
+    // key codes to use with keyPressed()
     keys: {
         blush: 67,
         reset: 82
@@ -234,7 +250,7 @@ let skyColour = {
     }
 };
 
-// Variables updated in function changeSkyColour()
+// variables updated in function changeSkyColour()
 let skyColourR = undefined;
 let skyColourG = undefined;
 let skyColourB = undefined;
@@ -301,7 +317,7 @@ function setup() {
 }
 
 /**
- * Fills the background and displays the face, hair, polka dots, and flowers
+ * Displays the background colour, face, hair, and snow (or flowers)
 */
 function draw() { 
     changeSkyColour();
@@ -361,7 +377,7 @@ function keyPressed(event) {
 }
 
 /**
- * Draws the eyes (left and right)
+ * Draws the closed eyes (left and right)
  */
 function drawEyes() {
     push();
@@ -374,7 +390,7 @@ function drawEyes() {
 }
 
 /**
- * Draws the mouth
+ * Draws the mouth (a smile!)
  */
 function drawMouth() {
     push();
@@ -416,7 +432,7 @@ function drawCurls() {
 }
 
 /**
- * Makes the curls (masks part of the black circles with bg colour circles)
+ * Creates the curl shape (masks part of the black circles with bg colour circles)
 */
 function maskCurls() {
     push();
@@ -466,7 +482,7 @@ function drawEarCurl() {
 }
 
 /**
- * Makes the curl in front of the ear (uses the colour-masking method again)
+ * Creates the curl shape in front of the ear (uses the colour-masking method again)
  */
 function maskEarlCurl() {
     push();
@@ -477,8 +493,8 @@ function maskEarlCurl() {
 }
 
 /**
- * Changes the background colour from blue (173, 216, 230) to green (163, 212, 104)
- * as the mouse moves from the left edge to the right edge of the canvas
+ * Changes the background colour from blue to green as the mouse moves from the 
+ * left edge to the right edge of the canvas (and vice versa)
  */
 function changeSkyColour() {
     // Constrain the colour change to the canvas width
@@ -501,7 +517,7 @@ function drawSnow(x, y) {
 }
 
 /**
- * Draws the flowers! (yellow centers, four pink petals)
+ * Draws the flowers! (yellow center with four pink petals)
  */
 function drawFlower(x, y) {
     push();
@@ -538,13 +554,14 @@ function rotateFlower(x, y) {
 }
 
 /**
- * Draws either snow or a flower depending on where the mouse's horizontal position is along the canvas 
+ * Draws either snow or a flower depending on the mouse's horizontal position along the canvas 
  * (move the mouse from left to right to change the snow into a flower and vice versa) 
  * Once all the snow has been transformed into flowers (after the ninth dot), the flowers can be
  * rotated using the mouse's vertical position (move the mouse up and down to spin!)
  */
 function drawSnowOrFlower() {
-    // The snow, flowers, and rotating flowers all have the same position values (same dot)
+    // The snow, flowers, and rotating flowers all have the same position values 
+    // (same dot, same x - and y - coordinates)
     
     let allFlowersOnScreen = mouseX >= dot.x.ninth;
     
@@ -615,21 +632,3 @@ function drawSnowOrFlower() {
         }
     }    
 }
-
-
-// Can't bring myself to delete this so I'm keeping the old blushing function here...
-    /**
-      * Checks if the mouse is within the face, and if it is, make the cheeks redder with every mouse press 
-      */
-// function mousePressed() {
-//     // Get the distance between the mouse and the face
-//     const d = dist(mouseX, mouseY, face.x, face.y);
-//     // Check if there is overlap (the mouse is within the face)
-//     const mouseIsInsideFace = (d <= face.size / 2);
-//     if (mouseIsInsideFace) {
-//         // If there is overlap, g and b values go down by 5 every time the mouse is pressed
-//         // Constrain g and b values to not go below 125 (min) or above 255 (max)
-//         cheeks.fill.g = constrain(cheeks.fill.g - 5, 125, 255); 
-//         cheeks.fill.b = constrain(cheeks.fill.b - 5, 125, 255);   
-//     }
-// }
