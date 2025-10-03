@@ -11,14 +11,18 @@ Christie Leung
 > - As the user moves the mouse from left to right, the seasons change from winter to spring, with each snowflake transforming into a pink flower, and the sky changing from a light blue to a light green.
 > - Once all the flowers have bloomed, the user can now move the mouse up and down along the edge of (or on the white space outside) the canvas to rotate them.
 > - The user is encouraged to go back and forth across the portrait! (Or stay in one season, or even an in-between state if they prefer that?)
-> - At any time, the user can also make the blush more intense by pressing the 'c' / 'C' key (turns redder in increments) and reset the colour by pressing the 'r' / 'R' key.
+> - At any time, the user can also make the blush more intense by pressing the 'c'/'C' key (turns redder in increments) and reset the colour by pressing the 'r'/'R' key.
 > - This blushing function allows the user to create their own narrative! For example, starting with the reddest cheeks in winter and resetting it when spring arrives could reflect a change temperature whereas gradually making the cheeks redder as the flowers bloom could symbolize the character (me) becoming happier. The user can also just choose their own default blush shade since the level of redness stays until they reset it.
 
 > - Note: I wanted to include winter and spring in this self-portrait because they feel personal to me. Snow is a character in my Chinese name (xue - 雪), and spring has been my favourite season since I was young. Plus, I wanted this project to feel whimsical and soft, and I think that flowers and spring are the embodiment of that (snowflakes too!).
 
 ## Screenshot(s)
 
-> ![Image of a clown face](./assets/images/clown.png)
+> ![Image of winter, default blush](./assets/images/winter-normal-blush.jpeg)
+
+> ![Image of mid-season transition (half-winter, half-spring) and medium blush](./assets/images/mid-medium-blush.jpeg)
+
+> ![Image of spring, the reddest blush, and spinning flowers](./assets/images/spring-full-blush-spin.jpeg)
 
 ## Attribution
 
