@@ -8,12 +8,13 @@
 "use strict";
 
 // Our flies that will buzz around
+// We start them undefined now, because we'll create them in setup()
 let buzzyTheFly = undefined;
 let jazzyTheFly = undefined;
 let jacuzziTheFly = undefined;
 
 /**
- * Create a canvas
+ * Create a canvas and setup our flies
  */
 function setup() {
     createCanvas(400, 400);
@@ -24,6 +25,10 @@ function setup() {
     
 }
 
+/**
+ * Creates a fly object with randomized position, default size, 
+ * and provided buzziness
+ */
 function createFly(flyBuzziness) {
     let fly = {
         x: random(100, width - 100), // Dynamic
