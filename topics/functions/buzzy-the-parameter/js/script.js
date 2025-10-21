@@ -1,6 +1,6 @@
 /**
  * Buzzy the parameter
- * Pippin Barr
+ * Christie Leung
  * 
  * A fly that buzzes around on the canvas
  */
@@ -15,6 +15,13 @@ let buzzyTheFly = {
     buzziness: 4
 };
 
+let jazzyTheFly = {
+    x: 300,
+    y: 250,
+    size: 10,
+    buzziness: 10
+};
+
 /**
  * Create a canvas
  */
@@ -23,19 +30,29 @@ function setup() {
 }
 
 /**
- * Background, move and draw buzzy
+ * Background, move and draw flies
  */
 function draw() {
     background("#87ceeb");
+    
+    // Move flies
+    moveFly(buzzyTheFly);
+    moveFly(jazzyTheFly);
+    
+    // Draw flies
+    drawFly(buzzyTheFly);
+    drawFly(jazzyTheFly);
+}
 
-    // Move buzzy
-    buzzyTheFly.x += random(-buzzyTheFly.buzziness, buzzyTheFly.buzziness);
-    buzzyTheFly.y += random(-buzzyTheFly.buzziness, buzzyTheFly.buzziness);
+function moveFly(fly) {
+    fly.x += random(-fly.buzziness, fly.buzziness);
+    fly.y += random(-fly.buzziness, fly.buzziness);
+}
 
-    // Draw buzzy
+function drawFly(fly) {
     push();
     noStroke();
     fill(0);
-    ellipse(buzzyTheFly.x, buzzyTheFly.y, buzzyTheFly.size);
+    ellipse(fly.x, fly.y, fly.size);
     pop();
 }
