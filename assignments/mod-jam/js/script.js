@@ -162,17 +162,97 @@ function drawFrogHead(x, y) {
     translate(x, y);
     fill("green");
     noStroke();
-    
-    // values before shifting origin to (x, y) using translate
-    // ellipse(100, 200, 100, 70);
-    // ellipse(75, 170, 30);
-    // ellipse(125, 170, 30);
     ellipse(0, 0, 100, 70); // head
     ellipse(-25, -30, 30); // part behind left eye
     ellipse(25, -30, 30); // part behind right eye
     pop();
     
-    // drawFrogFace();
+    // Draws the expression at the same coordinates as the head
+    drawFrogFace(100, 200, "hungry");
+    drawFrogFace(320, 200, "catching");
+    // will have to draw tongue first so
+    // the head can cover the start of the tongue
+    drawFrogFace(540, 200, "sleeping");
+}
+
+/**
+ * Draws the frog face and accompanying elements depending on the mood 
+ * (if the frog is hungry, catching flies, or sleeping)
+**/
+function drawFrogFace(x, y, mood) {
+    if (mood === "hungry") {
+         // eyes
+        push();
+        translate(x, y);
+        fill("black");
+        noStroke();
+        ellipse(-25, -32, 10);
+        ellipse(25, -32, 10);
+        pop();
+        
+        // frowning mouth
+        push();
+        noFill();
+        stroke("black");
+        strokeWeight(3);
+        arc(x, y, 25, 20, Math.PI, 0);
+        pop();
+    }
+    
+    if (mood === "catching") { 
+        // back of head
+        // tongue launched
+        push();
+        stroke("red");
+        strokeWeight(11);
+        line(x, y - 37, x, y - 90);
+        pop();
+        
+        // tiny fly body
+        push();
+        fill("black");
+        noStroke();
+        ellipse(x - 25, y - 110, 7);
+        pop();
+        
+        // tiny fly wings
+        push();
+        stroke("black");
+        strokeWeight(1.2);
+        line(x - 25, y - 110, x - 19, y - 113); // right wing 
+        line(x - 25, y - 110, x - 31, y - 113); // left wing
+        pop();
+    }
+    
+    if (mood === "sleeping") {
+        // closed eyes
+        push();
+        noFill();
+        stroke("black");
+        strokeWeight(3);
+        // closed left eye
+        line(x - 30, y - 30, x - 20, y - 30); 
+        // closed right eye
+        line(x + 20, y - 30, x + 30, y - 30);
+        pop();
+        
+        // smiling mouth
+        push();
+        noFill();
+        stroke("black");
+        strokeWeight(3);
+        arc(x, y - 5, 25, 20, 0, Math.PI);
+        pop();
+        
+        // zzz
+        push();
+        fill("black");
+        textSize(20);
+        text('z', 543, 145);
+        text('z', 560, 135);
+        text('z', 535, 125);
+        pop();
+    }
 }
 
 /**
