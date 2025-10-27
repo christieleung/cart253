@@ -43,6 +43,12 @@ const fly = {
     speed: 3
 };
 
+// Variable that holds the appropriate action verb based on what the user needs to do
+let actionVerb = "click";
+
+// Variable that allows for different states
+let state = "title";
+
 /**
  * Creates the canvas and initializes the fly
  */
@@ -53,7 +59,72 @@ function setup() {
     resetFly();
 }
 
+/**
+ * Draw the title, instructions, or game state
+*/
 function draw() {
+    if (state === "title") {
+        title();
+    }    
+    else if (state === "game") {
+        game();
+    }
+}
+
+/**
+ * Displays the title
+ */
+function title() {
+    // A light blue
+    background("#87ceeb");
+
+    // The title
+    push();
+    textSize(30);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    fill(40, 80, 30);
+    text("goodnight frog", width / 2, height / 2.1);
+    pop();
+    
+    // Draws the full lily pad
+    drawLilyPadFull(520, 125, 145);
+    
+    // Draws the lily pad with a notch
+    push();
+    fill(60, 140, 75); // Green
+    noStroke();
+    arc(130, 330, 145, 145, Math.PI/2.5, -7.5*Math.PI/4);
+    pop();
+
+
+    // The instruction to go to the how to play (instructions) screen
+    push();
+    textSize(18);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    fill(40, 80, 30);
+    // emoticons copied from: https://emojicombos.com/star
+    text(`⋆˚꩜｡ ${actionVerb} to begin! ⋆˙⟡`, width / 2, 3 * height / 3.5);
+    pop();
+}
+
+function drawLilyPadFull(x, y, a) {
+    push();
+    // Draws lily pad base
+    fill(60, 140, 75); // Green
+    noStroke();
+    ellipse(x, y, a); 
+    // Draws small central star pattern (veins)
+    fill(178, 224, 128); // Light green
+    star(x, y, a * 0.03, a * 0.3, 6);
+    pop();
+}
+
+/**
+ * Runs the frog game
+**/
+function game() {
     background("#87ceeb");
     moveFly();
     drawFly();
@@ -176,7 +247,33 @@ function checkTongueFlyOverlap() {
  * Launch the tongue on click (if it's not launched yet)
  */
 function mousePressed() {
-    if (frog.tongue.state === "idle") {
-        frog.tongue.state = "outbound";
+     // Handle the different states
+    if (state === "title") {
+        state = "game";
+    }
+    else if (state === "game") {
+        if (frog.tongue.state === "idle") {
+            frog.tongue.state = "outbound";
+        }
     }
 }
+
+/**
+ * Helper function to draw star shape
+ * Code from p5js star example: https://archive.p5js.org/examples/form-star.html
+ */ 
+function star(x, y, radius1, radius2, npoints) {
+  let angle = TWO_PI / npoints;
+  let halfAngle = angle / 2.0;
+  beginShape();
+  for (let a = 0; a < TWO_PI; a += angle) {
+    let sx = x + cos(a) * radius2;
+    let sy = y + sin(a) * radius2;
+    vertex(sx, sy);
+    sx = x + cos(a + halfAngle) * radius1;
+    sy = y + sin(a + halfAngle) * radius1;
+    vertex(sx, sy);
+  }
+  endShape(CLOSE);
+}
+
