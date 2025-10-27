@@ -1,7 +1,7 @@
 ## brainstorming
 
 concept:
-froggy food coma nap! 
+froggy food coma! / goodnight frog
 - the frog can't fall asleep until its belly is full (catch 10 flies)
 
 title screen:
@@ -27,7 +27,7 @@ instructions screen:
 ending:
 - frog falls asleep!
 - same sleepy frog as on instructions screen with zzz's above head
-- maybe some text on screen? (goodnight frog)
+- maybe some text on screen? (goodnight!)
 - darker background?
 - cute snoring audio
 
@@ -39,8 +39,8 @@ scoring:
 - number at the other?
 
 fly movement: 
-- either noise() or oscillating in a sine function
-  - leaning towards noise, i like how organic it feels
+- either perlin noise or oscillating in a sine function
+  - leaning towards noise(), i like how organic it feels
 - also add tiny wings to fly
   - two diagonal lines (keeping it simple!)
 
@@ -51,7 +51,7 @@ audio effects:
 - pond or soft background music?
 
 control system:
-- move the frog with the arrow keys
+- move the frog with the left and right arrow keys
 - press space bar to launch tongue
 
 other added features:
@@ -59,8 +59,11 @@ other added features:
   - randomized chance
   - can't skip it since the bubble fly will bounce back?
   - thought about making these count for 2x points but doesn't make sense since the frog wouldn't feel fuller from popping a bubble
+  - bubble popping sound
 
-
-
-
-
+alternatively...
+- help frog catch 10 flies to fall asleep before night falls
+- implement a time limit (60 seconds?)
+- background gets darker overtime (light to dark blue) 
+- win = frog falls asleep 
+- lose = frog is sad (animated tears?)
