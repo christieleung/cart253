@@ -54,7 +54,7 @@ const keyCode = {
 let actionVerb = "press space";
 
 // Variable that allows for different states
-let state = "title";
+let state = "instructions"; // remember to change back to "title" after!
 
 /**
  * Creates the canvas and initializes the fly
@@ -72,14 +72,17 @@ function setup() {
 function draw() {
     if (state === "title") {
         title();
-    }    
+    }   
+    else if (state === "instructions") {
+        instructions();
+    }
     else if (state === "game") {
         game();
     }
 }
 
 /**
- * Displays the title
+ * Displays the title screen
  */
 function title() {
     // A light blue
@@ -104,7 +107,6 @@ function title() {
     arc(130, 330, 145, 145, Math.PI/2.5, -7.5*Math.PI/4);
     pop();
 
-
     // The instruction to go to the how to play (instructions) screen
     push();
     textSize(18);
@@ -126,6 +128,51 @@ function drawLilyPadFull(x, y, a) {
     fill(178, 224, 128); // Light green
     star(x, y, a * 0.03, a * 0.3, 6);
     pop();
+}
+
+/**
+ * Displays the instructions screen
+**/
+function instructions() {
+    background("#87ceeb");
+    
+    // The instructions on how to play
+    push();
+    textSize(20);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    fill(40, 80, 30);
+    text();
+    // The instruction to go to the game screen
+    textSize(18);
+    text(`⋆˚꩜｡ ${actionVerb} to play! ⋆˙⟡`, width / 2, 3 * height / 3.5);
+    pop();
+    
+    // Draws a frog head at the specified (x, y) coordinates
+    drawFrogHead(100, 200);
+    drawFrogHead(320, 200);
+    drawFrogHead(540, 200);
+}
+
+/**
+ * Draws the frog heads on the instructions screen
+**/
+function drawFrogHead(x, y) {
+    push();
+    translate(x, y);
+    fill("green");
+    noStroke();
+    
+    // values before shifting origin to (x, y) using translate
+    // ellipse(100, 200, 100, 70);
+    // ellipse(75, 170, 30);
+    // ellipse(125, 170, 30);
+    ellipse(0, 0, 100, 70); // head
+    ellipse(-25, -30, 30); // part behind left eye
+    ellipse(25, -30, 30); // part behind right eye
+    pop();
+    
+    // drawFrogFace();
 }
 
 /**
@@ -258,7 +305,7 @@ function checkTongueFlyOverlap() {
 }
 
 /**
- * Changes the state when the space bar is pressed
+ * Changes the state (title, instructions, game) when the space bar is pressed
  * Also launches the tongue (if it's not launched yet)
  */
 function keyPressed(event) {
@@ -266,6 +313,9 @@ function keyPressed(event) {
     if (event.keyCode === keyCode.space) {
         // Handles the different states
     if (state === "title") {
+        state = "instructions";
+    }
+    else if (state === "instructions") {
         state = "game";
     }
     else if (state === "game") {
