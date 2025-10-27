@@ -43,8 +43,15 @@ const fly = {
     speed: 3
 };
 
+// Key codes for the left arrow, right arrow, and space bar
+const keyCode = {
+    left: 37,
+    right: 39,
+    space: 32
+}
+
 // Variable that holds the appropriate action verb based on what the user needs to do
-let actionVerb = "click";
+let actionVerb = "press space";
 
 // Variable that allows for different states
 let state = "title";
@@ -77,7 +84,7 @@ function draw() {
 function title() {
     // A light blue
     background("#87ceeb");
-
+    
     // The title
     push();
     textSize(30);
@@ -170,7 +177,14 @@ function resetFly() {
  * Moves the frog to the mouse position on x
  */
 function moveFrog() {
-    frog.body.x = mouseX;
+    let frogSpeed = 7;
+    
+    if (keyIsDown(keyCode.left)) {
+        frog.body.x -= frogSpeed;
+    } 
+    if (keyIsDown(keyCode.right)) {
+        frog.body.x += frogSpeed;
+    }
 }
 
 /**
@@ -244,10 +258,13 @@ function checkTongueFlyOverlap() {
 }
 
 /**
- * Launch the tongue on click (if it's not launched yet)
+ * Changes the state when the space bar is pressed
+ * Also launches the tongue (if it's not launched yet)
  */
-function mousePressed() {
-     // Handle the different states
+function keyPressed(event) {
+    // Checks if the space bar is pressed
+    if (event.keyCode === keyCode.space) {
+        // Handles the different states
     if (state === "title") {
         state = "game";
     }
@@ -255,6 +272,7 @@ function mousePressed() {
         if (frog.tongue.state === "idle") {
             frog.tongue.state = "outbound";
         }
+    } 
     }
 }
 
