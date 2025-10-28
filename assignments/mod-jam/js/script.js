@@ -120,7 +120,7 @@ const frogHead = {
             catching: 320,
             sleeping: 540
         },
-        y: 200        
+        y: 150        
     },
     // Frog head size
     head: {
@@ -228,11 +228,26 @@ const zzz = {
     }
 }
 
+// Rounded box position, size, corner radius, and colour on the instructions screen
+const instructionsBox = {
+    x: 50,
+    y: 215,
+    w: 540,
+    h: 160,
+    corner: 15,
+    // White (for now)
+    fill: {
+        r: 255,
+        g: 255,
+        b: 255
+    }
+}
+
 // Variable that holds the appropriate action verb based on what the user needs to do
 let actionVerb = "press space";
 
 // Variable that allows for different states
-let state = "title"; // remember to change back to "title" after!
+let state = "instructions"; // remember to change back to "title" after!
 
 /**
  * Creates the canvas and initializes the fly
@@ -314,14 +329,24 @@ function drawLilyPadFull(x, y, a) {
 **/
 function instructions() {
     background("#87ceeb");
-    
+
+    // Instruction box background
+    push();
+    fill(instructionsBox.fill.r, instructionsBox.fill.g, instructionsBox.fill.b);
+    noStroke();
+    rect(instructionsBox.x, instructionsBox.y, instructionsBox.w, instructionsBox.h, instructionsBox.corner);
+    pop();
+
     // The instructions on how to play
     push();
-    textSize(20);
+    textSize(16);
     textStyle(BOLD);
     textAlign(CENTER, CENTER);
     fill(40, 80, 30);
-    text();
+    text('catch 10 flies to help the hungry frog fall asleep!', width / 2, height / 2);
+    text('move the frog using the left and right arrow keys', width / 2, height / 1.8);
+    text('launch the tongue with the space bar', width / 2, height / 1.64);
+    text('...', width / 2, height / 1.5);
     // The instruction to go to the game screen
     textSize(18);
     text(`⋆˚꩜｡ ${actionVerb} to play! ⋆˙⟡`, width / 2, 3 * height / 3.5);
