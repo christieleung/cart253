@@ -112,6 +112,20 @@ const lilyPad = {
         }
 }    
 
+// Stripes in the background of the title screen
+let stripe = {
+    // Space between each stripe
+    spacing: 25,
+    // White with 50% transparency
+    fill: {
+        r: 255,
+        g: 255,
+        b: 255,
+        transparency: 50
+    },
+    strokeWeight: 3
+}
+
 // Frog heads on the instructions screen
 const frogHead = {
     // Frog head positions
@@ -282,6 +296,9 @@ function title() {
     // A light blue
     background("#87ceeb");
     
+    // Draws vertical stripes in the background
+    drawStripes();
+    
     // The title
     push();
     textSize(30);
@@ -322,6 +339,25 @@ function drawLilyPadFull(x, y, a) {
     // Draws small central star pattern (veins)
     fill(lilyPad.star.fill.r, lilyPad.star.fill.g, lilyPad.star.fill.b);
     star(x, y, a * lilyPad.star.factor.radius1, a * lilyPad.star.factor.radius2, lilyPad.star.points);
+    pop();
+}
+
+/**
+ * Draws vertical stripes across the canvas
+ */
+function drawStripes() {
+    push();
+    stroke(stripe.fill.r, stripe.fill.g, stripe.fill.b, stripe.fill.transparency);
+    strokeWeight(stripe.strokeWeight);
+
+    // Draws vertical lines that span the width of the canvas and are as tall as the height
+    for (let x = 0; x < width; x += stripe.spacing) {
+        line(x, 0, x, height);
+    }
+    // // Diagonal stripes
+    //    for (let x = 0; x < width + height; x += stripe.spacing) {
+    //     line(x, 0, x - height, height);
+    // }
     pop();
 }
 
