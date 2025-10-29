@@ -16,6 +16,11 @@ title screen:
 - title in center
 - press space bar or click to continue (click anywhere? button?)
 
+reworking title screen:
+- instead of ripples (feels too realistic with current cutesy cartoon feel), add a fun pattern to the water
+  - diagonal stripes! (sort of simulates ripples/current)
+- make the lily pads spin!!! (floating)
+
 instructions screen:
 - frogs with instructional speech bubbles
   - three frog heads (3 ellipses for the head, 2 ellipses for the eyes)
