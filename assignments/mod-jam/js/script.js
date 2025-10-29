@@ -17,11 +17,12 @@
 
 // Our frog
 const frog = {
-    // The frog's body has a position, size, and colour
+    // The frog's body has a position, size, speed, and colour
     body: {
         x: 320,
         y: 520,
         size: 150,
+        speed: 7,
         // Mossy green
         fill: {
             r: 124,
@@ -247,7 +248,7 @@ const instructionsBox = {
 let actionVerb = "press space";
 
 // Variable that allows for different states
-let state = "instructions"; // remember to change back to "title" after!
+let state = "title"; // remember to change back to "title" after!
 
 /**
  * Creates the canvas and initializes the fly
@@ -489,6 +490,15 @@ function moveFly() {
     if (fly.x > width) {
         resetFly();
     }
+    // // commenting out for now
+    // // need to fix overlap function for this to work but i like the movement
+    // // noise() code from: https://p5js.org/reference/p5/noise/
+    // const noiseRate = 0.005;
+    // let noiseX = noise(noiseRate * frameCount);
+    // let noiseY = noise(noiseRate * frameCount + 10000);
+    
+    // fly.x = width * noiseX;
+    // fly.y = height * noiseY;
 }
 
 /**
@@ -513,14 +523,12 @@ function resetFly() {
 /**
  * Moves the frog to the mouse position on x
  */
-function moveFrog() {
-    let frogSpeed = 7;
-    
+function moveFrog() { 
     if (keyIsDown(keyCode.left)) {
-        frog.body.x -= frogSpeed;
+        frog.body.x -= frog.body.speed;
     } 
     if (keyIsDown(keyCode.right)) {
-        frog.body.x += frogSpeed;
+        frog.body.x += frog.body.speed;
     }
 }
 
