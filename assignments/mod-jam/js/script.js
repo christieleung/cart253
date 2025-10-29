@@ -71,11 +71,12 @@ const keyCode = {
 
 // Lily pads on the title screen
 const lilyPad = {
-    // Full lily pad position and size
+    // Full lily pad position, size, and speed
     full: {
         x: 520,
         y: 125,
-        size: 145
+        size: 145,
+        speed: 0.007
     },
     // Lily pad base colour
     base: {
@@ -101,15 +102,16 @@ const lilyPad = {
         },
         points: 6
         },
-    // Arc parameters for the lily pad with a notch (position, size, angle)
+    // Arc parameters (position, size, angle) and speed of the lily pad with a notch
         notch: {
         x: 130,
         y: 330,
         w: 145,
         h: 145,
         startAngle: Math.PI / 2.5, 
-        endAngle: -7.5*Math.PI/4
-        }
+        endAngle: -7.5 * Math.PI / 4,
+        speed: 0.005
+    }
 }    
 
 // Stripes in the background of the title screen
@@ -264,6 +266,11 @@ let actionVerb = "press space";
 // Variable that allows for different states
 let state = "title"; // remember to change back to "title" after!
 
+// Variables that control the rotation of the lily pads
+// Set default angular position to 0 for no rotation at start
+let lilyPadRotation = 0;
+let lilyPadNotchRotation = 0;
+
 /**
  * Creates the canvas and initializes the fly
  */
@@ -308,17 +315,16 @@ function title() {
     text("goodnight frog", width / 2, height / 2.1);
     pop();
     
-    // Draws the full lily pad
+    // Displays the full lily pad
     drawLilyPadFull(lilyPad.full.x, lilyPad.full.y, lilyPad.full.size);
     
-    // Draws the lily pad with a notch
-    push();
-    fill(lilyPad.base.fill.r, lilyPad.base.fill.g, lilyPad.base.fill.b);
-    noStroke();
-    arc(lilyPad.notch.x, lilyPad.notch.y, lilyPad.notch.w, lilyPad.notch.h,
-        lilyPad.notch.startAngle, lilyPad.notch.endAngle);
-    pop();
-
+    // Displays the lily pad with a notch
+    drawLilyPadNotch();
+        
+    // Rotates the lily pads at specified speeds
+        lilyPadRotation += lilyPad.full.speed; 
+        lilyPadNotchRotation -= lilyPad.notch.speed;
+    
     // The instruction to go to the how to play (instructions) screen
     push();
     textSize(18);
@@ -330,18 +336,41 @@ function title() {
     pop();
 }
 
+/**
+ * Draws a full lily pad with a star at the top left of the canvas
+ */
 function drawLilyPadFull(x, y, a) {
     push();
+    // Sets the origin to the position of lily pad (becomes the centre of rotation)
+    translate(x, y);
+    // Rotates lily pad
+    rotate(lilyPadRotation);
     // Draws lily pad base
     fill(lilyPad.base.fill.r, lilyPad.base.fill.g, lilyPad.base.fill.b);
     noStroke();
-    ellipse(x, y, a); 
+    ellipse(0, 0, a); 
     // Draws small central star pattern (veins)
     fill(lilyPad.star.fill.r, lilyPad.star.fill.g, lilyPad.star.fill.b);
-    star(x, y, a * lilyPad.star.factor.radius1, a * lilyPad.star.factor.radius2, lilyPad.star.points);
+    star(0, 0, a * lilyPad.star.factor.radius1, a * lilyPad.star.factor.radius2, lilyPad.star.points);
     pop();
 }
 
+/**
+ * Draws a lily pad with a notch at the bottom left of the canvas
+ */
+function drawLilyPadNotch() {
+    push();
+    // Sets the origin to the position of the lily pad (becomes the centre of rotation)
+    translate(lilyPad.notch.x, lilyPad.notch.y);
+    // Rotates lily pad with a notch
+    rotate(lilyPadNotchRotation);
+    fill(lilyPad.base.fill.r, lilyPad.base.fill.g, lilyPad.base.fill.b);
+    noStroke();
+    arc(0, 0, lilyPad.notch.w, lilyPad.notch.h,
+        lilyPad.notch.startAngle, lilyPad.notch.endAngle);
+    pop(); 
+}
+ 
 /**
  * Draws vertical stripes across the canvas
  */
