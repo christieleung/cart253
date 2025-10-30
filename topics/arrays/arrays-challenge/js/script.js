@@ -13,8 +13,6 @@ let balls = []; // Will create it with createBall()
 function setup() {
   // Create the canvas
   createCanvas(400, 400);
-  // Create the ball
-  balls = createBall();
 }
 
 /**
@@ -87,4 +85,14 @@ function drawBall(ball) {
   fill(ball.fill);
   ellipse(ball.x, ball.y, ball.size);
   pop();
+}
+
+/**
+ * Add a new ball on mouse press
+ */
+function mousePressed() {
+    // Create a new ball
+    const newBall = createBall();
+    // Add new ball to the array
+    balls.push(newBall);
 }
