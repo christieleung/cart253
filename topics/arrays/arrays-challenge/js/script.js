@@ -26,7 +26,7 @@ function createBall() {
     y: 200,
     size: 20,
     // Colour
-    fill: "#000000",
+    fill: color(random(255), random(255), random(255)),
     // Movement
     velocity: {
       x: random(-5, 5),
