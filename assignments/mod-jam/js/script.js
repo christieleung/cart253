@@ -20,16 +20,24 @@ const frog = {
     // The frog's body has a position, size, speed, and colour
     body: {
         x: 320,
-        y: 520,
-        size: 150,
+        y: 450,
+        w: 170,
+        h: 115,
         speed: 7,
         // Mossy green
         fill: {
             r: 124,
             g: 161,
             b: 78
-        }
+        },
+        // Position and size for the parts behind the eyes
+        offset: {
+            x: 43,
+            y: 46,
+        },
+        sizeFactor: 0.32
     },
+    
     // The frog's tongue has a position, size, speed, state, and colour
     tongue: {
         x: undefined,
@@ -744,7 +752,9 @@ function drawFrog() {
     push();
     fill(frog.body.fill.r, frog.body.fill.g, frog.body.fill.b);
     noStroke();
-    ellipse(frog.body.x, frog.body.y, frog.body.size);
+    ellipse(frog.body.x, frog.body.y, frog.body.w, frog.body.h );
+    ellipse(frog.body.x - frog.body.offset.x, frog.body.y - frog.body.offset.y, frog.body.w * frog.body.sizeFactor); // left eye
+    ellipse(frog.body.x + frog.body.offset.x, frog.body.y - frog.body.offset.y, frog.body.w * frog.body.sizeFactor); // right eye
     pop();
 }
 
