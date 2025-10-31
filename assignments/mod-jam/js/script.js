@@ -47,7 +47,7 @@ const frog = {
     }
 };
 
-// Our fly
+// Our fly with wings
 // Has a position, size, speed of horizontal movement, and colour
 const fly = {
     x: 0,
@@ -59,8 +59,19 @@ const fly = {
         r: 0,
         g: 0, 
         b: 0
+    },
+    wing: {
+        // Stroke weight of wings
+        strokeWeight: 2,
+        // Factor to multiply by to make the wings proportional to the fly body size
+        factor: 0.85,
+        // Factor to control the angle of the wings
+        ratio: 3
     }
 };
+
+// Fly wing length
+const wingLength = fly.size * fly.wing.factor; 
 
 // Key codes for the left arrow, right arrow, and space bar
 const keyCode = {
@@ -264,7 +275,7 @@ const instructionsBox = {
 let actionVerb = "press space";
 
 // Variable that allows for different states
-let state = "title"; // remember to change back to "title" after!
+let state = "game"; // remember to change back to "title" after!
 
 // Variables that control the rotation of the lily pads
 // Set default angular position to 0 for no rotation at start
@@ -567,13 +578,24 @@ function moveFly() {
 }
 
 /**
- * Draws the fly as a black circle
+ * Draws the fly as a black circle with two diagonal lines as wings
  */
 function drawFly() {
+    // Body
     push();
     noStroke();
     fill(fly.fill.r, fly.fill.g, fly.fill.b);
     ellipse(fly.x, fly.y, fly.size);
+    pop();
+    
+    // Wings
+    push();
+    stroke(fly.fill.r, fly.fill.g, fly.fill.b);
+    strokeWeight(fly.wing.strokeWeight);
+    // Left Wing
+    line(fly.x, fly.y, fly.x - wingLength, fly.y - wingLength / fly.wing.ratio);
+    // Right Wing
+    line(fly.x, fly.y, fly.x + wingLength,  fly.y - wingLength / fly.wing.ratio);
     pop();
 }
 
