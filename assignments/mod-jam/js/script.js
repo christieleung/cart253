@@ -271,16 +271,30 @@ const instructionsBox = {
     }
 }
 
+// Progress bar position, size, and corner radius
+const progressBar = {
+    x: 30,
+    y: 30,
+    w: 200,
+    h: 25,
+    corner: 12
+}
+
 // Variable that holds the appropriate action verb based on what the user needs to do
 let actionVerb = "press space";
 
 // Variable that allows for different states
-let state = "instructions"; // remember to change back to "title" after!
+let state = "game"; // remember to change back to "title" after!
 
 // Variables that control the rotation of the lily pads
 // Set default angular position to 0 for no rotation at start
 let lilyPadRotation = 0;
 let lilyPadNotchRotation = 0;
+
+// Variable that keeps track of how many flies have been caught (score)
+let fliesCaught = 0;
+// Variable that defines the total number of flies needed to fill the progress bar (10)
+const maxFlies = 10;
 
 /**
  * Creates the canvas and initializes the fly
@@ -602,6 +616,7 @@ function game() {
     moveTongue();
     drawFrog();
     checkTongueFlyOverlap();
+    drawProgressBar();
 }
 
 /**
@@ -740,14 +755,45 @@ function checkTongueFlyOverlap() {
     // Get distance from tongue to fly
     const d = dist(frog.tongue.x, frog.tongue.y, fly.x, fly.y);
     // Check if it's an overlap
-    const eaten = (d < frog.tongue.size/2 + fly.size/2);
+    const eaten = (d < frog.tongue.size / 2 + fly.size / 2);
     if (eaten) {
         // Reset the fly
         resetFly();
         // Bring back the tongue
         frog.tongue.state = "inbound";
+        
+        // Increase the score with each fly caught, cap at maxFlies
+        if (fliesCaught < maxFlies) {
+            fliesCaught++;
+        }
     }
 }
+
+/**
+ * Draws the progress bar as a rounded rectangle
+ * Fills with each fly caught
+ */
+function drawProgressBar() {
+    // Variable that calculates how much of the progress bar should be filled based on 
+    // the number of flies caught (0 = empty, 1 = full)
+    const progress = constrain(fliesCaught / maxFlies, 0, 1);
+    // Converts that calculation into a filled width on the progress bar
+    const filled = progressBar.w * progress;
+   
+    // Empty Bar
+    push();
+    noStroke();
+    fill(255, 255, 255, 150);
+    rect(progressBar.x, progressBar.y, progressBar.w, progressBar.h, progressBar.corner);
+    pop();
+  
+    // Filled Bar
+    push();
+    noStroke();
+    fill(lilyPad.star.fill.r, lilyPad.star.fill.g, lilyPad.star.fill.b);
+    rect(progressBar.x, progressBar.y,filled, progressBar.h, progressBar.corner);
+    pop();
+}    
 
 /**
  * Changes the state (title, instructions, game) when the space bar is pressed
