@@ -62,11 +62,11 @@ const fly = {
     },
     wing: {
         // Stroke weight of wings
-        strokeWeight: 2,
+        strokeWeight: 1.8,
         // Factor to multiply by to make the wings proportional to the fly body size
-        factor: 0.85,
+        factor: 0.9,
         // Factor to control the angle of the wings
-        ratio: 3
+        ratio: 2.5
     }
 };
 
@@ -240,7 +240,7 @@ const tinyFly = {
             y1: 110,
             y2: 113,
         },
-        strokeWeight: 1.2
+        strokeWeight: 1.5
     }
 }
 
@@ -275,7 +275,7 @@ const instructionsBox = {
 let actionVerb = "press space";
 
 // Variable that allows for different states
-let state = "game"; // remember to change back to "title" after!
+let state = "instructions"; // remember to change back to "title" after!
 
 // Variables that control the rotation of the lily pads
 // Set default angular position to 0 for no rotation at start
@@ -459,87 +459,136 @@ function drawFrogHead(x, y) {
 }
 
 /**
- * Draws the frog face and accompanying elements depending on the mood 
+ * Draws the frog face and accompanying elements depending on the mood on the instructions screen
  * (if the frog is hungry, catching flies, or sleeping)
+ * Note: Inst short for instructions state
 **/
 function drawFrogFace(x, y, mood) {
     if (mood === "hungry") {
-         // Eyes
-        push();
-        fill(frogFace.features.r, frogFace.features.g, frogFace.features.b);
-        noStroke();
-        ellipse(x - frogFace.eyes.open.offset.x, y - frogFace.eyes.open.offset.y, frogFace.eyes.open.size);
-        ellipse(x + frogFace.eyes.open.offset.x, y - frogFace.eyes.open.offset.y, frogFace.eyes.open.size);
-        pop();
-        
-        // Frowning mouth
-        push();
-        noFill();
-        stroke(frogFace.features.r, frogFace.features.g, frogFace.features.b);
-        strokeWeight(frogFace.features.strokeWeight);
-        arc(x, y, frogFace.mouth.frown.w, frogFace.mouth.frown.h,
-            frogFace.mouth.frown.startAngle, frogFace.mouth.frown.endAngle);
-        pop();
+        // Open eyes, frowning mouth
+        drawEyesInst(x, y);   
+        drawFrownInst(x, y);
     }
     
     if (mood === "catching") { 
-        // Back of head
-        // Tongue launched
-        push();
-        stroke(frog.tongue.fill.r, frog.tongue.fill.g, frog.tongue.fill.b);
-        strokeWeight(frogFace.tongue.strokeWeight);
-        line(x, y - frogFace.tongue.offset.y1, x, y - frogFace.tongue.offset.y2);
-        pop();
-        
-        // Tiny fly body
-        push();
-        fill(fly.fill.r, fly.fill.g, fly.fill.b);
-        noStroke();
-        ellipse(x - tinyFly.body.offset.x, y - tinyFly.body.offset.y, tinyFly.body.size);
-        pop();
-        
-        // Tiny fly wings
-        push();
-        stroke(fly.fill.r, fly.fill.g, fly.fill.b);
-        strokeWeight(tinyFly.wings.strokeWeight);
-        line(x - tinyFly.wings.offset.x1, y - tinyFly.wings.offset.y1,
-            x - tinyFly.wings.offset.leftx2, y - tinyFly.wings.offset.y2); // Left wing
-        line(x - tinyFly.wings.offset.x1, y - tinyFly.wings.offset.y1,
-            x - tinyFly.wings.offset.rightx2, y - tinyFly.wings.offset.y2); // Right wing 
-       
-        pop();
+        // Tongue launched, a tiny fly with wings nearby
+        drawTongueInst(x, y);
+        drawTinyFlyInst(x, y);
+        drawTinyFlyWingsInst(x, y);
     }
     
     if (mood === "sleeping") {
-        // Closed eyes
-        push();
-        noFill();
-        stroke(frogFace.features.r, frogFace.features.g, frogFace.features.b);
-        strokeWeight(frogFace.features.strokeWeight);
-        line(x - frogFace.eyes.closed.offset, y - frogFace.eyes.closed.offset,
-            x - frogFace.eyes.closed.offsetLength, y - frogFace.eyes.closed.offset); // Closed left eye
-        line(x + frogFace.eyes.closed.offsetLength, y - frogFace.eyes.closed.offset,
-            x + frogFace.eyes.closed.offset, y - frogFace.eyes.closed.offset); // Closed right eye
-        pop();
-        
-        // Smiling mouth
-        push();
-        noFill();
-        stroke(frogFace.features.r, frogFace.features.g, frogFace.features.b);
-        strokeWeight(frogFace.features.strokeWeight);
-        arc(x, y - frogFace.mouth.smile.offset.y, frogFace.mouth.smile.w, frogFace.mouth.smile.h,
-            frogFace.mouth.smile.startAngle, frogFace.mouth.smile.endAngle);
-        pop();
-        
-        // Zzz
-        push();
-        fill(frogFace.features.r, frogFace.features.g, frogFace.features.b);
-        textSize(20);
-        text('z', x + zzz.offset.x1, y - zzz.offset.y1);  
-        text('z', x + zzz.offset.x2, y - zzz.offset.y2); 
-        text('z', x - zzz.offset.x3, y - zzz.offset.y3);
-        pop();
+        // Closed eyes, smiling mouth, Zzz above head
+        drawClosedEyesInst(x, y);
+        drawSmileInst(x, y);
+        drawZzzInst(x, y);
     }
+}
+
+/**
+ * Draws the frog eyes for the hungry mood
+**/
+function drawEyesInst(x, y) {
+    push();
+    fill(frogFace.features.r, frogFace.features.g, frogFace.features.b);
+    noStroke();
+    ellipse(x - frogFace.eyes.open.offset.x, y - frogFace.eyes.open.offset.y, frogFace.eyes.open.size);
+    ellipse(x + frogFace.eyes.open.offset.x, y - frogFace.eyes.open.offset.y, frogFace.eyes.open.size);
+    pop();
+}
+       
+/**
+ * Draws the frowning mouth for the hungry mood
+ */
+function drawFrownInst(x, y) {
+   push();
+    noFill();
+    stroke(frogFace.features.r, frogFace.features.g, frogFace.features.b);
+    strokeWeight(frogFace.features.strokeWeight);
+    arc(x, y, frogFace.mouth.frown.w, frogFace.mouth.frown.h,
+        frogFace.mouth.frown.startAngle, frogFace.mouth.frown.endAngle);
+    pop(); 
+}
+    
+/**
+ * Draws the tongue for the catching mood
+ */
+function drawTongueInst(x, y) {
+    push();
+    stroke(frog.tongue.fill.r, frog.tongue.fill.g, frog.tongue.fill.b);
+    strokeWeight(frogFace.tongue.strokeWeight);
+    line(x, y - frogFace.tongue.offset.y1, x, y - frogFace.tongue.offset.y2);
+    pop();
+}
+
+/**
+ * Draws the tiny fly body for the catching mood
+ */
+function drawTinyFlyInst(x, y) { 
+    push();
+    fill(fly.fill.r, fly.fill.g, fly.fill.b);
+    noStroke();
+    ellipse(x - tinyFly.body.offset.x, y - tinyFly.body.offset.y, tinyFly.body.size);
+    pop(); 
+}
+
+/**
+ * Draws the tiny fly wings for the catching mood
+ */
+function drawTinyFlyWingsInst(x, y) {
+    push();
+    stroke(fly.fill.r, fly.fill.g, fly.fill.b);
+    strokeWeight(tinyFly.wings.strokeWeight);
+    // Left wing
+    line(x - tinyFly.wings.offset.x1, y - tinyFly.wings.offset.y1,
+        x - tinyFly.wings.offset.leftx2, y - tinyFly.wings.offset.y2); 
+    // Right wing
+    line(x - tinyFly.wings.offset.x1, y - tinyFly.wings.offset.y1,
+        x - tinyFly.wings.offset.rightx2, y - tinyFly.wings.offset.y2);  
+    pop();
+}
+
+/**
+ * Draws the closed eyes for the sleeping mood
+ */
+function drawClosedEyesInst(x, y) {
+    push();
+    noFill();
+    stroke(frogFace.features.r, frogFace.features.g, frogFace.features.b);
+    strokeWeight(frogFace.features.strokeWeight);
+    // Closed left eye
+    line(x - frogFace.eyes.closed.offset, y - frogFace.eyes.closed.offset,
+        x - frogFace.eyes.closed.offsetLength, y - frogFace.eyes.closed.offset); 
+     // Closed right eye
+    line(x + frogFace.eyes.closed.offsetLength, y - frogFace.eyes.closed.offset,
+        x + frogFace.eyes.closed.offset, y - frogFace.eyes.closed.offset);
+    pop();
+}
+
+/**
+ * Draws the smiling mouth for the sleeping mood
+ */
+function drawSmileInst(x, y) {
+    push();
+    noFill();
+    stroke(frogFace.features.r, frogFace.features.g, frogFace.features.b);
+    strokeWeight(frogFace.features.strokeWeight);
+    arc(x, y - frogFace.mouth.smile.offset.y, frogFace.mouth.smile.w, frogFace.mouth.smile.h,
+        frogFace.mouth.smile.startAngle, frogFace.mouth.smile.endAngle);
+    pop();
+}        
+
+/**
+ * Draws the Zzz above the head for the sleeping mood
+ */
+function drawZzzInst(x, y) {
+    push();
+    fill(frogFace.features.r, frogFace.features.g, frogFace.features.b);
+    textSize(20);
+    text('z', x + zzz.offset.x1, y - zzz.offset.y1);
+    text('z', x + zzz.offset.x2, y - zzz.offset.y2);
+    text('z', x - zzz.offset.x3, y - zzz.offset.y3);
+    pop();
 }
 
 /**
@@ -578,17 +627,28 @@ function moveFly() {
 }
 
 /**
- * Draws the fly as a black circle with two diagonal lines as wings
+ * Displays the fly in the game state
  */
 function drawFly() {
-    // Body
+    drawFlyBody();
+    drawFlyWings();
+}
+
+/**
+ * Draws the fly body as a black circle
+ */
+function drawFlyBody() {
     push();
     noStroke();
     fill(fly.fill.r, fly.fill.g, fly.fill.b);
     ellipse(fly.x, fly.y, fly.size);
     pop();
-    
-    // Wings
+}
+
+/**
+ * Draws the wings as two black diagonal lines
+*/
+function drawFlyWings() {
     push();
     stroke(fly.fill.r, fly.fill.g, fly.fill.b);
     strokeWeight(fly.wing.strokeWeight);
