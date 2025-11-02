@@ -300,7 +300,7 @@ const progressBar = {
 let actionVerb = "press space";
 
 // Variable that allows for different states
-let state = "game"; // remember to change back to "title" after!
+let state = "sleep"; // remember to change back to "title" after!
 
 // Variables that control the rotation of the lily pads
 // Set default angular position to 0 for no rotation at start
@@ -323,7 +323,7 @@ function setup() {
 }
 
 /**
- * Draw the title, instructions, or game state
+ * Draw the title, instructions, game, or ending (sleeping) state
 */
 function draw() {
     if (state === "title") {
@@ -334,6 +334,9 @@ function draw() {
     }
     else if (state === "game") {
         game();
+    }
+    else if (state === "sleep") {
+        sleep();
     }
 }
 
@@ -778,9 +781,13 @@ function checkTongueFlyOverlap() {
         // Bring back the tongue
         frog.tongue.state = "inbound";
         
-        // Increase the score with each fly caught, cap at maxFlies
+        // Increase the score with each fly caught, cap at max number of flies
         if (fliesCaught < maxFlies) {
             fliesCaught++;
+        }
+        // If max flies are caught, change from game state to sleeping state
+        if (fliesCaught >= maxFlies) {
+            state = "sleep";
         }
     }
 }
@@ -810,6 +817,59 @@ function drawProgressBar() {
     rect(progressBar.x, progressBar.y,filled, progressBar.h, progressBar.corner);
     pop();
 }    
+
+/**
+ * Displays the ending screen
+ */
+function sleep() {
+    background("pink");
+    drawSleepingFrog();
+}
+
+/**
+ * Draws the sleeping frog on the ending screen
+ */
+function drawSleepingFrog() {
+    // Pillow
+    push();
+    noStroke();
+    fill("white")
+    rect(width / 2 - 112, height / 2 - 100, 220, 125, 20);
+    pop();
+    
+    // Head + Hands
+    push();
+    noStroke();
+    fill(frog.body.fill.r, frog.body.fill.g, frog.body.fill.b);
+    ellipse(width / 2, height / 2, 175, 120);
+    ellipse(width / 2 - 47, height / 2 - 50, 45)
+    ellipse(width / 2 + 47, height / 2 - 50, 45)
+    ellipse(width / 2 - 80, height / 2 + 50, 50, 30);
+    ellipse(width / 2 + 80, height / 2 + 50, 50, 30);
+    pop();
+    
+    // Face
+    push();
+    stroke(frogFace.features.r, frogFace.features.g, frogFace.features.b);
+    noFill();
+    strokeWeight(frogFace.features.strokeWeight);
+    // Smile
+    arc(width/2, height/2 - frogFace.mouth.smile.offset.y, frogFace.mouth.smile.w, frogFace.mouth.smile.h,
+        frogFace.mouth.smile.startAngle, frogFace.mouth.smile.endAngle);
+    // Closed left eye
+    line(width/2 - 55, height/2 - 52, width/2 - 40, height/2 - 52); 
+    // Closed right eye
+    line(width/2 + 55, height/2 - 52, width/2 + 40, height/2 - 52); 
+    pop();
+    
+    // Blanket
+    push();
+    fill("pink");
+    stroke("black");
+    strokeWeight(3);
+    arc(width / 2, height / 2 + 170, 500, 250, 7 * PI / 5.9, 11 * PI / 6.05);
+    pop();
+}
 
 /**
  * Changes the state (title, instructions, game) when the space bar is pressed
