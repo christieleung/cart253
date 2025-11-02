@@ -56,12 +56,11 @@ const frog = {
 };
 
 // Our fly with wings
-// Has a position, size, speed of horizontal movement, and colour
+// Has a position, size, and colour
 const fly = {
     x: 0,
     y: 200, // Will be random
     size: 10,
-    speed: 3,
     // Black
     fill: {
         r: 0,
@@ -77,6 +76,15 @@ const fly = {
         ratio: 2.5
     }
 };
+
+// Default fly movement
+// Has a speed, angle, and amplitude (input into sine function) 
+let flyMovement = {
+    speed: 2,
+    angle: 0,
+    amplitude: 30,
+    midline: 200
+}
 
 // Fly wing length
 const wingLength = fly.size * fly.wing.factor; 
@@ -628,25 +636,21 @@ function game() {
 }
 
 /**
- * Moves the fly according to its speed
+ * Moves the fly horizontally according to its speed and vertically along a sine wave
  * Resets the fly if it gets all the way to the right
+ * Referenced code from: https://editor.p5js.org/crecord/sketches/ByWfYwbjb
  */
 function moveFly() {
-    // Move the fly
-    fly.x += fly.speed;
-    // Handle the fly going off the canvas
+    // Increases the sine wave angle so the fly oscillates up and down
+    flyMovement.angle += 0.1;
+    // Sets the fly's vertical position based on the sine wave
+    fly.y = flyMovement.midline + sin(flyMovement.angle) * flyMovement.amplitude
+    // Moves the fly horizontally
+    fly.x += flyMovement.speed;
+    // Handles the fly going off the canvas
     if (fly.x > width) {
         resetFly();
     }
-    // // commenting out for now
-    // // need to fix overlap function for this to work but i like the movement
-    // // noise() code from: https://p5js.org/reference/p5/noise/
-    // const noiseRate = 0.005;
-    // let noiseX = noise(noiseRate * frameCount);
-    // let noiseY = noise(noiseRate * frameCount + 10000);
-    
-    // fly.x = width * noiseX;
-    // fly.y = height * noiseY;
 }
 
 /**
@@ -683,11 +687,13 @@ function drawFlyWings() {
 }
 
 /**
- * Resets the fly to the left with a random y
+ * Resets the fly to the left, and randomizes the oscillation midline, speed, and angle
  */
 function resetFly() {
     fly.x = 0;
-    fly.y = random(0, 300);
+    flyMovement.midline = random(80, 300);
+    flyMovement.speed = random(1, 4);
+    flyMovement.angle = random(0, Math.TWO_PI);
 }
 
 /**
