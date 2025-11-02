@@ -21,8 +21,8 @@ const frog = {
     body: {
         x: 320,
         y: 450,
-        w: 170,
-        h: 115,
+        w: 157,
+        h: 105,
         speed: 7,
         // Mossy green
         fill: {
@@ -32,10 +32,10 @@ const frog = {
         },
         // Position and size for the parts behind the eyes
         offset: {
-            x: 43,
+            x: 40,
             y: 46,
         },
-        sizeFactor: 0.32
+        sizeFactor: 0.26
     },
     
     // The frog's tongue has a position, size, speed, state, and colour
@@ -169,17 +169,17 @@ const frogHead = {
     // Frog head size
     head: {
         w: 100,
-        h: 70
+        h: 68
     },
     // Part behind left eye
     left: {
-        x: -25,
+        x: -26,
         y: -30,
         size: 30
     },
     // Part behind right eye
     right: {
-        x: 25,
+        x: 26,
         y: -30,
         size: 30
     }
@@ -300,7 +300,7 @@ const progressBar = {
 let actionVerb = "press space";
 
 // Variable that allows for different states
-let state = "sleep"; // remember to change back to "title" after!
+let state = "game"; // remember to change back to "title" after!
 
 // Variables that control the rotation of the lily pads
 // Set default angular position to 0 for no rotation at start
