@@ -296,11 +296,69 @@ const progressBar = {
     corner: 12
 }
 
+// Sleeping frog with a head, hands, and face on the ending (sleeping) screen
+// Also has a pillow and blanket
+// Each element has specific shape parameters (position, size, angle) and colours
+// Note: position values are offset from (x, y)
+const sleepingFrog = {
+    // Pink background and blanket
+    bgFill: {
+        r: 255,
+        g: 192,
+        b: 203
+    },
+    head: {
+        main: {
+            w: 175,
+            h: 120
+        },
+        behindEyes: {
+            x: 46,
+            y: 50,
+            size: 45
+        }
+    },
+    hands: {
+        x: 80,
+        y: 50,
+        w: 50,
+        h: 30
+    },  
+    eyes: {
+        x1: 55,
+        x2: 40,
+        y: 52
+    },
+    smile: {
+        y: 10
+    },
+    pillow: {
+        // White
+        fill: {
+            r: 255,
+            g: 255,
+            b: 255
+        },
+        x: 112,
+        y: 100,
+        w: 220,
+        h: 125,
+        corner: 20
+    },
+    blanket: {
+        y: 170,
+        w: 500,
+        h: 250,
+        startAngle: 7 * Math.PI / 5.9,
+        endAngle: 11 * Math.PI / 6.05
+    }
+}
+
 // Variable that holds the appropriate action verb based on what the user needs to do
 let actionVerb = "press space";
 
 // Variable that allows for different states
-let state = "game"; // remember to change back to "title" after!
+let state = "sleep"; // remember to change back to "title" after!
 
 // Variables that control the rotation of the lily pads
 // Set default angular position to 0 for no rotation at start
@@ -819,55 +877,82 @@ function drawProgressBar() {
 }    
 
 /**
- * Displays the ending screen
+ * Displays the ending screen (sleeping)
  */
 function sleep() {
-    background("pink");
-    drawSleepingFrog();
+    background(sleepingFrog.bgFill.r, sleepingFrog.bgFill.g, sleepingFrog.bgFill.b);
+    drawSleepingFrog(width / 2, height / 2);
 }
 
 /**
- * Draws the sleeping frog on the ending screen
+ * Draws the sleeping frog tucked in its blanket on the ending screen (sleeping)
  */
-function drawSleepingFrog() {
-    // Pillow
+function drawSleepingFrog(x, y) {
+    drawPillow(x, y);
+    drawSleepingFrogBody(x, y);
+    drawSleepingFrogFace(x, y);    
+    drawBlanket(x, y);
+}
+
+/**
+ * Draws a rounded rectangle as a pillow on the ending screen (sleeping)
+ */
+function drawPillow(x, y) {
     push();
     noStroke();
-    fill("white")
-    rect(width / 2 - 112, height / 2 - 100, 220, 125, 20);
+    fill(sleepingFrog.pillow.fill.r, sleepingFrog.pillow.fill.g, sleepingFrog.pillow.fill.b)
+    rect(x - sleepingFrog.pillow.x, y - sleepingFrog.pillow.y, sleepingFrog.pillow.w,
+        sleepingFrog.pillow.h, sleepingFrog.pillow.corner);
     pop();
-    
-    // Head + Hands
+}
+
+/**
+ * Draws the frog on the ending screen (sleeping)
+ */
+function drawSleepingFrogBody(x, y) {
     push();
     noStroke();
     fill(frog.body.fill.r, frog.body.fill.g, frog.body.fill.b);
-    ellipse(width / 2, height / 2, 175, 120);
-    ellipse(width / 2 - 47, height / 2 - 50, 45)
-    ellipse(width / 2 + 47, height / 2 - 50, 45)
-    ellipse(width / 2 - 80, height / 2 + 50, 50, 30);
-    ellipse(width / 2 + 80, height / 2 + 50, 50, 30);
+    // Head
+    ellipse(x, y, sleepingFrog.head.main.w, sleepingFrog.head.main.h);
+    ellipse(x - sleepingFrog.head.behindEyes.x, y - sleepingFrog.head.behindEyes.y, sleepingFrog.head.behindEyes.size);
+    ellipse(x + sleepingFrog.head.behindEyes.x, y - sleepingFrog.head.behindEyes.y, sleepingFrog.head.behindEyes.size);
+    // Hands
+    ellipse(x - sleepingFrog.hands.x, y + sleepingFrog.hands.y, sleepingFrog.hands.w, sleepingFrog.hands.h);
+    ellipse(x + sleepingFrog.hands.x, y + sleepingFrog.hands.y, sleepingFrog.hands.w, sleepingFrog.hands.h);
     pop();
-    
-    // Face
+}
+
+/**
+ * Draws the sleeping face (closed eyes and a smile) on the ending screen (sleeping)
+ */
+function drawSleepingFrogFace(x, y) {
     push();
     stroke(frogFace.features.r, frogFace.features.g, frogFace.features.b);
     noFill();
     strokeWeight(frogFace.features.strokeWeight);
-    // Smile
-    arc(width/2, height/2 - frogFace.mouth.smile.offset.y, frogFace.mouth.smile.w, frogFace.mouth.smile.h,
-        frogFace.mouth.smile.startAngle, frogFace.mouth.smile.endAngle);
     // Closed left eye
-    line(width/2 - 55, height/2 - 52, width/2 - 40, height/2 - 52); 
+    line(x - sleepingFrog.eyes.x1, y - sleepingFrog.eyes.y, x - sleepingFrog.eyes.x2, y - sleepingFrog.eyes.y);
     // Closed right eye
-    line(width/2 + 55, height/2 - 52, width/2 + 40, height/2 - 52); 
+    line(x + sleepingFrog.eyes.x1, y - sleepingFrog.eyes.y, x + sleepingFrog.eyes.x2, y - sleepingFrog.eyes.y);
+     // Smile (uses same parameter values as frog on instructions screen except for y offset)
+    arc(x, y - sleepingFrog.smile.y, frogFace.mouth.smile.w, frogFace.mouth.smile.h,
+        frogFace.mouth.smile.startAngle, frogFace.mouth.smile.endAngle);
     pop();
-    
-    // Blanket
+}
+
+/**
+ * Draws the blanket outline as a curve (part of an arc) on the ending screen (sleeping)
+ */
+function drawBlanket(x, y) {
     push();
-    fill("pink");
-    stroke("black");
-    strokeWeight(3);
-    arc(width / 2, height / 2 + 170, 500, 250, 7 * PI / 5.9, 11 * PI / 6.05);
+    // Uses same fill as background so the blanket looks like it's encompassing the screen
+    fill(sleepingFrog.bgFill.r, sleepingFrog.bgFill.g, sleepingFrog.bgFill.b);
+    // Uses same stroke colour and weight as facial features
+    stroke(frogFace.features.r, frogFace.features.g, frogFace.features.b);
+    strokeWeight(frogFace.features.strokeWeight);
+    arc(x, y + sleepingFrog.blanket.y, sleepingFrog.blanket.w, sleepingFrog.blanket.h,
+        sleepingFrog.blanket.startAngle, sleepingFrog.blanket.endAngle);
     pop();
 }
 
