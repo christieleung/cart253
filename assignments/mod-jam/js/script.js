@@ -71,7 +71,8 @@ const fly = {
         // Stroke weight of wings
         strokeWeight: 1.8,
         // Factor to multiply by to make the wings proportional to the fly body size
-        factor: 0.9,
+        // How much smaller the wings are than the body
+        sizeFactor: 0.9,
         // Factor to control the angle of the wings
         ratio: 2.5
     }
@@ -86,8 +87,25 @@ let flyMovement = {
     midline: 200
 }
 
-// Fly wing length
-const wingLength = fly.size * fly.wing.factor; 
+// Fly wing length calculation
+const wingLength = fly.size * fly.wing.sizeFactor; 
+
+// Bubbles (that some flies are randomly trapped in) in the game state
+const bubble = {
+    // Light blue and transparent
+    fill: {
+        r: 187,
+        g: 238,
+        b: 255,
+        transparency: 100
+    },
+    strokeWeight: 1.7,
+    // How much larger the bubble is than the fly
+    sizeFactor: 3.1
+}
+
+// Bubble size calculation
+const bubbleSize = fly.size * bubble.sizeFactor
 
 // Key codes for the left arrow, right arrow, and space bar
 const keyCode = {
@@ -348,7 +366,7 @@ const sleepingFrog = {
 let actionVerb = "press space";
 
 // Variable that allows for different states
-let state = "instructions"; // remember to change back to "title" after!
+let state = "game"; // remember to change back to "title" after!
 
 // Variables that control the rotation of the lily pads
 // Set default angular position to 0 for no rotation at start
@@ -708,6 +726,7 @@ function moveFly() {
  * Displays the fly in the game state
  */
 function drawFly() {
+    drawBubble();
     drawFlyBody();
     drawFlyWings();
 }
@@ -738,6 +757,20 @@ function drawFlyWings() {
 }
 
 /**
+ * Draws the bubble
+ */
+function drawBubble() {
+    if (fly.inBubble) {
+        push();
+        fill(bubble.fill.r, bubble.fill.g, bubble.fill.b, bubble.fill.transparency);
+        stroke(bubble.fill.r, bubble.fill.g, bubble.fill.b);
+        strokeWeight(bubble.strokeWeight);
+        ellipse(fly.x, fly.y, bubbleSize);
+        pop();
+    }
+}
+
+/**
  * Resets the fly to the left, and randomizes the oscillation midline, speed, and angle
  */
 function resetFly() {
@@ -745,6 +778,14 @@ function resetFly() {
     flyMovement.midline = random(80, 300);
     flyMovement.speed = random(1, 4);
     flyMovement.angle = random(0, Math.TWO_PI);
+    
+    // 40% chance the fly will be trapped in a bubble
+    if (random() < 0.4) {
+        fly.inBubble = true;
+    }
+    else {
+        fly.inBubble = false;
+    }
 }
 
 /**
