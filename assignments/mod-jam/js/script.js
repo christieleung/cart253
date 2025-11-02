@@ -31,7 +31,7 @@ const frog = {
             b: 78
         },
         // Position and size for the parts behind the eyes
-        offset: {
+        behindEyes: {
             x: 40,
             y: 46,
         },
@@ -186,27 +186,27 @@ const frogHead = {
 }
 
 // Frog faces on the instruction screen
+// Note: position values are offset from the (x, y) of the frog heads
 const frogFace = {
     // Frog facial features colour
     // Black
     features: {
         r: 0,
-        g: 0, 
+        g: 0,
         b: 0,
         strokeWeight: 3
     },
     // Frog eye positions, size
     eyes: {
         open: {
-            offset: {
             x: 25,
-            y: 32
-            },
+            y: 32,
             size: 9
         },
         closed: {
-            offset: 30,
-            offsetLength: 20
+            x: 30,
+            y: 30,
+            length: 20
         }
     },
     // Frog mouth stroke weight, size, angle
@@ -218,9 +218,7 @@ const frogFace = {
             endAngle: 0
         },
         smile: {
-            offset: {
-                y: 5
-            },
+            y: 5,
             w: 25,
             h: 20,
             startAngle: 0,
@@ -229,47 +227,39 @@ const frogFace = {
     },
     // Frog tongue position and stroke weight
     tongue: {
-        offset: {
-            y1: 36,
-            y2: 90
-        },
+        y1: 36,
+        y2: 90,
         strokeWeight: 11
-    }    
-}
+    },
+}    
 
 // Tiny fly on instructions screen
 const tinyFly = {
     // Tiny fly body position and size
     body: {
-        offset: {
-            x: 25,
-            y: 110
-        },
+        x: 25,
+        y: 110,
         size: 7,
     },
     // Tiny fly wings position, size, and stroke weight
     wings: {
-        offset: {
-            x1: 25,
-            leftx2: 31,
-            rightx2: 19,
-            y1: 110,
-            y2: 113,
-        },
+        x1: 25,
+        leftx2: 31,
+        rightx2: 19,
+        y1: 110,
+        y2: 113,
         strokeWeight: 1.5
     }
 }
 
 // Position of the 'zzz' above sleeping frog head on the instructions screen
 const zzz = {
-    offset: {
-        x1: 3,
-        x2: 20,
-        x3: 5,
-        y1: 55,
-        y2: 65,
-        y3: 75
-    }
+    x1: 3,
+    x2: 20,
+    x3: 5,
+    y1: 55,
+    y2: 65,
+    y3: 75
 }
 
 // Rounded box position, size, corner radius, and colour on the instructions screen
@@ -358,7 +348,7 @@ const sleepingFrog = {
 let actionVerb = "press space";
 
 // Variable that allows for different states
-let state = "sleep"; // remember to change back to "title" after!
+let state = "instructions"; // remember to change back to "title" after!
 
 // Variables that control the rotation of the lily pads
 // Set default angular position to 0 for no rotation at start
@@ -583,8 +573,8 @@ function drawEyesInst(x, y) {
     push();
     fill(frogFace.features.r, frogFace.features.g, frogFace.features.b);
     noStroke();
-    ellipse(x - frogFace.eyes.open.offset.x, y - frogFace.eyes.open.offset.y, frogFace.eyes.open.size);
-    ellipse(x + frogFace.eyes.open.offset.x, y - frogFace.eyes.open.offset.y, frogFace.eyes.open.size);
+    ellipse(x - frogFace.eyes.open.x, y - frogFace.eyes.open.y, frogFace.eyes.open.size);
+    ellipse(x + frogFace.eyes.open.x, y - frogFace.eyes.open.y, frogFace.eyes.open.size);
     pop();
 }
        
@@ -608,7 +598,7 @@ function drawTongueInst(x, y) {
     push();
     stroke(frog.tongue.fill.r, frog.tongue.fill.g, frog.tongue.fill.b);
     strokeWeight(frogFace.tongue.strokeWeight);
-    line(x, y - frogFace.tongue.offset.y1, x, y - frogFace.tongue.offset.y2);
+    line(x, y - frogFace.tongue.y1, x, y - frogFace.tongue.y2);
     pop();
 }
 
@@ -619,7 +609,7 @@ function drawTinyFlyInst(x, y) {
     push();
     fill(fly.fill.r, fly.fill.g, fly.fill.b);
     noStroke();
-    ellipse(x - tinyFly.body.offset.x, y - tinyFly.body.offset.y, tinyFly.body.size);
+    ellipse(x - tinyFly.body.x, y - tinyFly.body.y, tinyFly.body.size);
     pop(); 
 }
 
@@ -631,11 +621,11 @@ function drawTinyFlyWingsInst(x, y) {
     stroke(fly.fill.r, fly.fill.g, fly.fill.b);
     strokeWeight(tinyFly.wings.strokeWeight);
     // Left wing
-    line(x - tinyFly.wings.offset.x1, y - tinyFly.wings.offset.y1,
-        x - tinyFly.wings.offset.leftx2, y - tinyFly.wings.offset.y2); 
+    line(x - tinyFly.wings.x1, y - tinyFly.wings.y1,
+        x - tinyFly.wings.leftx2, y - tinyFly.wings.y2); 
     // Right wing
-    line(x - tinyFly.wings.offset.x1, y - tinyFly.wings.offset.y1,
-        x - tinyFly.wings.offset.rightx2, y - tinyFly.wings.offset.y2);  
+    line(x - tinyFly.wings.x1, y - tinyFly.wings.y1,
+        x - tinyFly.wings.rightx2, y - tinyFly.wings.y2);  
     pop();
 }
 
@@ -648,11 +638,11 @@ function drawClosedEyesInst(x, y) {
     stroke(frogFace.features.r, frogFace.features.g, frogFace.features.b);
     strokeWeight(frogFace.features.strokeWeight);
     // Closed left eye
-    line(x - frogFace.eyes.closed.offset, y - frogFace.eyes.closed.offset,
-        x - frogFace.eyes.closed.offsetLength, y - frogFace.eyes.closed.offset); 
+    line(x - frogFace.eyes.closed.x, y - frogFace.eyes.closed.y,
+        x - frogFace.eyes.closed.length, y - frogFace.eyes.closed.y); 
      // Closed right eye
-    line(x + frogFace.eyes.closed.offsetLength, y - frogFace.eyes.closed.offset,
-        x + frogFace.eyes.closed.offset, y - frogFace.eyes.closed.offset);
+    line(x + frogFace.eyes.closed.length, y - frogFace.eyes.closed.y,
+        x + frogFace.eyes.closed.x, y - frogFace.eyes.closed.y);
     pop();
 }
 
@@ -664,7 +654,7 @@ function drawSmileInst(x, y) {
     noFill();
     stroke(frogFace.features.r, frogFace.features.g, frogFace.features.b);
     strokeWeight(frogFace.features.strokeWeight);
-    arc(x, y - frogFace.mouth.smile.offset.y, frogFace.mouth.smile.w, frogFace.mouth.smile.h,
+    arc(x, y - frogFace.mouth.smile.y, frogFace.mouth.smile.w, frogFace.mouth.smile.h,
         frogFace.mouth.smile.startAngle, frogFace.mouth.smile.endAngle);
     pop();
 }        
@@ -676,9 +666,9 @@ function drawZzzInst(x, y) {
     push();
     fill(frogFace.features.r, frogFace.features.g, frogFace.features.b);
     textSize(20);
-    text('z', x + zzz.offset.x1, y - zzz.offset.y1);
-    text('z', x + zzz.offset.x2, y - zzz.offset.y2);
-    text('z', x - zzz.offset.x3, y - zzz.offset.y3);
+    text('z', x + zzz.x1, y - zzz.y1);
+    text('z', x + zzz.x2, y - zzz.y2);
+    text('z', x - zzz.x3, y - zzz.y3);
     pop();
 }
 
@@ -815,13 +805,15 @@ function drawFrog() {
     line(frog.tongue.x, frog.tongue.y, frog.body.x, frog.body.y);
     pop();
 
-    // Draw the frog's body
+    // Draw the frog's body (back of head)
     push();
     fill(frog.body.fill.r, frog.body.fill.g, frog.body.fill.b);
     noStroke();
-    ellipse(frog.body.x, frog.body.y, frog.body.w, frog.body.h );
-    ellipse(frog.body.x - frog.body.offset.x, frog.body.y - frog.body.offset.y, frog.body.w * frog.body.sizeFactor); // left eye
-    ellipse(frog.body.x + frog.body.offset.x, frog.body.y - frog.body.offset.y, frog.body.w * frog.body.sizeFactor); // right eye
+    // Main part of head
+    ellipse(frog.body.x, frog.body.y, frog.body.w, frog.body.h);
+    // Parts behind eyes
+    ellipse(frog.body.x - frog.body.behindEyes.x, frog.body.y - frog.body.behindEyes.y, frog.body.w * frog.body.sizeFactor); // left eye
+    ellipse(frog.body.x + frog.body.behindEyes.x, frog.body.y - frog.body.behindEyes.y, frog.body.w * frog.body.sizeFactor); // right eye
     pop();
 }
 
