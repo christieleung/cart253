@@ -1062,6 +1062,8 @@ function keyPressed(event) {
     } 
     else if (state === "sleep") {
         state = "title";
+        // Resets the progress bar
+        fliesCaught = 0;
     }    
     }
 }
