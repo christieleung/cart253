@@ -865,20 +865,31 @@ function checkTongueFlyOverlap() {
     // Get distance from tongue to fly
     const d = dist(frog.tongue.x, frog.tongue.y, fly.x, fly.y);
     // Check if it's an overlap
-    const eaten = (d < frog.tongue.size / 2 + fly.size / 2);
-    if (eaten) {
-        // Reset the fly
-        resetFly();
-        // Bring back the tongue
-        frog.tongue.state = "inbound";
+    const overlapped = (d < frog.tongue.size / 2 + fly.size / 2);
+    if (overlapped) {
         
-        // Increase the score with each fly caught, cap at max number of flies
-        if (fliesCaught < maxFlies) {
-            fliesCaught++;
+        if (fly.inBubble) {
+            // Pop the bubble
+            fly.inBubble = false;
+            
+            // Bring back the tongue
+            frog.tongue.state = "inbound";
         }
-        // If max flies are caught, change from game state to sleeping state
-        if (fliesCaught >= maxFlies) {
-            state = "sleep";
+        else {
+            // Reset the fly
+            resetFly();
+            
+            // Bring back the tongue
+            frog.tongue.state = "inbound";
+            
+            // Increase the score with each fly caught, cap at max number of flies
+            if (fliesCaught < maxFlies) {
+                fliesCaught++;
+            }
+            // If max flies are caught, change from game state to sleeping state
+            if (fliesCaught >= maxFlies) {
+                state = "sleep";
+            }
         }
     }
 }
