@@ -271,13 +271,13 @@ const tinyFly = {
 }
 
 // Position of the 'zzz' above sleeping frog head on the instructions screen
-const zzz = {
+const tinyZzz = {
     x1: 3,
     x2: 20,
     x3: 5,
-    y1: 55,
-    y2: 65,
-    y3: 75
+    y1: 50,
+    y2: 60,
+    y3: 70
 }
 
 // Rounded box position, size, corner radius, and colour on the instructions screen
@@ -295,13 +295,20 @@ const instructionsBox = {
     }
 }
 
-// Progress bar position, size, and corner radius
+// Progress bar position, size, corner radius, and colour
 const progressBar = {
     x: 30,
     y: 30,
     w: 200,
     h: 25,
-    corner: 12
+    corner: 12,
+    // White with transparency
+    fill: {
+        r: 255,
+        g: 255,
+        b: 255,
+        transparency: 150
+    }
 }
 
 // Sleeping frog with a head, hands, and face on the ending (sleeping) screen
@@ -359,6 +366,14 @@ const sleepingFrog = {
         h: 250,
         startAngle: 7 * Math.PI / 5.9,
         endAngle: 11 * Math.PI / 6.05
+    },
+    zzz: {
+        x1: 15,
+        x2: 40,
+        x3: 68,
+        y1: 78,
+        y2: 91,
+        y3: 82
     }
 }
 
@@ -366,7 +381,7 @@ const sleepingFrog = {
 let actionVerb = "press space";
 
 // Variable that allows for different states
-let state = "game"; // remember to change back to "title" after!
+let state = "sleep"; // remember to change back to "title" after!
 
 // Variables that control the rotation of the lily pads
 // Set default angular position to 0 for no rotation at start
@@ -684,9 +699,9 @@ function drawZzzInst(x, y) {
     push();
     fill(frogFace.features.r, frogFace.features.g, frogFace.features.b);
     textSize(20);
-    text('z', x + zzz.x1, y - zzz.y1);
-    text('z', x + zzz.x2, y - zzz.y2);
-    text('z', x - zzz.x3, y - zzz.y3);
+    text('z', x + tinyZzz.x1, y - tinyZzz.y1);
+    text('z', x + tinyZzz.x2, y - tinyZzz.y2);
+    text('z', x - tinyZzz.x3, y - tinyZzz.y3);
     pop();
 }
 
@@ -904,17 +919,18 @@ function drawProgressBar() {
     const progress = constrain(fliesCaught / maxFlies, 0, 1);
     // Converts that calculation into a filled width on the progress bar
     const filled = progressBar.w * progress;
-   
+    
     // Empty Bar
     push();
     noStroke();
-    fill(255, 255, 255, 150);
+    fill(progressBar.fill.r, progressBar.fill.b, progressBar.fill.g, progressBar.fill.transparency);
     rect(progressBar.x, progressBar.y, progressBar.w, progressBar.h, progressBar.corner);
     pop();
   
     // Filled Bar
     push();
     noStroke();
+    // Same colour as lily pad star
     fill(lilyPad.star.fill.r, lilyPad.star.fill.g, lilyPad.star.fill.b);
     rect(progressBar.x, progressBar.y,filled, progressBar.h, progressBar.corner);
     pop();
@@ -926,6 +942,17 @@ function drawProgressBar() {
 function sleep() {
     background(sleepingFrog.bgFill.r, sleepingFrog.bgFill.g, sleepingFrog.bgFill.b);
     drawSleepingFrog(width / 2, height / 2);
+    drawZzz(width / 2, height / 2);
+    
+    // The instruction to play again
+    push();
+    textSize(18);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    fill(40, 80, 30);
+    // emoticons copied from: https://emojicombos.com/star
+    text(`⋆˚꩜｡ ${actionVerb} to play again! ⋆˙⟡`, width / 2, 3 * height / 3.5);
+    pop();
 }
 
 /**
@@ -1001,6 +1028,20 @@ function drawBlanket(x, y) {
 }
 
 /**
+ * Draws the Zzz above the head on the ending screen (sleeping)
+ */
+function drawZzz(x, y) {
+    push();
+    fill(frogFace.features.r, frogFace.features.g, frogFace.features.b);
+    textSize(30);
+    text('z', x + sleepingFrog.zzz.x1, y - sleepingFrog.zzz.y1);
+    text('Z', x + sleepingFrog.zzz.x2, y - sleepingFrog.zzz.y2);
+    text('z', x + sleepingFrog.zzz.x3, y - sleepingFrog.zzz.y3);
+    pop();
+}
+
+
+/**
  * Changes the state (title, instructions, game) when the space bar is pressed
  * Also launches the tongue (if it's not launched yet)
  */
@@ -1019,6 +1060,9 @@ function keyPressed(event) {
             frog.tongue.state = "outbound";
         }
     } 
+    else if (state === "sleep") {
+        state = "title";
+    }    
     }
 }
 
