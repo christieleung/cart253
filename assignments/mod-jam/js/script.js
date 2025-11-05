@@ -114,6 +114,16 @@ const keyCode = {
     space: 32
 }
 
+// Background colour on the title and instructions screen
+const bg = {
+    // Muted light blue
+    fill: {
+        r: 140,
+        g: 190,
+        b: 214
+    }
+}
+
 // Lily pads on the title screen
 const lilyPad = {
     // Full lily pad position, size, and speed
@@ -315,7 +325,11 @@ const progressBar = {
 let sky = {
     fill: {
         // Light blue
-        start: "#87ceeb",
+        start: {
+            r: 140,
+            g: 190,
+            b: 214
+        },
         // Dark blue
         end: {
             r: 43,
@@ -444,7 +458,7 @@ const hungryFrog = {
 let actionVerb = "press space";
 
 // Variable that allows for different states
-let state = "hungry"; // remember to change back to "title" after!
+let state = "title"; // remember to change back to "title" after!
 
 // Variables that control the rotation of the lily pads
 // Set default angular position to 0 for no rotation at start
@@ -492,7 +506,7 @@ function draw() {
  */
 function title() {
     // A light blue
-    background("#87ceeb");
+    background(bg.fill.r, bg.fill.g, bg.fill.b);
     
     // Draws vertical stripes in the background
     drawStripes();
@@ -585,7 +599,7 @@ function drawStripes() {
  * Displays the instructions screen
 **/
 function instructions() {
-    background("#87ceeb");
+    background(bg.fill.r, bg.fill.g, bg.fill.b);
 
     // Instruction box background
     push();
@@ -787,7 +801,7 @@ function game() {
     // Constrained to make sure it doesn't go above or beyond specifiec colour range
     let amt = constrain(elapsed / sky.timer.end, 0, 1);
     // Blend the two sky colours
-    let gameSky = lerpColor(color(sky.fill.start), color(sky.fill.end.r,sky.fill.end.g, sky.fill.end.b), amt);
+    let gameSky = lerpColor(color(sky.fill.start.r, sky.fill.start.g, sky.fill.start.b), color(sky.fill.end.r,sky.fill.end.g, sky.fill.end.b), amt);
     background(gameSky);
         
     moveFly();
