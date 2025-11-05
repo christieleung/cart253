@@ -330,17 +330,9 @@ let sky = {
     }
 }
 
-// Sleeping frog with a head, hands, and face on the ending (sleeping) screen
-// Also has a pillow and blanket
-// Each element has specific shape parameters (position, size, angle) and colours
+// Frog body position and size on both ending screens (sleeping and hungry)
 // Note: position values are offset from (x, y)
-const sleepingFrog = {
-    // Pink background and blanket
-    bgFill: {
-        r: 255,
-        g: 192,
-        b: 203
-    },
+const endingFrog = {
     head: {
         main: {
             w: 175,
@@ -353,11 +345,29 @@ const sleepingFrog = {
         }
     },
     hands: {
-        x: 80,
-        y: 50,
+        sleeping: {
+            x: 80,
+            y: 50,
+        },
+        hungry: {
+            x: 50,
+            y: 50
+        },
         w: 50,
         h: 30
-    },  
+    }
+}    
+
+// Sleeping frog face, pillow, and blanket on the ending (sleeping) screen
+// Each element has specific shape parameters (position, size, angle) and colours
+// Note: position values are offset from (x, y)
+const sleepingFrog = {
+    // Pink background and blanket
+    bgFill: {
+        r: 255,
+        g: 192,
+        b: 203
+    },
     eyes: {
         x1: 55,
         x2: 40,
@@ -367,17 +377,17 @@ const sleepingFrog = {
         y: 10
     },
     pillow: {
+        x: 112,
+        y: 100,
+        w: 220,
+        h: 125,
+        corner: 20,
         // White
         fill: {
             r: 255,
             g: 255,
             b: 255
-        },
-        x: 112,
-        y: 100,
-        w: 220,
-        h: 125,
-        corner: 20
+        }
     },
     blanket: {
         y: 170,
@@ -396,11 +406,45 @@ const sleepingFrog = {
     }
 }
 
+// Hungry frog face and lily pad stuffie
+// Each element has specific shape parameters (position, size) and colours
+// Note: position values are offset from (x, y)
+const hungryFrog = {
+    eyes: {
+        x: 45,
+        y: 50,
+        size: 15
+    },
+    tears: {
+        x: 53,
+        y: 43,
+        w: 12,
+        h: 7,
+        // Light blue
+        fill: {
+            r: 135,
+            g: 193,
+            b: 255
+        }
+    },
+    stuffie: {
+        y: 65,
+        w: 100,
+        h: 100,
+        // Green
+        fill: {
+            r: 0,
+            g: 128,
+            b: 0
+        }
+    }
+}
+
 // Variable that holds the appropriate action verb based on what the user needs to do
 let actionVerb = "press space";
 
 // Variable that allows for different states
-let state = "game"; // remember to change back to "title" after!
+let state = "hungry"; // remember to change back to "title" after!
 
 // Variables that control the rotation of the lily pads
 // Set default angular position to 0 for no rotation at start
@@ -985,7 +1029,7 @@ function sleep() {
     textSize(18);
     textStyle(BOLD);
     textAlign(CENTER, CENTER);
-    fill(40, 80, 30);
+    fill(frog.body.fill.r, frog.body.fill.g, frog.body.fill.b);
     // emoticons copied from: https://emojicombos.com/star
     text(`⋆˚꩜｡ ${actionVerb} to play again! ⋆˙⟡`, width / 2, 3 * height / 3.5);
     pop();
@@ -1021,12 +1065,12 @@ function drawSleepingFrogBody(x, y) {
     noStroke();
     fill(frog.body.fill.r, frog.body.fill.g, frog.body.fill.b);
     // Head
-    ellipse(x, y, sleepingFrog.head.main.w, sleepingFrog.head.main.h);
-    ellipse(x - sleepingFrog.head.behindEyes.x, y - sleepingFrog.head.behindEyes.y, sleepingFrog.head.behindEyes.size);
-    ellipse(x + sleepingFrog.head.behindEyes.x, y - sleepingFrog.head.behindEyes.y, sleepingFrog.head.behindEyes.size);
+    ellipse(x, y, endingFrog.head.main.w, endingFrog.head.main.h);
+    ellipse(x - endingFrog.head.behindEyes.x, y - endingFrog.head.behindEyes.y, endingFrog.head.behindEyes.size);
+    ellipse(x + endingFrog.head.behindEyes.x, y - endingFrog.head.behindEyes.y, endingFrog.head.behindEyes.size);
     // Hands
-    ellipse(x - sleepingFrog.hands.x, y + sleepingFrog.hands.y, sleepingFrog.hands.w, sleepingFrog.hands.h);
-    ellipse(x + sleepingFrog.hands.x, y + sleepingFrog.hands.y, sleepingFrog.hands.w, sleepingFrog.hands.h);
+    ellipse(x - endingFrog.hands.sleeping.x, y + endingFrog.hands.sleeping.y, endingFrog.hands.w, endingFrog.hands.h);
+    ellipse(x + endingFrog.hands.sleeping.x, y + endingFrog.hands.sleeping.y, endingFrog.hands.w, endingFrog.hands.h);
     pop();
 }
 
@@ -1081,20 +1125,104 @@ function drawZzz(x, y) {
  */
 function hungry() {
     background("#2B2C5A");
-    
+    drawHungryFrog(width / 2, height / 2);
+
     // The instruction to play again
     push();
     textSize(18);
     textStyle(BOLD);
     textAlign(CENTER, CENTER);
-    fill(40, 80, 30);
+    fill(frog.body.fill.r, frog.body.fill.g, frog.body.fill.b);
     // emoticons copied from: https://emojicombos.com/star
     text(`⋆˚꩜｡ ${actionVerb} to play again! ⋆˙⟡`, width / 2, 3 * height / 3.5);
     pop();
 }
 
 /**
- * Changes the state (title, instructions, game) when the space bar is pressed
+ * Draws the hungry frog crying and hugging a small lily pad stuffie for comfort
+ * on the losing ending screen (hungry)
+ */
+function drawHungryFrog(x, y) {
+    drawHungryFrogHead(x, y);
+    drawHungryFrogFace(x, y);
+    drawTears(x, y);
+    drawLilyPadStuffie(x, y);
+    drawHungryFrogHands(x, y);
+}
+
+/**
+ * Draws the frog head on the ending screen (hungry) 
+ */
+function drawHungryFrogHead(x, y) {
+    push();
+    noStroke();
+    fill(frog.body.fill.r, frog.body.fill.g, frog.body.fill.b);
+    // Head
+    ellipse(x, y, endingFrog.head.main.w, endingFrog.head.main.h);
+    ellipse(x - endingFrog.head.behindEyes.x, y - endingFrog.head.behindEyes.y, endingFrog.head.behindEyes.size);
+    ellipse(x + endingFrog.head.behindEyes.x, y - endingFrog.head.behindEyes.y, endingFrog.head.behindEyes.size);
+}
+
+/**
+ * Draws the frog hands on the ending screen (hungry) 
+ */
+function drawHungryFrogHands(x, y) {
+    push();
+    noStroke();
+    fill(frog.body.fill.r, frog.body.fill.g, frog.body.fill.b);
+    ellipse(x - endingFrog.hands.hungry.x, y + endingFrog.hands.hungry.y, endingFrog.hands.w, endingFrog.hands.h);
+    ellipse(x + endingFrog.hands.hungry.x, y + endingFrog.hands.hungry.y, endingFrog.hands.w, endingFrog.hands.h);
+    pop();
+}
+
+/**
+ * Draws the eyes and frown on the ending screen (hungry) 
+ */
+function drawHungryFrogFace(x, y) {
+    // Eyes
+    push();
+    noStroke();
+    fill(frogFace.features.r, frogFace.features.g, frogFace.features.b);
+    ellipse(x - hungryFrog.eyes.x, y - hungryFrog.eyes.y, hungryFrog.eyes.size);
+    ellipse(x + hungryFrog.eyes.x, y - hungryFrog.eyes.y, hungryFrog.eyes.size);
+    pop();
+    
+    // Mouth
+    push();
+    stroke(frogFace.features.r, frogFace.features.g, frogFace.features.b);
+    noFill();
+    strokeWeight(frogFace.features.strokeWeight);
+     // Frown (uses same parameter values as frog on instructions screen except for y offset)
+    arc(x, y, frogFace.mouth.frown.w, frogFace.mouth.frown.h,
+        frogFace.mouth.frown.startAngle, frogFace.mouth.frown.endAngle);
+    pop();
+}
+
+/**
+ * Draws the tears on the hungry crying frog face on the ending screen (hungry)
+ */
+function drawTears(x, y) {
+    push();
+    noStroke();
+    fill(hungryFrog.tears.fill.r, hungryFrog.tears.fill.g, hungryFrog.tears.fill.b);
+    ellipse(x - hungryFrog.tears.x, y - hungryFrog.tears.y, hungryFrog.tears.w, hungryFrog.tears.h);
+    ellipse(x + hungryFrog.tears.x, y - hungryFrog.tears.y, hungryFrog.tears.w, hungryFrog.tears.h);
+    pop();
+}
+
+/**
+ * Draws the small lily pad stuffie on the ending screen (hungry)
+ */
+function drawLilyPadStuffie(x, y) {
+    push();
+    noStroke();
+    fill(0, 128, 0);
+    arc(x, y + hungryFrog.stuffie.y, hungryFrog.stuffie.w, hungryFrog.stuffie.h, lilyPad.notch.startAngle, lilyPad.notch.endAngle);
+    pop();
+}
+
+/**
+ * Changes the state (title, instructions, game, ending) when the space bar is pressed
  * Also launches the tongue (if it's not launched yet)
  */
 function keyPressed(event) {
