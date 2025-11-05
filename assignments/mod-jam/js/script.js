@@ -295,7 +295,7 @@ const instructionsBox = {
     }
 }
 
-// Progress bar position, size, corner radius, and colour
+// Progress bar position, size, corner radius, and colour in the game state
 const progressBar = {
     x: 30,
     y: 30,
@@ -308,6 +308,25 @@ const progressBar = {
         g: 255,
         b: 255,
         transparency: 150
+    }
+}
+
+// Sky fill and timer settings in the game state
+let sky = {
+    fill: {
+        // Light blue
+        start: "#87ceeb",
+        // Dark blue
+        end: {
+            r: 43,
+            g: 44,
+            b: 90
+        }
+    },
+    timer: {
+        // 30 second timer (in milliseconds)
+        start: 0,
+        end: 30000
     }
 }
 
@@ -381,7 +400,7 @@ const sleepingFrog = {
 let actionVerb = "press space";
 
 // Variable that allows for different states
-let state = "sleep"; // remember to change back to "title" after!
+let state = "game"; // remember to change back to "title" after!
 
 // Variables that control the rotation of the lily pads
 // Set default angular position to 0 for no rotation at start
@@ -398,7 +417,7 @@ const maxFlies = 10;
  */
 function setup() {
     createCanvas(640, 480);
-
+    
     // Give the fly its first random position
     resetFly();
 }
@@ -709,7 +728,15 @@ function drawZzzInst(x, y) {
  * Runs the frog game
 **/
 function game() {
-    background("#87ceeb");
+    // Measures how much time has passed since timer started
+    let elapsed = millis() - sky.timer.start;
+    // Amount to interpolate between the two sky colours
+    // Constrained to make sure it doesn't go above or beyond specifiec colour range
+    let amt = constrain(elapsed / sky.timer.end, 0, 1);
+    // Blend the two sky colours
+    let gameSky = lerpColor(color(sky.fill.start), color(sky.fill.end.r,sky.fill.end.g, sky.fill.end.b), amt);
+    background(gameSky);
+        
     moveFly();
     drawFly();
     moveFrog();
@@ -1040,7 +1067,6 @@ function drawZzz(x, y) {
     pop();
 }
 
-
 /**
  * Changes the state (title, instructions, game) when the space bar is pressed
  * Also launches the tongue (if it's not launched yet)
@@ -1049,22 +1075,25 @@ function keyPressed(event) {
     // Checks if the space bar is pressed
     if (event.keyCode === keyCode.space) {
         // Handles the different states
-    if (state === "title") {
-        state = "instructions";
-    }
-    else if (state === "instructions") {
-        state = "game";
-    }
-    else if (state === "game") {
-        if (frog.tongue.state === "idle") {
-            frog.tongue.state = "outbound";
+        if (state === "title") {
+            state = "instructions";
         }
-    } 
-    else if (state === "sleep") {
-        state = "title";
-        // Resets the progress bar
-        fliesCaught = 0;
-    }    
+        else if (state === "instructions") {
+            state = "game";
+            // Starts the sky colour change
+            sky.timer.start = millis(); 
+        
+        }
+        else if (state === "game") {
+            if (frog.tongue.state === "idle") {
+                frog.tongue.state = "outbound";
+            }
+        } 
+        else if (state === "sleep") {
+            state = "title";
+            // Resets the progress bar
+            fliesCaught = 0;
+        }    
     }
 }
 
