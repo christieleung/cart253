@@ -438,6 +438,9 @@ function draw() {
     else if (state === "sleep") {
         sleep();
     }
+    else if (state === "hungry") {
+        hungry();
+    }
 }
 
 /**
@@ -730,6 +733,12 @@ function drawZzzInst(x, y) {
 function game() {
     // Measures how much time has passed since timer started
     let elapsed = millis() - sky.timer.start;
+    // If the timer runs out before the needed number of flies have been caught,
+    // then the game ends and goes to the losing (hungry) ending screen
+    if (elapsed > sky.timer.end && fliesCaught < maxFlies) {
+        state = "hungry";
+        return;
+    }
     // Amount to interpolate between the two sky colours
     // Constrained to make sure it doesn't go above or beyond specifiec colour range
     let amt = constrain(elapsed / sky.timer.end, 0, 1);
@@ -964,7 +973,7 @@ function drawProgressBar() {
 }    
 
 /**
- * Displays the ending screen (sleeping)
+ * Displays the winning ending screen (sleeping)
  */
 function sleep() {
     background(sleepingFrog.bgFill.r, sleepingFrog.bgFill.g, sleepingFrog.bgFill.b);
@@ -1068,6 +1077,23 @@ function drawZzz(x, y) {
 }
 
 /**
+ * Displays the losing ending screen (hungry)
+ */
+function hungry() {
+    background("#2B2C5A");
+    
+    // The instruction to play again
+    push();
+    textSize(18);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    fill(40, 80, 30);
+    // emoticons copied from: https://emojicombos.com/star
+    text(`⋆˚꩜｡ ${actionVerb} to play again! ⋆˙⟡`, width / 2, 3 * height / 3.5);
+    pop();
+}
+
+/**
  * Changes the state (title, instructions, game) when the space bar is pressed
  * Also launches the tongue (if it's not launched yet)
  */
@@ -1080,7 +1106,7 @@ function keyPressed(event) {
         }
         else if (state === "instructions") {
             state = "game";
-            // Starts the sky colour change
+            // Starts the sky colour change (game timer)
             sky.timer.start = millis(); 
         
         }
@@ -1089,7 +1115,8 @@ function keyPressed(event) {
                 frog.tongue.state = "outbound";
             }
         } 
-        else if (state === "sleep") {
+        // For both ending screens (winning (sleep) or losing (hungry)
+        else if (state === "sleep" || state === "hungry") {
             state = "title";
             // Resets the progress bar
             fliesCaught = 0;
