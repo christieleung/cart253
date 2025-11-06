@@ -15,7 +15,7 @@
 
 "use strict";
 
-// Our frog
+// Our Frog in the game state
 const frog = {
     // The frog's body has a position, size, speed, and colour
     body: {
@@ -55,7 +55,7 @@ const frog = {
     }
 };
 
-// Our fly with wings
+// Our fly with wings in the game state
 // Has a position, size, and colour
 const fly = {
     x: 0,
@@ -78,7 +78,7 @@ const fly = {
     }
 };
 
-// Default fly movement
+// Default fly movement for the game state
 // Has a speed, angle, and amplitude (input into sine function) 
 let flyMovement = {
     speed: 2,
@@ -87,7 +87,7 @@ let flyMovement = {
     midline: 200
 }
 
-// Fly wing length calculation
+// Fly wing length calculation for the same state
 const wingLength = fly.size * fly.wing.sizeFactor; 
 
 // Bubbles (that some flies are randomly trapped in) in the game state
@@ -104,7 +104,7 @@ const bubble = {
     sizeFactor: 3.1
 }
 
-// Bubble size calculation
+// Bubble size calculation for the game state
 const bubbleSize = fly.size * bubble.sizeFactor
 
 // Key codes for the left arrow, right arrow, and space bar
@@ -277,6 +277,11 @@ const tinyFly = {
         y1: 110,
         y2: 113,
         strokeWeight: 1.5
+    },
+    // Position of the fly trapped in a bubble and its bubble
+    bubble: {
+        x: 63,
+        y: 30
     }
 }
 
@@ -297,11 +302,12 @@ const instructionsBox = {
     w: 540,
     h: 160,
     corner: 15,
-    // White (for now)
+    // White with transparency
     fill: {
         r: 255,
         g: 255,
-        b: 255
+        b: 255,
+        transparency: 150
     }
 }
 
@@ -378,9 +384,9 @@ const endingFrog = {
 const sleepingFrog = {
     // Pink background and blanket
     bgFill: {
-        r: 255,
-        g: 192,
-        b: 203
+        r: 232,
+        g: 187,
+        b: 199
     },
     eyes: {
         x1: 55,
@@ -458,7 +464,7 @@ const hungryFrog = {
 let actionVerb = "press space";
 
 // Variable that allows for different states
-let state = "title"; // remember to change back to "title" after!
+let state = "instructions"; // remember to change back to "title" after!
 
 // Variables that control the rotation of the lily pads
 // Set default angular position to 0 for no rotation at start
@@ -588,10 +594,6 @@ function drawStripes() {
     for (let x = 0; x < width; x += stripe.spacing) {
         line(x, 0, x, height);
     }
-    // // Diagonal stripes
-    //    for (let x = 0; x < width + height; x += stripe.spacing) {
-    //     line(x, 0, x - height, height);
-    // }
     pop();
 }
 
@@ -603,7 +605,7 @@ function instructions() {
 
     // Instruction box background
     push();
-    fill(instructionsBox.fill.r, instructionsBox.fill.g, instructionsBox.fill.b);
+    fill(instructionsBox.fill.r, instructionsBox.fill.g, instructionsBox.fill.b, instructionsBox.fill.transparency);
     noStroke();
     rect(instructionsBox.x, instructionsBox.y, instructionsBox.w, instructionsBox.h, instructionsBox.corner);
     pop();
@@ -614,10 +616,10 @@ function instructions() {
     textStyle(BOLD);
     textAlign(CENTER, CENTER);
     fill(40, 80, 30);
-    text('catch 10 flies to help the hungry frog fall asleep!', width / 2, height / 2);
-    text('move the frog using the left and right arrow keys', width / 2, height / 1.8);
-    text('launch the tongue with the space bar', width / 2, height / 1.64);
-    text('...', width / 2, height / 1.5);
+    text('catch 10 flies to help the frog fall asleep before night falls!', width / 2, height / 1.95);
+    text('watch out for the fly bubbles! (double hit to catch)', width / 2, height / 1.73);
+    text('move the frog using the left and right arrow keys', width / 2, height / 1.55);
+    text('launch the tongue with the space bar', width / 2, height / 1.41);
     // The instruction to go to the game screen
     textSize(18);
     text(`⋆˚꩜｡ ${actionVerb} to play! ⋆˙⟡`, width / 2, 3 * height / 3.5);
@@ -668,7 +670,8 @@ function drawFrogFace(x, y, mood) {
         // Tongue launched, a tiny fly with wings nearby
         drawTongueInst(x, y);
         drawTinyFlyInst(x, y);
-        drawTinyFlyWingsInst(x, y);
+        drawTinyFlyInst(x + tinyFly.bubble.x, y + tinyFly.bubble.y);
+        drawBubbleInst(x + tinyFly.bubble.x, y + tinyFly.bubble.y);
     }
     
     if (mood === "sleeping") {
@@ -716,9 +719,17 @@ function drawTongueInst(x, y) {
 }
 
 /**
- * Draws the tiny fly body for the catching mood
+ * Draws the tiny fly for the catching mood
  */
 function drawTinyFlyInst(x, y) { 
+    drawTinyFlyBody(x, y);
+    drawTinyFlyWingsInst(x, y);
+}
+
+/**
+ * Draws the tiny fly body for the catching mood
+ */
+function drawTinyFlyBody(x, y) {
     push();
     fill(fly.fill.r, fly.fill.g, fly.fill.b);
     noStroke();
@@ -739,6 +750,15 @@ function drawTinyFlyWingsInst(x, y) {
     // Right wing
     line(x - tinyFly.wings.x1, y - tinyFly.wings.y1,
         x - tinyFly.wings.rightx2, y - tinyFly.wings.y2);  
+    pop();
+}
+
+function drawBubbleInst(x, y) {
+    push();
+    fill(bubble.fill.r, bubble.fill.g, bubble.fill.b, bubble.fill.transparency);
+    stroke(bubble.fill.r, bubble.fill.g, bubble.fill.b);
+    strokeWeight(bubble.strokeWeight);
+    ellipse(x - tinyFly.body.x, y - tinyFly.body.y, 21);
     pop();
 }
 
@@ -998,6 +1018,7 @@ function checkTongueFlyOverlap() {
             // If max flies are caught, change from game state to sleeping state
             if (fliesCaught >= maxFlies) {
                 state = "sleep";
+                return;
             }
         }
     }
@@ -1037,6 +1058,15 @@ function sleep() {
     background(sleepingFrog.bgFill.r, sleepingFrog.bgFill.g, sleepingFrog.bgFill.b);
     drawSleepingFrog(width / 2, height / 2);
     drawZzz(width / 2, height / 2);
+    
+    // Winning message
+    push();
+    textSize(18);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    fill(frog.body.fill.r, frog.body.fill.g, frog.body.fill.b);
+    text(`shhhh! frog is sleeping`, width / 2, height / 6.5);
+    pop();
     
     // The instruction to play again
     push();
@@ -1140,6 +1170,16 @@ function drawZzz(x, y) {
 function hungry() {
     background("#2B2C5A");
     drawHungryFrog(width / 2, height / 2);
+    
+    // Losing message
+    push();
+    textSize(18);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    fill(frog.body.fill.r, frog.body.fill.g, frog.body.fill.b);
+    text(`frog is still hungry and couldn't fall asleep`, width / 2, height / 6.5);
+    text(`try again tomorrow?`, width / 2, height / 4.8);
+    pop();
 
     // The instruction to play again
     push();
