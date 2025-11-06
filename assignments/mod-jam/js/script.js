@@ -464,11 +464,19 @@ const hungryFrog = {
     }
 }
 
+// A place to store our sound effects
+const sounds = {
+    ac: undefined,
+    bubble: undefined,
+    sparkle: undefined,
+    night: undefined,
+};
+
 // Variable that holds the appropriate action verb based on what the user needs to do
 let actionVerb = "press space";
 
 // Variable that allows for different states (title, instructions, game, sleep, hungry)
-let state = "instructions"; // remember to change back to "title" after!
+let state = "title";
 
 // Variables that control the rotation of the lily pads
 // Set default angular position to 0 for no rotation at start
@@ -481,6 +489,21 @@ let fliesCaught = 0;
 const maxFlies = 10;
 
 /**
+ * Load our sounds
+ */
+function preload() {
+    // MP3s
+    // From Animal Crossing, downloaded from: https://www.youtube.com/watch?v=KnT15ubTRi4
+    sounds.ac = loadSound("assets/sounds/animal-crossing-city-folk-1-AM.mp3");
+    // From Pixabay: https://pixabay.com/sound-effects/sound-effect-twinklesparkle-115095/
+    sounds.sparkle = loadSound("assets/sounds/sparkle.mp3");
+    // From Pixabay: https://pixabay.com/sound-effects/bubble-pop-06-351337/
+    sounds.bubble = loadSound("assets/sounds/bubble-pop.mp3");
+    // From Pixabay: https://pixabay.com/sound-effects/night-ambience-17064/
+    sounds.night = loadSound("assets/sounds/night-ambience.mp3");
+}
+
+/**
  * Creates the canvas and initializes the fly
  */
 function setup() {
@@ -488,6 +511,11 @@ function setup() {
     
     // Give the fly its first random position
     resetFly();
+    
+    // Play Animal Crossing music in the background
+    sounds.ac.loop();
+    // Set volume to 25%
+    sounds.ac.setVolume(0.25);
 }
 
 /**
@@ -1007,11 +1035,20 @@ function checkTongueFlyOverlap() {
         if (fly.inBubble) {
             // Pop the bubble
             fly.inBubble = false;
+            // Play bubble pop sound effect
+            sounds.bubble.play();
+            // Set volume to 10%
+            sounds.bubble.setVolume(0.1);
             
             // Bring back the tongue
             frog.tongue.state = "inbound";
         }
         else {
+            // Play sparkle sound effect when a fly is eaten
+            sounds.sparkle.play();
+            // Set volume to 15%
+            sounds.sparkle.setVolume(0.15);
+            
             // Reset the fly
             resetFly();
             
@@ -1197,6 +1234,16 @@ function hungry() {
     // emoticons copied from: https://emojicombos.com/star
     text(`⋆˚꩜｡ ${actionVerb} to play again! ⋆˙⟡`, width / 2, 3 * height / 3.5);
     pop();
+    
+    // Play night ambience sound only in the losing ending screen (hungry)
+    if (!sounds.night.isPlaying()) {
+        // Stop Animal Crossing music
+        sounds.ac.stop(); 
+        // Play night ambience sound
+        sounds.night.loop(); 
+        // Set volume to 80%
+        sounds.night.setVolume(0.8);
+    }    
 }
 
 /**
@@ -1289,6 +1336,8 @@ function drawLilyPadStuffie(x, y) {
 function keyPressed(event) {
     // Checks if the space bar is pressed
     if (event.keyCode === keyCode.space) {
+        // Handles audio
+        userStartAudio();
         // Handles the different states
         if (state === "title") {
             state = "instructions";
@@ -1309,6 +1358,12 @@ function keyPressed(event) {
             state = "title";
             // Resets the progress bar
             fliesCaught = 0;
+            // Stop night ambience and restart Animal Crossing music
+            sounds.night.stop();
+            if (!sounds.ac.isPlaying()) {
+                sounds.ac.loop();
+                sounds.ac.setVolume(0.8);
+            }
         }    
     }
 }
