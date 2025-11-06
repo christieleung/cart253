@@ -1,4 +1,4 @@
-# TITLE OF PROJECT
+# Mod Jam
 
 Christie Leung
 
@@ -6,30 +6,49 @@ Christie Leung
 
 ## Description
 
-This description should help the reader understand what the program is, anything they should know to be able to experience it (controls, special features, etc.), and what the desired user experience is. For example:
+> *goodnight frog* is a cozy game about a frog who can't fall asleep until their belly is full. Help the frog catch 10 flies before night falls so they can have a peaceful sleep! If not, the frog will stay awake and be hungry until the next morning.
 
-> *The Mayor of Clown Town* is a simulator experience that allows the user to control a small town populated entirely by clowns.
+> The experience is controlled via the keyboard, moving the frog using the left and right arrow keys and launching the tongue with the space bar. The space bar also allows the user to change between states. Make sure to hit the flies trapped in bubbles twice to get the catch (the bubble needs to be popped before the fly can be caught)!
 
-> The experience is controlled via the mouse, with left click selecting a clown and bringing up a menu of options such as "slip of banana peel" or "get into impossible capacious clown-car."
+## Modifications
 
-> The project is meant to give the user a sense of what it would be the mayor of a town of clowns, eventually getting the sense that clowns are not taking their civic duties seriously.
+> - Title screen with vertical stripes and rotating lily pads
+> - Instructions screen with frog diagrams
+> - New control system using the keyboard
+> - New fly movement using randomized sine waves
+> - Added catching complexity by trapping some flies in bubbles
+> - Scoring system using a progress bar that fills with each fly caught
+> - Timer shown by the sky changing from light blue to dark blue over 30 seconds (didn't include countdown on screen because it made it feel more stressful than cozy)
+> - Two ending screens: sleeping frog (win) and hungry frog (lose)
+> - Audio effects: background music, sound effects when the fly is caught and the bubble is popped, eerie music for the hungry frog ending
 
-## Screenshot(s)
+## Screenshots
 
-This bit should have some images of the program running so that the reader has a sense of what it looks like. For example:
-
-> ![Image of a clown face](./assets/images/clown.png)
+> ![Image of the title screen](./assets/images/title-screen.png)
+> ![Image of the instructions screen](./assets/images/instructions-screen.png)
+> ![Image of the game screen](./assets/images/catching.png)
+> ![Image of the hungry ending screen](./assets/images/hungry-ending-screen.png)
+> ![Image of the sleeping ending screen](./assets/images/sleeping-ending-screen.png)
 
 ## Attribution
 
-This bit should attribute any code, assets or other elements used taken from other sources. For example:
+> This project uses [p5.js](https://p5js.org) and p5.sound.js
 
-> - This project uses [p5.js](https://p5js.org).
-> - The clown image is a capture of the clown from the Apple emoji character set.
-> - The barking sound effect is "single dog bark 1" by crazymonke9 from freesound.org: https://freesound.org/people/crazymonke9/sounds/418107/
+> Sounds:
+> - The Animal Crossing music is "Animal Crossing City Folk - 1 AM Music", uploaded by John2K7 on YouTube (from the Nintendo game): https://www.youtube.com/watch?v=KnT15ubTRi4 
+> - The sparkle sound effect is "sound effect: twinkle/sparkle" by ShidenBeatsMusic from pixabay.com: https://pixabay.com/sound-effects/sound-effect-twinklesparkle-115095/
+> - The bubble pop sound effect is "bubble pop 06" by Universfield from pixabay.com: https://pixabay.com/sound-effects/bubble-pop-06-351337/ 
+> - The night ambience sound is "night ambience" by cclaretc from pixabay.com: https://pixabay.com/sound-effects/night-ambience-17064/
+
+> Referenced Code:
+> - "frogfrogfrog" by Pippin Barr: https://github.com/pippinbarr/frogfrogfrog/blob/main/js/script.js
+> - Star function from p5.js: https://archive.p5js.org/examples/form-star.html
+> - Sine wave movement from "Wave Movement" by crecord: https://editor.p5js.org/crecord/sketches/ByWfYwbjb
+
+> Other:
+> - Emoticons from: https://emojicombos.com/star
+> - Key codes from: https://www.toptal.com/developers/keycode
 
 ## License
-
-This bit should include the license you want to apply to your work. For example:
 
 > This project is licensed under a Creative Commons Attribution ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.en)) license with the exception of libraries and other components with their own licenses.
