@@ -954,6 +954,7 @@ function resetFly() {
 
 /**
  * Moves the frog using the left and right arrow keys in the game state
+ * Also constrains the frog within the canvas
  */
 function moveFrog() { 
     if (keyIsDown(keyCode.left)) {
@@ -962,6 +963,13 @@ function moveFrog() {
     if (keyIsDown(keyCode.right)) {
         frog.body.x += frog.body.speed;
     }
+    
+    // Prevent the frog from moving off the canvas
+    // Minimum x-position of the frog
+    const leftLimit = frog.body.w * 0.5;
+    // Maximum x-position of the frog
+    const rightLimit = width - frog.body.w * 0.5;
+    frog.body.x = constrain(frog.body.x, leftLimit, rightLimit);
 }
 
 /**
