@@ -24,13 +24,28 @@ function draw() {
     // Draw a series of 50-pixel diameter circles
     // Starting at the top of the canvas
     // And ending at the bottom
-    ellipse(200, 0, 50);
-    ellipse(200, 50, 50);
-    ellipse(200, 100, 50);
-    ellipse(200, 150, 50);
-    ellipse(200, 200, 50);
-    ellipse(200, 250, 50);
-    ellipse(200, 300, 50);
-    ellipse(200, 350, 50);
-    ellipse(200, 400, 50);
+    
+    let x = 200;
+    // let y = 0;
+    let diameter = 50;
+    
+    let numCircles = 9;
+    
+    for (let i = 0; i < numCircles; i++) {
+        // ellipse(x, y, diameter);
+        // y += diameter;
+        
+        // can also be written this way:
+        const y = diameter * i;
+        ellipse(x, y, diameter);
+    }
+
+    // while-loop:
+    // let i = 0;
+    // while (i < numCircles) {
+    //     const y = diameter * i;
+    //     ellipse(x, y, diameter);
+    //     i++;
+    // }
 }
+
