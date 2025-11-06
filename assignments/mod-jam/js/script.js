@@ -1,14 +1,18 @@
 /**
- * Mod Jam
+ * Mod Jam (Goodnight Frog)
  * Christie Leung
  * 
  * A game of catching flies with your frog-tongue
+ * Frog can't fall asleep before its belly is full, help frog catch flies before night falls!
  * 
  * Instructions:
- * - Move the frog with your mouse
- * - Click to launch the tongue
- * - Catch flies
- * 
+ * - Press the space bar to switch between title, instructions, game, and ending screens
+ * - Move the frog with the left and right arrow keys
+ * - Press the space bar to launch the tongue
+ * - Catch 10 flies before night falls (30 second timer)
+ * - Double hit to catch the flies trapped in bubbles (pop the bubble first)
+ * - Have the sound on!
+ *  
  * Made with p5
  * https://p5js.org/
  */
@@ -463,7 +467,7 @@ const hungryFrog = {
 // Variable that holds the appropriate action verb based on what the user needs to do
 let actionVerb = "press space";
 
-// Variable that allows for different states
+// Variable that allows for different states (title, instructions, game, sleep, hungry)
 let state = "instructions"; // remember to change back to "title" after!
 
 // Variables that control the rotation of the lily pads
@@ -471,7 +475,7 @@ let state = "instructions"; // remember to change back to "title" after!
 let lilyPadRotation = 0;
 let lilyPadNotchRotation = 0;
 
-// Variable that keeps track of how many flies have been caught (score)
+// Variable that keeps track of how many flies have been caught
 let fliesCaught = 0;
 // Variable that defines the total number of flies needed to fill the progress bar (10)
 const maxFlies = 10;
@@ -683,7 +687,7 @@ function drawFrogFace(x, y, mood) {
 }
 
 /**
- * Draws the frog eyes for the hungry mood
+ * Draws the frog eyes on the instructions screen (hungry mood)
 **/
 function drawEyesInst(x, y) {
     push();
@@ -695,7 +699,7 @@ function drawEyesInst(x, y) {
 }
        
 /**
- * Draws the frowning mouth for the hungry mood
+ * Draws the frowning mouth on the instructions screen (hungry mood)
  */
 function drawFrownInst(x, y) {
    push();
@@ -708,7 +712,7 @@ function drawFrownInst(x, y) {
 }
     
 /**
- * Draws the tongue for the catching mood
+ * Draws the tongue on the instructions screen (catching mood)
  */
 function drawTongueInst(x, y) {
     push();
@@ -719,7 +723,7 @@ function drawTongueInst(x, y) {
 }
 
 /**
- * Draws the tiny fly for the catching mood
+ * Draws the tiny fly on the instructions screen (catching mood)
  */
 function drawTinyFlyInst(x, y) { 
     drawTinyFlyBody(x, y);
@@ -727,7 +731,7 @@ function drawTinyFlyInst(x, y) {
 }
 
 /**
- * Draws the tiny fly body for the catching mood
+ * Draws the tiny fly body on the instructions screen (catching mood)
  */
 function drawTinyFlyBody(x, y) {
     push();
@@ -738,7 +742,7 @@ function drawTinyFlyBody(x, y) {
 }
 
 /**
- * Draws the tiny fly wings for the catching mood
+ * Draws the tiny fly wings on the instructions screen (catching mood)
  */
 function drawTinyFlyWingsInst(x, y) {
     push();
@@ -753,6 +757,9 @@ function drawTinyFlyWingsInst(x, y) {
     pop();
 }
 
+/**
+ * Draws the bubble around the tiny fly on the instructions screen (catching mood)
+ */
 function drawBubbleInst(x, y) {
     push();
     fill(bubble.fill.r, bubble.fill.g, bubble.fill.b, bubble.fill.transparency);
@@ -763,7 +770,7 @@ function drawBubbleInst(x, y) {
 }
 
 /**
- * Draws the closed eyes for the sleeping mood
+ * Draws the closed eyes on the instructions screen (sleeping mood)
  */
 function drawClosedEyesInst(x, y) {
     push();
@@ -780,7 +787,7 @@ function drawClosedEyesInst(x, y) {
 }
 
 /**
- * Draws the smiling mouth for the sleeping mood
+ * Draws the smiling mouth on the instructions screen (sleeping mood)
  */
 function drawSmileInst(x, y) {
     push();
@@ -793,7 +800,7 @@ function drawSmileInst(x, y) {
 }        
 
 /**
- * Draws the Zzz above the head for the sleeping mood
+ * Draws the Zzz above the head on the instructions screen (sleeping mood)
  */
 function drawZzzInst(x, y) {
     push();
@@ -834,7 +841,7 @@ function game() {
 }
 
 /**
- * Moves the fly horizontally according to its speed and vertically along a sine wave
+ * Moves the fly horizontally according to its speed and vertically along a sine wave 
  * Resets the fly if it gets all the way to the right
  * Referenced code from: https://editor.p5js.org/crecord/sketches/ByWfYwbjb
  */
@@ -886,7 +893,7 @@ function drawFlyWings() {
 }
 
 /**
- * Draws the bubble
+ * Draws the bubble the fly is trapped in in the game state
  */
 function drawBubble() {
     if (fly.inBubble) {
@@ -918,7 +925,7 @@ function resetFly() {
 }
 
 /**
- * Moves the frog to the mouse position on x
+ * Moves the frog using the left and right arrow keys in the game state
  */
 function moveFrog() { 
     if (keyIsDown(keyCode.left)) {
@@ -958,7 +965,7 @@ function moveTongue() {
 }
 
 /**
- * Displays the tongue (tip and line connection) and the frog (body)
+ * Displays the tongue (tip and line connection) and the frog (body) in the game state
  */
 function drawFrog() {
     // Draw the tongue tip
@@ -988,7 +995,7 @@ function drawFrog() {
 }
 
 /**
- * Handles the tongue overlapping the fly
+ * Handles the tongue overlapping the fly in the game state
  */
 function checkTongueFlyOverlap() {
     // Get distance from tongue to fly
@@ -1025,7 +1032,7 @@ function checkTongueFlyOverlap() {
 }
 
 /**
- * Draws the progress bar as a rounded rectangle
+ * Draws the progress bar as a rounded rectangle in the game state
  * Fills with each fly caught
  */
 function drawProgressBar() {
@@ -1193,7 +1200,7 @@ function hungry() {
 }
 
 /**
- * Draws the hungry frog crying and hugging a small lily pad stuffie for comfort
+ * Draws the hungry frog with tears in its eyes, hugging a small lily pad stuffie for comfort
  * on the losing ending screen (hungry)
  */
 function drawHungryFrog(x, y) {
@@ -1324,5 +1331,3 @@ function star(x, y, radius1, radius2, npoints) {
   }
   endShape(CLOSE);
 }
-
-
