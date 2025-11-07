@@ -19,38 +19,40 @@ function setup() {
  * gradually lightening colour
  */
 function draw() {
-    background("pink");
     
-    stroke(0);
-    line(0, 0, 0, height);
+    // Gradient background
+    for (let x = 0; x <= width; x++) {
+        // Darker teal (0, 76, 76) to lighter teal (52, 167, 152)
+        const r = map(x, 0, width, 0, 52);
+        const g = map(x, 0, width, 76, 162);
+        const b = map(x, 0, width, 76, 152);
+        stroke(r, g, b);
+        line(x, 0, x, height);
+    }
+       
+    // Vertical lines
+    let x = 0;
+    let strokeColourX = 0;
     
-    stroke(25);
-    line(50, 0, 50, height);
+    while (x <= width) {
+        stroke(strokeColourX);
+        // x and width have the same value
+        line(x, 0, x, height);
+        
+        strokeColourX += 25;
+        x += 50;
+    }
     
-    stroke(50);
-    line(100, 0, 100, height);
+    // Horizontal lines
+    let y = 0;
+    let strokeColourY = 0;
     
-    stroke(75);
-    line(150, 0, 150, height);
-    
-    stroke(100);
-    line(200, 0, 200, height);
-    
-    stroke(125);
-    line(250, 0, 250, height);
-    
-    stroke(150);
-    line(300, 0, 300, height);
-    
-    stroke(175);
-    line(350, 0, 350, height);
-    
-    stroke(200);
-    line(400, 0, 400, height);
-    
-    stroke(225);
-    line(450, 0, 450, height);
-    
-    stroke(250);
-    line(500, 0, 500, height);
+    while (y <= height) {
+        stroke(strokeColourY);
+        // y and height have the same value
+        line(0, y, width, y);
+        
+        strokeColourY += 5;
+        y += 5;
+    }
 }
