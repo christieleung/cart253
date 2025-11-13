@@ -12,7 +12,7 @@
 "use strict";
 
 let carData = undefined;
-let dinosaurData = undefined;
+let fishData = undefined;
 let langData = undefined;
 let lang = "fr";
 
@@ -20,10 +20,11 @@ let lang = "fr";
 let carName = "Click to generate a car name.";
 
 /**
- * Load the car and dinosaur data
+ * Load the car and fish data
  */
 function preload() {
-
+    carData = loadJSON("assets/data/cars.json");
+    fishData = loadJSON("assets/data/fish.json");   
 }
 
 /**
@@ -51,5 +52,10 @@ function draw() {
  * Generate a new car name
  */
 function mousePressed() {
-
+    // Chooses a random car brand
+    let car = random(carData.cars);
+    // Chooses a random fish species
+    let fish = random(fishData.fish);
+    // Puts them together
+    carName = car + " " + fish;
 }
