@@ -35,7 +35,7 @@ function menuKeyPressed(event) {
 
         case 50: // 2
             state = "anxious-variation";
-            greenSetup();
+            anxiousSetup();
             break;
 
         case 51: // 3

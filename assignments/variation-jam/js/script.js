@@ -10,6 +10,24 @@
 let state = "menu";
 
 /**
+ * Preload images
+ */
+function preload() {
+    // Daydreaming variation
+    daydreamImg.girl = loadImage('assets/images/girl_daydream.png');
+    daydreamImg.bunny = loadImage('assets/images/bunny.png');
+    daydreamImg.cat = loadImage('assets/images/cat.png');
+    daydreamImg.sakuraLightPink = loadImage('assets/images/sakura_light_pink.png');
+    daydreamImg.sakuraDarkPink = loadImage('assets/images/sakura_dark_pink.png');
+    daydreamImg.orchid = loadImage('assets/images/orchid.png');
+    daydreamImg.record = loadImage('assets/images/record.png');
+    
+    // Anxious variation
+    anxietyImg.girl = loadImage('assets/images/girl_anxious.png');
+    anxietyImg.record = loadImage('assets/images/record.png');
+}
+
+/**
  * Create the canvas
 */
 function setup() {
@@ -18,7 +36,14 @@ function setup() {
     switch (state) {
         case "daydreaming-variation":
             daydreamingSetup();
-    }
+            break
+        case "anxious-variation":
+            anxiousSetup();
+            break;
+        case "stuck-variation":
+            blueSetup();
+            break;
+        }
 }
 
 /**
@@ -33,7 +58,7 @@ function draw() {
             daydreamingDraw();
             break
         case "anxious-variation":
-            greenDraw();
+            anxiousDraw();
             break;
         case "stuck-variation":
             blueDraw();
@@ -54,7 +79,7 @@ function mousePressed() {
             daydreamingMousePressed();
             break
         case "anxious-variation":
-            greenMousePressed();
+            anxiousMousePressed();
             break;
         case "stuck-variation":
             blueMousePressed();
@@ -69,7 +94,9 @@ function mousePressed() {
 function mouseDragged() {
     switch (state) {
         case "daydreaming-variation":
-           daydreamingMouseDragged();
+            daydreamingMouseDragged();
+        case "anxious-variation":
+            anxiousMouseDragged();
     }
 }
 
@@ -81,6 +108,8 @@ function mouseReleased() {
     switch (state) {
         case "daydreaming-variation":
             daydreamingMouseReleased();
+        case "anxious-variation":
+            anxiousMouseReleased();
     }
 }
 
@@ -97,7 +126,7 @@ function keyPressed(event) {
             daydreamingKeyPressed(event);
             break
         case "anxious-variation":
-            greenKeyPressed(event);
+            anxiousKeyPressed(event);
             break;
         case "stuck-variation":
             blueKeyPressed(event);

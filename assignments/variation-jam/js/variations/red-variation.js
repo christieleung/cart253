@@ -4,7 +4,6 @@
  * This keeps the stuff the menu needs to do *separate* from the rest of the program.
  */
 
-
 // Images of daydreaming girl and what she's thinking about
 let daydreamImg = {
     girl: undefined,
@@ -21,19 +20,6 @@ let daydreamItems = [];
 
 // Array for the star particle cursor trail
 let stars = [];
-
-/**
- * Preload images in the daydream variation
- */
-function preload() {
-    daydreamImg.girl = loadImage('assets/images/girl_daydream.png');
-    daydreamImg.bunny = loadImage('assets/images/bunny.png');
-    daydreamImg.cat = loadImage('assets/images/cat.png');
-    daydreamImg.sakuraLightPink = loadImage('assets/images/sakura_light_pink.png');
-    daydreamImg.sakuraDarkPink = loadImage('assets/images/sakura_dark_pink.png');
-    daydreamImg.orchid = loadImage('assets/images/orchid.png');
-    daydreamImg.record = loadImage('assets/images/record.png');
-}
 
 /**
  * This will be called just before the daydream variation starts
