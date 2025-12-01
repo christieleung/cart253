@@ -40,7 +40,7 @@ function menuKeyPressed(event) {
 
         case 51: // 3
             state = "stuck-variation";
-            blueSetup();
+            stuckSetup();
             break;
     }
 }

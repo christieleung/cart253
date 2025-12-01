@@ -25,6 +25,9 @@ function preload() {
     // Anxious variation
     anxietyImg.girl = loadImage('assets/images/girl_anxious.png');
     anxietyImg.record = loadImage('assets/images/record.png');
+    
+    // Stuck variation
+    stuckImg.girl = loadImage('assets/images/girl_think.png')
 }
 
 /**
@@ -41,7 +44,7 @@ function setup() {
             anxiousSetup();
             break;
         case "stuck-variation":
-            blueSetup();
+            stuckSetup();
             break;
         }
 }
@@ -61,7 +64,7 @@ function draw() {
             anxiousDraw();
             break;
         case "stuck-variation":
-            blueDraw();
+            stuckDraw();
             break;
     }
 }
@@ -82,7 +85,7 @@ function mousePressed() {
             anxiousMousePressed();
             break;
         case "stuck-variation":
-            blueMousePressed();
+            stuckMousePressed();
             break;
     }
 }
@@ -129,7 +132,7 @@ function keyPressed(event) {
             anxiousKeyPressed(event);
             break;
         case "stuck-variation":
-            blueKeyPressed(event);
+            stuckKeyPressed(event);
             break;
     }
 }
