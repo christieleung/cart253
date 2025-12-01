@@ -5,9 +5,9 @@
  */
 
 const menuText = `
-(R) Red variation
-(G) Green variation
-(B) Blue variation`
+(1) daydreaming
+(2) anxious
+(3) stuck`
 
 /**
  * Display the main menu
@@ -28,18 +28,18 @@ function menuDraw() {
  */
 function menuKeyPressed(event) {
     switch (event.keyCode) {
-        case 82:
-            state = "red-variation";
-            redSetup();
+        case 49: // 1
+            state = "daydreaming-variation";
+            daydreamingSetup();
             break;
 
-        case 71:
-            state = "green-variation";
+        case 50: // 2
+            state = "anxious-variation";
             greenSetup();
             break;
 
-        case 66:
-            state = "blue-variation";
+        case 51: // 3
+            state = "stuck-variation";
             blueSetup();
             break;
     }
