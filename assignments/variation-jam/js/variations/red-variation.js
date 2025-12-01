@@ -19,8 +19,11 @@ let img = {
 // Array for the daydream items
 let items = [];
 
+// Array for the star particle cursor trail
+let stars = [];
+
 /**
- * Preload images
+ * Preload images in the daydream variation
  */
 function preload() {
     img.girlDaydream = loadImage('assets/images/girl_daydream.png');
@@ -33,20 +36,20 @@ function preload() {
 }
 
 /**
- * This will be called just before the red variation starts
+ * This will be called just before the daydream variation starts
  */
 function daydreamingSetup() {
     // Create daydream items, each has a position and scale
-    items.push(daydreamItem(img.bunny, 208, 148, 0.13));
-    items.push(daydreamItem(img.sakuraLightPink, 269, 170, 0.14));
-    items.push(daydreamItem(img.record, 303, 158, 0.16));
-    items.push(daydreamItem(img.cat, 400, 170, 0.13));
-    items.push(daydreamItem(img.sakuraDarkPink, 380, 180, 0.14));
-    items.push(daydreamItem(img.orchid, 448, 143, 0.165));
+    items.push(createDaydreamItem(img.bunny, 208, 148, 0.13));
+    items.push(createDaydreamItem(img.sakuraLightPink, 269, 170, 0.14));
+    items.push(createDaydreamItem(img.record, 303, 158, 0.16));
+    items.push(createDaydreamItem(img.cat, 400, 170, 0.13));
+    items.push(createDaydreamItem(img.sakuraDarkPink, 380, 180, 0.14));
+    items.push(createDaydreamItem(img.orchid, 448, 143, 0.165));
 }
 
 /**
- * This will be called every frame when the red variation is active
+ * This will be called every frame when the daydream variation is active
  */
 function daydreamingDraw() {
     background('silver');
@@ -58,28 +61,32 @@ function daydreamingDraw() {
     
     // Display image of girl
     image(img.girlDaydream, 140, 180, 440, 290);
+    
+    drawStarParticles();
+    updateStarParticles();
+    
 }
 
 /**
- * Displays the item image, positon, and size
+ * Displays the item image, positon, and size in the daydream variation
  */
-function daydreamItem(img, x, y, scale) {
+function createDaydreamItem(img, x, y, scale) {
     let item = {
-        img: img,
-        x: x,
-        y: y,
-        w: img.width * scale,
-        h: img.height * scale,
-        dragging: false,
-        offsetX: 0,
-        offsetY: 0
+            img: img,
+            x: x,
+            y: y,
+            w: img.width * scale,
+            h: img.height * scale,
+            dragging: false,
+            offsetX: 0,
+            offsetY: 0
     };
     
     return item;
 }
 
 /**
- * This will be called whenever a key is pressed while the red variation is active
+ * This will be called whenever a key is pressed while the daydream variation is active
  */
 function daydreamingKeyPressed(event) {
     if (event.keyCode === 27) {
@@ -88,7 +95,7 @@ function daydreamingKeyPressed(event) {
 }
 
 /**
- * This will be called whenever the mouse is pressed while the red variation is active
+ * This will be called whenever the mouse is pressed while the daydream variation is active
  */
 function daydreamingMousePressed() {
     for (let i = 0; i < items.length; i++) {
@@ -116,7 +123,7 @@ function daydreamingMousePressed() {
 }
 
 /**
- * Updates position of items being dragged by the mouse
+ * Updates position of items being dragged by the mouse in the daydream variation
  */
 function daydreamingMouseDragged() {
     for (let item of items) {
@@ -125,13 +132,99 @@ function daydreamingMouseDragged() {
             item.y = mouseY - item.offsetY;
         }
     }
+    
+    // Makes a star particle every 5th frame
+    if (frameCount % 5 === 0) {
+        // Adds a star particle only when an item is being dragged
+        stars.push(createStarParticles(mouseX, mouseY));
+    }    
 }
 
 /**
- * Stops dragging items once mouse is released
+ * Stops dragging items once mouse is released in the daydream variation
  */
 function daydreamingMouseReleased() {
     for (let item of items) {
     item.dragging = false;
     }
+}
+
+/**
+ * Creates a star particle with randomized position, size, speed, and colour
+ */
+function createStarParticles(x, y) {
+    let starParticle = {
+        // Creates particles scattered around the drag position (x, y)
+        x: x + random(-6, 6),
+        y: y + random(-6, 6),
+        size: random(5, 9),
+        // Makes the trail go slightly upwards
+        speed: {
+            x: random(-0.2, 0.2), 
+            y: random(-0.6, -0.2)
+        },
+        // Randomizes colour
+        fill: {
+            r: random(200, 255),
+            g: random(100, 255),
+            b: random(100, 255),
+        },
+         // Fully opaque
+        alpha: 255
+    };
+    
+    return starParticle;
+}
+
+/**
+ * Updates the position and transparency of the star particles
+ */
+function updateStarParticles() {
+    // Loops through stars array in reverse to remove stars
+    for (let i = stars.length - 1; i >= 0; i--) {
+        let star = stars[i];
+        
+        // Updates position of star particles
+        star.x += star.speed.x;
+        star.y += star.speed.y;
+        
+        // Fades star out (increases transparency)
+        star.alpha -= 10;
+
+        // Removes the star once it's completely transparent
+        if (star.alpha <= 0) {
+            stars.splice(i, 1);
+        }
+    }
+}
+
+/**
+ * Draws the star particle cursor trail
+ */
+function drawStarParticles() {
+    noStroke();
+    for (let starParticle of stars) {
+        fill(starParticle.fill.r, starParticle.fill.g, starParticle.fill.b, starParticle.alpha);
+        // Draws stars using star helper function
+        star(starParticle.x, starParticle.y, starParticle.size / 2, starParticle.size, 5);
+    }
+}
+
+/**
+ * Helper function to draw a star
+ * From p5js documentation: https://archive.p5js.org/examples/form-star.html
+ */
+function star(x, y, radius1, radius2, npoints) {
+  let angle = TWO_PI / npoints;
+  let halfAngle = angle / 2.0;
+  beginShape();
+  for (let a = 0; a < TWO_PI; a += angle) {
+    let sx = x + cos(a) * radius2;
+    let sy = y + sin(a) * radius2;
+    vertex(sx, sy);
+    sx = x + cos(a + halfAngle) * radius1;
+    sy = y + sin(a + halfAngle) * radius1;
+    vertex(sx, sy);
+  }
+  endShape(CLOSE);
 }
