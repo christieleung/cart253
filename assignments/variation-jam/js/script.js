@@ -7,7 +7,7 @@
 
 "use strict";
 
-let state = "daydreaming-variation";
+let state = "menu";
 
 /**
  * Create the canvas
@@ -51,7 +51,7 @@ function mousePressed() {
             menuMousePressed();
             break;
         case "daydreaming-variation":
-           daydreamingMousePressed();
+            daydreamingMousePressed();
             break
         case "anxious-variation":
             greenMousePressed();

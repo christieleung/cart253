@@ -6,8 +6,8 @@
 
 
 // Images of daydreaming girl and what she's thinking about
-let img = {
-    girlDaydream: undefined,
+let daydreamImg = {
+    girl: undefined,
     bunny: undefined,
     cat: undefined,
     sakuraLightPink: undefined,
@@ -17,7 +17,7 @@ let img = {
 }
 
 // Array for the daydream items
-let items = [];
+let daydreamItems = [];
 
 // Array for the star particle cursor trail
 let stars = [];
@@ -26,13 +26,13 @@ let stars = [];
  * Preload images in the daydream variation
  */
 function preload() {
-    img.girlDaydream = loadImage('assets/images/girl_daydream.png');
-    img.bunny = loadImage('assets/images/bunny.png');
-    img.cat = loadImage('assets/images/cat.png');
-    img.sakuraLightPink = loadImage('assets/images/sakura_light_pink.png');
-    img.sakuraDarkPink = loadImage('assets/images/sakura_dark_pink.png');
-    img.orchid = loadImage('assets/images/orchid.png');
-    img.record = loadImage('assets/images/record.png');
+    daydreamImg.girl = loadImage('assets/images/girl_daydream.png');
+    daydreamImg.bunny = loadImage('assets/images/bunny.png');
+    daydreamImg.cat = loadImage('assets/images/cat.png');
+    daydreamImg.sakuraLightPink = loadImage('assets/images/sakura_light_pink.png');
+    daydreamImg.sakuraDarkPink = loadImage('assets/images/sakura_dark_pink.png');
+    daydreamImg.orchid = loadImage('assets/images/orchid.png');
+    daydreamImg.record = loadImage('assets/images/record.png');
 }
 
 /**
@@ -40,12 +40,12 @@ function preload() {
  */
 function daydreamingSetup() {
     // Create daydream items, each has a position and scale
-    items.push(createDaydreamItem(img.bunny, 208, 148, 0.13));
-    items.push(createDaydreamItem(img.sakuraLightPink, 269, 170, 0.14));
-    items.push(createDaydreamItem(img.record, 303, 158, 0.16));
-    items.push(createDaydreamItem(img.cat, 400, 170, 0.13));
-    items.push(createDaydreamItem(img.sakuraDarkPink, 380, 180, 0.14));
-    items.push(createDaydreamItem(img.orchid, 448, 143, 0.165));
+    daydreamItems.push(createDaydreamItem(daydreamImg.bunny, 208, 148, 0.13));
+    daydreamItems.push(createDaydreamItem(daydreamImg.sakuraLightPink, 269, 170, 0.14));
+    daydreamItems.push(createDaydreamItem(daydreamImg.record, 303, 158, 0.16));
+    daydreamItems.push(createDaydreamItem(daydreamImg.cat, 400, 170, 0.13));
+    daydreamItems.push(createDaydreamItem(daydreamImg.sakuraDarkPink, 380, 180, 0.14));
+    daydreamItems.push(createDaydreamItem(daydreamImg.orchid, 448, 143, 0.165));
 }
 
 /**
@@ -55,16 +55,15 @@ function daydreamingDraw() {
     background('silver');
     
     // Draw each item
-    for (let item of items) {
+    for (let item of daydreamItems) {
         image(item.img, item.x, item.y, item.w, item.h);
     }    
     
     // Display image of girl
-    image(img.girlDaydream, 140, 180, 440, 290);
+    image(daydreamImg.girl, 140, 180, 440, 290);
     
     drawStarParticles();
     updateStarParticles();
-    
 }
 
 /**
@@ -98,8 +97,8 @@ function daydreamingKeyPressed(event) {
  * This will be called whenever the mouse is pressed while the daydream variation is active
  */
 function daydreamingMousePressed() {
-    for (let i = 0; i < items.length; i++) {
-        let item = items[i];
+    for (let i = 0; i < daydreamItems.length; i++) {
+        let item = daydreamItems[i];
         
         // Checks if mouse is inside the item
         if (mouseX > item.x && mouseX < item.x + item.w &&
@@ -114,7 +113,7 @@ function daydreamingMousePressed() {
 
             // Removes item and adds it at the end of the array
             // Makes dragged item appear on top
-            items.push(items.splice(i, 1)[0]);
+            daydreamItems.push(daydreamItems.splice(i, 1)[0]);
             
             // Stops the loop so only one item is dragged at a time
             break; 
@@ -126,7 +125,7 @@ function daydreamingMousePressed() {
  * Updates position of items being dragged by the mouse in the daydream variation
  */
 function daydreamingMouseDragged() {
-    for (let item of items) {
+    for (let item of daydreamItems) {
         if (item.dragging) {
             item.x = mouseX - item.offsetX;
             item.y = mouseY - item.offsetY;
@@ -144,7 +143,7 @@ function daydreamingMouseDragged() {
  * Stops dragging items once mouse is released in the daydream variation
  */
 function daydreamingMouseReleased() {
-    for (let item of items) {
+    for (let item of daydreamItems) {
     item.dragging = false;
     }
 }
