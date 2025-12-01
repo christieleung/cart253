@@ -39,10 +39,10 @@ function daydreamingSetup() {
     // Create daydream items, each has a position and scale
     items.push(daydreamItem(img.bunny, 208, 148, 0.13));
     items.push(daydreamItem(img.sakuraLightPink, 269, 170, 0.14));
-    items.push(daydreamItem(img.record, 310, 158, 0.16));
-    items.push(daydreamItem(img.cat, 397, 170, 0.13));
-    items.push(daydreamItem(img.sakuraDarkPink, 372, 180, 0.14));
-    items.push(daydreamItem(img.orchid, 448, 143, 0.16));
+    items.push(daydreamItem(img.record, 303, 158, 0.16));
+    items.push(daydreamItem(img.cat, 400, 170, 0.13));
+    items.push(daydreamItem(img.sakuraDarkPink, 380, 180, 0.14));
+    items.push(daydreamItem(img.orchid, 448, 143, 0.165));
 }
 
 /**
@@ -69,7 +69,10 @@ function daydreamItem(img, x, y, scale) {
         x: x,
         y: y,
         w: img.width * scale,
-        h: img.height * scale
+        h: img.height * scale,
+        dragging: false,
+        offsetX: 0,
+        offsetY: 0
     };
     
     return item;
@@ -88,5 +91,47 @@ function daydreamingKeyPressed(event) {
  * This will be called whenever the mouse is pressed while the red variation is active
  */
 function daydreamingMousePressed() {
+    for (let i = 0; i < items.length; i++) {
+        let item = items[i];
+        
+        // Checks if mouse is inside the item
+        if (mouseX > item.x && mouseX < item.x + item.w &&
+            mouseY > item.y && mouseY < item.y + item.h) {
+            
+            // If it is, then the item can be dragged
+            item.dragging = true;
+        
+            // Keeps item under mouse cursor
+            item.offsetX = mouseX - item.x;
+            item.offsetY = mouseY - item.y;
 
+            // Removes item and adds it at the end of the array
+            // Makes dragged item appear on top
+            items.push(items.splice(i, 1)[0]);
+            
+            // Stops the loop so only one item is dragged at a time
+            break; 
+        }
+    }
+}
+
+/**
+ * Updates position of items being dragged by the mouse
+ */
+function daydreamingMouseDragged() {
+    for (let item of items) {
+        if (item.dragging) {
+            item.x = mouseX - item.offsetX;
+            item.y = mouseY - item.offsetY;
+        }
+    }
+}
+
+/**
+ * Stops dragging items once mouse is released
+ */
+function daydreamingMouseReleased() {
+    for (let item of items) {
+    item.dragging = false;
+    }
 }

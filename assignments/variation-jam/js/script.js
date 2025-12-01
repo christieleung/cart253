@@ -7,13 +7,18 @@
 
 "use strict";
 
-let state = "menu";
+let state = "daydreaming-variation";
 
 /**
  * Create the canvas
 */
 function setup() {
     createCanvas(700, 600);
+    
+    switch (state) {
+        case "daydreaming-variation":
+            daydreamingSetup();
+    }
 }
 
 /**
@@ -54,6 +59,28 @@ function mousePressed() {
         case "stuck-variation":
             blueMousePressed();
             break;
+    }
+}
+
+/**
+ * Listen for mouse dragged and call the function for it in the
+ * current state
+ */
+function mouseDragged() {
+    switch (state) {
+        case "daydreaming-variation":
+           daydreamingMouseDragged();
+    }
+}
+
+/**
+ * Listen for mouse released and call the function for it in the
+ * current state
+ */
+function mouseReleased() {
+    switch (state) {
+        case "daydreaming-variation":
+            daydreamingMouseReleased();
     }
 }
 
