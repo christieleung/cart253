@@ -4,23 +4,66 @@
  * This keeps the stuff the menu needs to do *separate* from the rest of the program.
  */
 
-// Images of a girl who feels stuck, can't think through her thoughts
+// Image of a girl who feels stuck
 let stuckImg = {
     girl: undefined
 }
 
+// Position and size of the girl image
+const stuckGirl = {
+    x: 140,
+    y: 180,
+    width: 440,
+    height: 290
+}
+
+// Background colour and rectangle (square) starting position, spacing (between), size, 
+// greyscale values, and opacity for the animated static background
+const staticBg = {
+    // Silver (canvas fill)
+    fill: {
+        r: 192,
+        g: 192,
+        b: 192
+    },
+    rect: {
+        startingPosition: 0,
+        spacing: 5,
+        size: 3,
+        // Lighter greys (static squares)
+        greyscale: {
+            lowerRange: 130,
+            upperRange: 240
+        },
+        opacity: 120
+    }    
+}
+
 // Variable for mouse-drawing layer
 let lineLayer = undefined;
+
+// Mouse-drawing stroke colour and weight
+const mouseDrawing = {
+    // Black
+    stroke: {
+        fill: {
+            r: 0,
+            g: 0,
+            b: 0
+        }
+    },
+    strokeWeight: 2
+}
 
 /**
  * This will be called just before the stuck variation starts
  * Initializes the background and mouse-drawing layer
  */
 function stuckSetup() {   
-    background("silver"); 
+    background(staticBg.fill.r, staticBg.fill.b, staticBg.fill.g); 
     // Creates a new layer
     // Learned how to use function from: https://www.youtube.com/watch?v=TaluaAD9MKA
-    lineLayer = createGraphics(700, 600);
+    lineLayer = createGraphics(width, height);
     // Makes the layer transparent
     lineLayer.clear();
 }
@@ -30,36 +73,53 @@ function stuckSetup() {
  * Draws the background, the girl image, and the mouse-drawing layer
  */
 function stuckDraw() {
-    // Draws a static-like, randomized grey background
-    // Referenced code from: https://editor.p5js.org/Sekyi/sketches/rb6qBfKB3
-    for (rectX = 0; rectX <= width; rectX = rectX + 5) {
-        for (rectY = 0; rectY <= height; rectY = rectY + 5) {
-            // Random light greys
-            let grey = random(130, 230);
-            fill(grey, grey, grey, 120);
+    // Draws the static background
+    drawStatic();
+  
+    // Displays the image of the girl
+    image(stuckImg.girl, stuckGirl.x, stuckGirl.y, stuckGirl.width, stuckGirl.height);
+    
+    // Draws the lines in the mouse-drawing layer
+    drawLines();
+}
+
+/**
+ * Draws a static-like, randomized greyscale background using tiny squares
+ * Referenced code from: https://editor.p5js.org/Sekyi/sketches/rb6qBfKB3
+ */
+function drawStatic() {
+    for (let rectX = staticBg.rect.startingPosition; rectX <= width; rectX = rectX += staticBg.rect.spacing) {
+        for (let rectY = staticBg.rect.startingPosition; rectY <= height; rectY = rectY += staticBg.rect.spacing) {
+            let staticGreyscale = random(
+                staticBg.rect.greyscale.lowerRange,
+                staticBg.rect.greyscale.upperRange);
+            
+            fill(staticGreyscale, staticBg.rect.opacity);
             noStroke();
-            rect(rectX, rectY, 3, 3);
+            rect(rectX, rectY, staticBg.rect.size, staticBg.rect.size);
         }
     }
-    
-    // Displays the image of the girl
-    image(stuckImg.girl, 140, 180, 440, 290);
-    
-    // Draws a line following mouse movement in the mouse-drawing layer
-    // Referenced code from: https://editor.p5js.org/brain/sketches/ojB-QN8Tv
-    lineLayer.stroke(0);
-    lineLayer.strokeWeight(2);
+}
+
+/**
+ * Draws a line following mouse movement in the mouse-drawing layer
+ * Referenced code from: https://editor.p5js.org/brain/sketches/ojB-QN8Tv
+ */
+function drawLines() {
+    lineLayer.stroke(mouseDrawing.stroke.fill.r, mouseDrawing.stroke.fill.g, mouseDrawing.stroke.fill.b);
+    lineLayer.strokeWeight(mouseDrawing.strokeWeight);
     lineLayer.line(mouseX, mouseY, pmouseX, pmouseY);
     
-    // Displays mouse-drawing layer above everything else
+    // Displays mouse-drawing layer (at the origin) above everything else
     image(lineLayer, 0, 0);
 }
 
 /**
  * This will be called whenever a key is pressed while the stuck variation is active
+ * Returns to the main menu by pressing esc
  */
 function stuckKeyPressed(event) {
-    if (event.keyCode === 27) {
+    if (event.keyCode === key.esc) {
         state = "menu";
     }
 }

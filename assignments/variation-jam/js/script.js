@@ -9,6 +9,11 @@
 
 let state = "stuck-variation";
 
+// Variable for key codes
+const key = {
+    esc: 27
+}
+
 /**
  * Preload images
  */
