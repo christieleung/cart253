@@ -7,7 +7,7 @@
 
 "use strict";
 
-let state = "menu";
+let state = "stuck-variation";
 
 /**
  * Preload images
