@@ -7,7 +7,7 @@
 
 "use strict";
 
-let state = "anxious-variation";
+let state = "menu";
 
 /**
  * Preload images
