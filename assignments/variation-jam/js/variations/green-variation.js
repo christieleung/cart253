@@ -13,8 +13,8 @@ let anxietyImg = {
 // Array for the anxiety items
 let anxietyItems = [];
 
-// // Array for the spiral particle cursor trail
-// let spiral = [];
+// Array for the spiral particle cursor trail
+let spirals = [];
 
 /**
  * This will be called just before the anxious variation starts
@@ -37,6 +37,9 @@ function anxiousDraw() {
     
     // Display image of girl
     image(anxietyImg.girl, 140, 180, 440, 290);
+    
+    drawSpiralParticles();
+    updateSpiralParticles();
 }
 
 /**
@@ -105,11 +108,11 @@ function anxiousMouseDragged() {
         }
     }
     
-    // // Makes a spiral particle every 5th frame
-    // if (frameCount % 5 === 0) {
-    //     // Adds a spiral particle only when an item is being dragged
-    //     spiral.push(createSpiralParticles(mouseX, mouseY));
-    // }    
+    // Makes a spiral particle every 5th frame
+    if (frameCount % 5 === 0) {
+        // Adds a spiral particle only when an item is being dragged
+        spirals.push(createSpiralParticles(mouseX, mouseY));
+    }    
 }
 
 /**
@@ -119,4 +122,86 @@ function anxiousMouseReleased() {
     for (let item of anxietyItems) {
     item.dragging = false;
     }
+}
+
+/**
+ * Creates a spiral particle with randomized position, size, speed, and colour
+ */
+function createSpiralParticles(x, y) {
+    let spiralParticle = {
+        // Creates particles scattered around the drag position (x, y)
+        x: x + random(-6, 6),
+        y: y + random(-6, 6),
+        size: random(8, 12),
+        // Makes the trail go slightly upwards
+        speed: {
+            x: random(-0.2, 0.2), 
+            y: random(-0.6, -0.2)
+        },
+        // Randomizes colour
+        fill: {
+            r: random(20, 50),
+            g: random(0, 10),
+            b: random(30, 50)
+        },
+         // Fully opaque
+        alpha: 255
+    };
+    
+    return spiralParticle;
+}
+
+/**
+ * Updates the position and transparency of the spiral particles
+ */
+function updateSpiralParticles() {
+    // Loops through spiral array in reverse to remove spiral
+    for (let i = spirals.length - 1; i >= 0; i--) {
+        let spiral = spirals[i];
+        
+        // Updates position of spiral particles
+        spiral.x += spiral.speed.x;
+        spiral.y += spiral.speed.y;
+        
+        // Fades spiral out (increases transparency)
+        spiral.alpha -= 5;
+
+        // Removes the star once it's completely transparent
+        if (spiral.alpha <= 0) {
+            spirals.splice(i, 1);
+        }
+    }
+}
+
+/**
+ * Draws the spiral particle cursor trail
+ */
+function drawSpiralParticles() {
+    noFill();
+    strokeWeight(1.5);
+    for (let spiralParticle of spirals) {
+        stroke(spiralParticle.fill.r, spiralParticle.fill.g, spiralParticle.fill.b, spiralParticle.alpha);
+        // Draws spirals using spiral helper function
+        spiral(spiralParticle.x, spiralParticle.y, spiralParticle.size);
+    }
+}
+
+/**
+ * Helper function to draw a spiral
+ * Referenced p5js star documentation: https://archive.p5js.org/examples/form-star.htmland 
+ * and geeksforgeeks spiral animation effect: 
+ * https://www.geeksforgeeks.org/javascript/how-to-create-a-rotating-spiral-animation-effect-using-p5-js/
+ */
+function spiral(x, y, radius) {
+    beginShape();
+    let nturns = 4; 
+    let npoints = 100;
+    for (let i = 0; i < npoints; i++) {
+        let r = map(i, 0, npoints, 0, radius);
+        let angle = map(i, 0, npoints, 0, TWO_PI * nturns);
+        let sx = x + cos(angle) * r;
+        let sy = y + sin(angle) * r;
+        vertex(sx, sy);
+    }
+    endShape();
 }
