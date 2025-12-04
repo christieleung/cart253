@@ -20,6 +20,9 @@ let spirals = [];
  * This will be called just before the anxious variation starts
  */
 function anxiousSetup() {
+    // Resets anxiety items
+    anxietyItems = [];
+    
      // Create anxiety items, each has a position and scale
     anxietyItems.push(createAnxietyItem(anxietyImg.record, 213, 158, 0.16));
 }

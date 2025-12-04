@@ -25,6 +25,9 @@ let stars = [];
  * This will be called just before the daydream variation starts
  */
 function daydreamingSetup() {
+    // Resets daydream items
+    daydreamItems = [];
+    
     // Create daydream items, each has a position and scale
     daydreamItems.push(createDaydreamItem(daydreamImg.bunny, 208, 148, 0.13));
     daydreamItems.push(createDaydreamItem(daydreamImg.sakuraLightPink, 269, 170, 0.14));
