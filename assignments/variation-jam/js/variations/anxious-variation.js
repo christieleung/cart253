@@ -108,6 +108,11 @@ function anxiousMouseDragged() {
         if (item.dragging) {
             item.x = mouseX - item.offsetX;
             item.y = mouseY - item.offsetY;
+            
+            // Trembling effect
+            let tremors = 2;
+            item.x += random(-tremors, tremors);
+            item.y += random(-tremors, tremors);
         }
     }
     
