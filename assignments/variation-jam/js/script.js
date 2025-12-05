@@ -7,7 +7,7 @@
 
 "use strict";
 
-let state = "menu";
+let state = "anxious-variation";
 
 // Variable for key codes
 const key = {

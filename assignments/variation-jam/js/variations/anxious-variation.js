@@ -7,7 +7,12 @@
 // Images of anxious girl and what she's thinking about
 let anxietyImg = {
     girl: undefined,
-    record: undefined
+    record: undefined,
+    work: undefined,
+    reminderBlue: undefined,
+    reminderPurple: undefined,
+    time: undefined,
+    health: undefined
 }
 
 // Array for the anxiety items
@@ -23,8 +28,18 @@ function anxiousSetup() {
     // Resets anxiety items
     anxietyItems = [];
     
-     // Create anxiety items, each has a position and scale
-    anxietyItems.push(createAnxietyItem(anxietyImg.record, 213, 158, 0.16));
+    // Create anxiety items, each has a position and scale
+    anxietyItems.push(createAnxietyItem(anxietyImg.record, 213, 155, 0.16));
+    anxietyItems.push(createAnxietyItem(anxietyImg.work, 270, 163, 0.20));
+    anxietyItems.push(createAnxietyItem(anxietyImg.work, 280, 170, 0.20));
+    anxietyItems.push(createAnxietyItem(anxietyImg.reminderPurple, 300, 186, 0.16));
+    anxietyItems.push(createAnxietyItem(anxietyImg.time, 350, 158, 0.18));
+    anxietyItems.push(createAnxietyItem(anxietyImg.health, 330, 176, 0.21));
+    anxietyItems.push(createAnxietyItem(anxietyImg.work, 410, 172, 0.20));
+    // Anxiety items with a slight rotation
+    anxietyItems.push(createAnxietyItem(anxietyImg.work, 415, 163, 0.20, Math.PI / 27));
+    anxietyItems.push(createAnxietyItem(anxietyImg.reminderPurple, 427, 173, 0.16, Math.PI / 20));
+    anxietyItems.push(createAnxietyItem(anxietyImg.reminderBlue, 443, 183, 0.16, Math.PI / 20));
 }
 
 /**
@@ -35,9 +50,23 @@ function anxiousDraw() {
     
     // Draw each item
     for (let item of anxietyItems) {
-        image(item.img, item.x, item.y, item.w, item.h);
-    }    
-    
+        
+        // If the item has a rotation, then draw the image rotated
+        if (item.rotation !== 0) {
+            push();
+            // New origin
+            translate(item.x + item.width / 2, item.y + item.height / 2);
+            rotate(item.rotation);
+            // Draw image centered relative to new origin
+            imageMode(CENTER);
+            image(item.img, 0, 0, item.width, item.height);
+            pop();
+            
+        // Otherwise, draw the item normally
+        } else {
+            image(item.img, item.x, item.y, item.width, item.height);
+        }
+    }
     // Display image of girl
     image(anxietyImg.girl, 140, 180, 440, 290);
     
@@ -48,13 +77,14 @@ function anxiousDraw() {
 /**
  * Displays the item image, positon, and size in the anxious variation
  */
-function createAnxietyItem(img, x, y, scale) {
+function createAnxietyItem(img, x, y, scale, rotation = 0) {
     let item = {
             img: img,
             x: x,
             y: y,
-            w: img.width * scale,
-            h: img.height * scale,
+            width: img.width * scale,
+            height: img.height * scale,
+            rotation: rotation,
             dragging: false,
             offsetX: 0,
             offsetY: 0
@@ -80,8 +110,8 @@ function anxiousMousePressed() {
         let item = anxietyItems[i];
         
         // Checks if mouse is inside the item
-        if (mouseX > item.x && mouseX < item.x + item.w &&
-            mouseY > item.y && mouseY < item.y + item.h) {
+        if (mouseX > item.x && mouseX < item.x + item.width &&
+            mouseY > item.y && mouseY < item.y + item.height) {
             
             // If it is, then the item can be dragged
             item.dragging = true;

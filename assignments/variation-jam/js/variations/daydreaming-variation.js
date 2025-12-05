@@ -45,7 +45,7 @@ function daydreamingDraw() {
     
     // Draw each item
     for (let item of daydreamItems) {
-        image(item.img, item.x, item.y, item.w, item.h);
+        image(item.img, item.x, item.y, item.width, item.height);
     }    
     
     // Display image of girl
@@ -63,8 +63,8 @@ function createDaydreamItem(img, x, y, scale) {
             img: img,
             x: x,
             y: y,
-            w: img.width * scale,
-            h: img.height * scale,
+            width: img.width * scale,
+            height: img.height * scale,
             dragging: false,
             offsetX: 0,
             offsetY: 0
@@ -90,8 +90,8 @@ function daydreamingMousePressed() {
         let item = daydreamItems[i];
         
         // Checks if mouse is inside the item
-        if (mouseX > item.x && mouseX < item.x + item.w &&
-            mouseY > item.y && mouseY < item.y + item.h) {
+        if (mouseX > item.x && mouseX < item.x + item.width &&
+            mouseY > item.y && mouseY < item.y + item.height) {
             
             // If it is, then the item can be dragged
             item.dragging = true;
