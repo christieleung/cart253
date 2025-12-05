@@ -1,12 +1,35 @@
 /**
- * Variation Jam
+ * Variation Jam (a peek inside my head!)
+ * 
  * Christie Leung
  * 
- * ...
+ * This project explores what the inside of my head looks like when I'm daydreaming, feeling anxious, or feeling stuck. 
+ * Each version features a girl with a matching expression and experience. The images were hand-drawn and then coloured in Photoshop.
+ * 
+ * The daydreaming and anxious variations include draggable items. When an item is dragged, a thematic cursor trail appears–
+ * randomized stars in daydreaming and randomized spirals in anxious. The items in the anxious state also slightly tremble.  
+ * 
+ * There are no items at all in the stuck variation. Instead, the mouse becomes a pen, allowing you to draw all over the canvas, 
+ * or do nothing at all. The drawings can be cleared by pressing (delete / backspace).
+ *  
+ * Mouse controls:
+ * - Click items to select, drag to move them around in the daydreaming and anxious variations 
+ * - Draw freely with the mouse in the stuck variation
+ * 
+ * Keyboard controls:
+ * - Press (1), (2), or (3) to enter each variation
+ * - Press (space) to show or hide the intructions panel
+ * - Press (escape) to return to the menu
+ * - Press (delete / backspace) to clear drawings in the stuck variation
+ * 
+ * Made with p5
+ * https://p5js.org/
  */
 
 "use strict";
 
+// Variable that allows for different states 
+// (states: menu, daydreaming - variation, anxious - variation, stuck - variation)
 let state = "menu";
 
 // Variable for key codes

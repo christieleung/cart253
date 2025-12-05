@@ -4,6 +4,7 @@
  * This keeps the stuff the menu needs to do *separate* from the rest of the program.
  */
 
+// Menu text with title and variation names
 const menuText = `
 a peek inside my head!
 
@@ -63,14 +64,24 @@ const menuTextPanel = {
 function menuDraw() {
     background(menuBg.fill.r, menuBg.fill.g, menuBg.fill.b);
     
-    drawGinghamHorizontal();
-    drawGinghamVertical();
+    drawGingham();
     // Resets blend mode (colour mixing)
     blendMode(BLEND);
     
     drawMenuTextPanel();
-    
     drawMenuText();
+}
+
+/**
+ * Draws a translucent rectangle behind the menu text
+ */
+function drawMenuTextPanel() {
+    push();
+    noStroke();
+    fill(menuTextPanel.fill.r, menuTextPanel.fill.g, menuTextPanel.fill.b, menuTextPanel.opacity);
+    rectMode(CENTER);
+    rect(width / 2, height / 2, menuTextPanel.width, menuTextPanel.height);
+    pop();
 }
 
 /**
@@ -84,6 +95,14 @@ function drawMenuText() {
     textAlign(CENTER, CENTER);
     text(menuText, width / 2, height / 2);
     pop();
+}
+
+/**
+ * Draws the gingham background
+ */
+function drawGingham() {
+    drawGinghamHorizontal();
+    drawGinghamVertical();
 }
 
 /**
@@ -120,18 +139,6 @@ function drawGinghamVertical() {
 }
 
 /**
- * Draws a translucent rectangle behind the menu text
- */
-function drawMenuTextPanel() {
-    push();
-    noStroke();
-    fill(menuTextPanel.fill.r, menuTextPanel.fill.g, menuTextPanel.fill.b, menuTextPanel.opacity);
-    rectMode(CENTER);
-    rect(width / 2, height / 2, menuTextPanel.width, menuTextPanel.height);
-    pop();
-}
-
-/**
  * Listen to the keyboard
  */
 function menuKeyPressed(event) {
@@ -151,11 +158,4 @@ function menuKeyPressed(event) {
             stuckSetup();
             break;
     }
-}
-
-/**
- * This will be called whenever the mouse is pressed while the menu is active
- */
-function menuMousePressed() {
-
 }

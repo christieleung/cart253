@@ -1,4 +1,4 @@
-# TITLE OF PROJECT
+# Variation Jam
 
 Christie Leung
 
@@ -6,13 +6,15 @@ Christie Leung
 
 ## Description
 
-This description should help the reader understand what the program is, anything they should know to be able to experience it (controls, special features, etc.), and what the desired user experience is. For example:
+> *A peek inside my head!* is project that allows the user to interact with different mental states: daydreaming, anxious, and stuck. 
 
-> *The Mayor of Clown Town* is a simulator experience that allows the user to control a small town populated entirely by clowns.
+> The experience is controlled with the mouse, as you can click to bring the different items inside my head to the top, and drag to move them around in the daydreaming and anxious variations. 
+>
+> The daydreaming variation features cute animals, such as a bunny and cat, along with pretty flowers like sakura and an orchid branch. In constrast, the anxious variation is filled with post-it notes (reminders), papers (forms and essays), a bandaged heart (health), and a clock (time). Items in the anxious variation are duplicated to make it feel more cluttered and overwhelming, and they tremble when dragged. Both variations also include a vinyl record.
+>
+> The mouse is also used to draw in the stuck variation. There are no items in this mode, as I feel like I can never think of anything concrete in this state. You can choose to scribble all over the canvas, or leave the space empty, reflecting how it feels when your mind is in a constant loop, with thoughts that simultaneously feel like too much yet nothing at all.
 
-> The experience is controlled via the mouse, with left click selecting a clown and bringing up a menu of options such as "slip of banana peel" or "get into impossible capacious clown-car."
-
-> The project is meant to give the user a sense of what it would be the mayor of a town of clowns, eventually getting the sense that clowns are not taking their civic duties seriously.
+> The project is also controlled using the keyboard, as pressing (1), (2), or (3) allows you to enter the daydreaming, anxious, or stuck variations, and pressing (space) toggles the visibility of each state's instruction panel. Pressing (escape) allows you to return to the menu. The drawings in the stuck variation can be cleared by pressing the (delete / backspace) key.
 
 ## Screenshot(s)
 
@@ -22,11 +24,17 @@ This bit should have some images of the program running so that the reader has a
 
 ## Attribution
 
-This bit should attribute any code, assets or other elements used taken from other sources. For example:
+> This project uses [p5.js](https://p5js.org) 
 
-> - This project uses [p5.js](https://p5js.org).
-> - The clown image is a capture of the clown from the Apple emoji character set.
-> - The barking sound effect is "single dog bark 1" by crazymonke9 from freesound.org: https://freesound.org/people/crazymonke9/sounds/418107/
+> Referenced code:
+> - Cursor trail from “heart cursor copy” by dorianraev: https://editor.p5js.org/dorianraev/sketches/szGPYRZEQ
+> - Star helper function from p5.js: https://archive.p5js.org/examples/form-star.html
+> - Spiral helper function from “How to create a Rotating Spiral Animation Effect using p5.js?” by geeksforgeeks: https://www.geeksforgeeks.org/javascript/how-to-create-a-rotating-spiral-animation-effect-using-p5-js/
+> - Static background design from “Static noise” by Sekvi: https://editor.p5js.org/Sekyi/sketches/rb6qBfKB3
+> - Mouse-drawing function from “mouse-drawing” by brain: https://editor.p5js.org/brain/sketches/ojB-QN8Tv
+
+> Other:
+> - Key codes from: https://www.toptal.com/developers/keycode
 
 ## License
 
