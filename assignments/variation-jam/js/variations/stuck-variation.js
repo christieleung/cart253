@@ -28,7 +28,7 @@ const staticBg = {
 
 // Array for instruction text in the stuck variation
 const stuckInstructions = [
-    "꩜ feeling stuck! ꩜",
+    "꩜ when i'm feeling stuck! ꩜",
     "",
     "• draw messy webs of thoughts using the mouse",
     "• press (delete) to erase them",
@@ -62,13 +62,12 @@ const mouseDrawing = {
 
 /**
  * This will be called just before the stuck variation starts
- * Initializes the background and mouse-drawing layer
+ * Initializes the instructions panel and mouse-drawing layer
  */
 function stuckSetup() {   
     // Resets instruction panel to visible
     showStuckInstructions = true;
     
-    background(staticBg.fill.r, staticBg.fill.g, staticBg.fill.b); 
     // Creates a new layer
     // Learned how to use function from: https://www.youtube.com/watch?v=TaluaAD9MKA
     lineLayer = createGraphics(width, height);
@@ -81,7 +80,8 @@ function stuckSetup() {
  * Draws the background, the girl image, and the mouse-drawing layer
  */
 function stuckDraw() {
-    // Draws the static background
+    background(staticBg.fill.r, staticBg.fill.g, staticBg.fill.b);
+    // Draws the animated static squares
     drawStatic();
   
     // Displays the image of the girl
@@ -126,14 +126,14 @@ function drawLines() {
     lineLayer.strokeWeight(mouseDrawing.strokeWeight);
     lineLayer.line(mouseX, mouseY, pmouseX, pmouseY);
     
-    // Displays mouse-drawing layer (at the origin) above everything else
+    // Displays mouse-drawing layer (at the origin) above the girl and static bg
     image(lineLayer, 0, 0);
     pop();
 }
 
 /**
  * This will be called whenever a key is pressed while the stuck variation is active
- * Handles returning to the menu and showing/hiding the instruction panel
+ * Handles returning to the menu, showing/hiding the instruction panel, and erasing drawn lines
  */
 function stuckKeyPressed(event) {
     // Return to the main menu by pressing esc
@@ -145,11 +145,9 @@ function stuckKeyPressed(event) {
     if (event.keyCode === key.space) {
         showStuckInstructions = !showStuckInstructions;
     }
-}
-
-/**
- * This will be called whenever the mouse is pressed while the stuck variation is active
- */
-function stuckMousePressed() {
     
+    // Erase lines by pressing delete
+    if (event.keyCode === key.delete) {
+        lineLayer.clear();
+    }
 }

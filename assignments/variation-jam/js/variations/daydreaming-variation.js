@@ -16,7 +16,7 @@ const daydreamBg = {
 
 // Array for the instruction text in the daydreaming variation
 const daydreamInstructions = [
-    "✿ daydreaming! ✿",
+    "✿ when i'm daydreaming! ✿",
     "",
     "• click & drag items around",
     "• press (space) to toggle this instruction panel",
@@ -80,7 +80,7 @@ let stars = [];
 
 /**
  * This will be called just before the daydream variation starts
- * Initializes and positions the daydream items
+ * Initializes the instructions panel and creates daydream items with positions and scales
  */
 function daydreamingSetup() {
     // Resets instruction panel to visible

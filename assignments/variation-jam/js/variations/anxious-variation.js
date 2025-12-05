@@ -16,7 +16,7 @@ const anxiousBg = {
 
 // Array for the instruction text in the anxious variation
 const anxiousInstructions = [
-    "⊹ feeling anxious! ⊹",
+    "✴︎ when i'm feeling anxious! ✴︎",
     "",
     "• click & drag items around",
     "• press (space) to toggle this instruction panel",
@@ -98,7 +98,7 @@ let spirals = [];
 
 /**
  * This will be called just before the anxious variation starts
- * Initializes and positions the anxiety items
+ * Initializes the instructions panel and creates anxiety items with positions and scales
  */
 function anxiousSetup() {
     // Resets instruction panel to visible

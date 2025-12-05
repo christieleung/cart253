@@ -15,7 +15,8 @@ const key = {
     two: 50,
     three: 51,
     esc: 27,
-    space: 32
+    space: 32,
+    delete: 8
 }
 
 // Colour and size of the instruction panel background
