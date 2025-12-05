@@ -28,11 +28,17 @@ function preload() {
     daydreamImg.sakuraLightPink = loadImage('assets/images/sakura_light_pink.png');
     daydreamImg.sakuraDarkPink = loadImage('assets/images/sakura_dark_pink.png');
     daydreamImg.orchid = loadImage('assets/images/orchid.png');
-    daydreamImg.record = loadImage('assets/images/record.png');
+    daydreamImg.record = loadImage('assets/images/record_daydream.png');
     
     // Anxious variation
     anxietyImg.girl = loadImage('assets/images/girl_anxious.png');
-    anxietyImg.record = loadImage('assets/images/record.png');
+    anxietyImg.record = loadImage('assets/images/record_anxiety.png');
+    anxietyImg.time = loadImage('assets/images/time.png');
+    anxietyImg.health = loadImage('assets/images/health.png');
+    anxietyImg.work = loadImage('assets/images/work.png');
+    anxietyImg.reminderBlue = loadImage('assets/images/reminder_1.png');
+    anxietyImg.reminderPurple = loadImage('assets/images/reminder_2.png');
+    
     
     // Stuck variation
     stuckImg.girl = loadImage('assets/images/girl_think.png')
