@@ -92,17 +92,22 @@ function daydreamingSetup() {
     
     // Create daydream items, each has a position, scale, and sound
     daydreamItems.push(createDaydreamItem(daydreamImg.bunny, daydreamItemProperties.bunny.x, daydreamItemProperties.bunny.y,
-        daydreamItemProperties.bunny.scale, sounds.shimmering));
+        daydreamItemProperties.bunny.scale, { sound: sounds.shimmering }));
+    
     daydreamItems.push(createDaydreamItem(daydreamImg.sakuraLightPink, daydreamItemProperties.sakuraLightPink.x, daydreamItemProperties.sakuraLightPink.y,
-        daydreamItemProperties.sakuraLightPink.scale, sounds.shimmering));
+        daydreamItemProperties.sakuraLightPink.scale, { sound: sounds.shimmering }));
+    
     daydreamItems.push(createDaydreamItem(daydreamImg.record, daydreamItemProperties.record.x, daydreamItemProperties.record.y,
-        daydreamItemProperties.record.scale, sounds.daydreamingSong));
+        daydreamItemProperties.record.scale,  { sound: sounds.daydreamingSong, rotationSpeed: 0.015 }));
+    
     daydreamItems.push(createDaydreamItem(daydreamImg.cat, daydreamItemProperties.cat.x, daydreamItemProperties.cat.y,
-        daydreamItemProperties.cat.scale, sounds.shimmering));
+        daydreamItemProperties.cat.scale, { sound: sounds.shimmering }));
+    
     daydreamItems.push(createDaydreamItem(daydreamImg.sakuraDarkPink, daydreamItemProperties.sakuraDarkPink.x, daydreamItemProperties.sakuraDarkPink.y,
-        daydreamItemProperties.sakuraDarkPink.scale, sounds.shimmering));
+        daydreamItemProperties.sakuraDarkPink.scale, { sound: sounds.shimmering }));
+    
     daydreamItems.push(createDaydreamItem(daydreamImg.orchid, daydreamItemProperties.orchid.x, daydreamItemProperties.orchid.y,
-        daydreamItemProperties.orchid.scale, sounds.shimmering));
+        daydreamItemProperties.orchid.scale, { sound: sounds.shimmering }));
 }
 
 /**
@@ -142,16 +147,21 @@ function daydreamingDraw() {
 
 /**
  * Creates a daydreaming item with a positon, size, and sound
+ * Some items also have a rotation
  * Tracks dragging state and mouse offset
  */
-function createDaydreamItem(img, x, y, scale, sound) {
+function createDaydreamItem(img, x, y, scale, options = {}) {
     let item = {
             img: img,
             x: x,
             y: y,
             width: img.width * scale,
             height: img.height * scale,
-            sound: sound,
+            width: img.width * scale,
+            height: img.height * scale,
+            rotation: options.rotation || 0,
+            rotationSpeed: options.rotationSpeed || 0,
+            sound: options.sound,
             dragging: false,
             onTop: false,
             offsetX: 0,
@@ -162,10 +172,36 @@ function createDaydreamItem(img, x, y, scale, sound) {
 }
 
 /**
- * Draws daydream items
+ * Draws daydream items with conditions for item rotation
  */
 function drawDaydreamItem(item) {
-    image(item.img, item.x, item.y, item.width, item.height);
+    // Check if the item should spin
+    let itemSpin = item.sound && item.sound.isPlaying() && item.rotationSpeed !== 0;
+    
+    // If the item has a rotation, then draw the image rotated (static)
+    // If the item had a rotation speed, then make the object spin (dynamic)
+    if (item.rotation !== 0 || itemSpin) {
+        push();
+        // Move origin to centre of the item
+        translate(item.x + item.width / 2, item.y + item.height / 2);
+            
+        // If sound is playing, spin the item
+        if (itemSpin) {
+            item.rotation += item.rotationSpeed;
+        }
+            
+        // Apply rotation (static or spinning)
+        rotate(item.rotation);
+            
+        // Draw image centered at the new origin
+        imageMode(CENTER);
+        image(item.img, 0, 0, item.width, item.height);
+        pop();
+            
+        // Otherwise, draw the item normally
+    } else {
+        image(item.img, item.x, item.y, item.width, item.height);
+    }
 }
 
 /**

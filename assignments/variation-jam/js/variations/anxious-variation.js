@@ -108,27 +108,36 @@ function anxiousSetup() {
     // Resets anxiety items
     anxietyItems = [];
     
-    // Create anxiety items, each has a position and scale
-    // Some items have sound and rotation
+    // Create anxiety items, each has a position, scale, and sound
+    // Some items have a rotation
     anxietyItems.push(createAnxietyItem(anxietyImg.record, anxietyItemProperties.record.x, anxietyItemProperties.record.y,
-        anxietyItemProperties.record.scale, { sound: sounds.anxietySong }));
+        anxietyItemProperties.record.scale, { sound: sounds.anxietySong, rotationSpeed: 0.015 }));
+    
     anxietyItems.push(createAnxietyItem(anxietyImg.work, anxietyItemProperties.work.x.first, anxietyItemProperties.work.y.first,
         anxietyItemProperties.work.scale, { sound: sounds.paperCrinkle }));
+    
     anxietyItems.push(createAnxietyItem(anxietyImg.work, anxietyItemProperties.work.x.second, anxietyItemProperties.work.y.second,
         anxietyItemProperties.work.scale, { sound: sounds.paperCrinkle }));
+    
     anxietyItems.push(createAnxietyItem(anxietyImg.reminderPurple, anxietyItemProperties.reminderPurple.x.first,
         anxietyItemProperties.reminderPurple.y.first, anxietyItemProperties.reminderPurple.scale, { sound: sounds.stickyNote }));
+    
     anxietyItems.push(createAnxietyItem(anxietyImg.time, anxietyItemProperties.time.x, anxietyItemProperties.time.y,
         anxietyItemProperties.time.scale, { sound: sounds.ticking }));
+    
     anxietyItems.push(createAnxietyItem(anxietyImg.health, anxietyItemProperties.health.x, anxietyItemProperties.health.y,
         anxietyItemProperties.health.scale, { sound: sounds.heartbeat }));
+    
     anxietyItems.push(createAnxietyItem(anxietyImg.work, anxietyItemProperties.work.x.third, anxietyItemProperties.work.y.third,
         anxietyItemProperties.work.scale, { sound: sounds.writing }));
+    
     // Anxiety items with a slight rotation
     anxietyItems.push(createAnxietyItem(anxietyImg.work, anxietyItemProperties.work.x.fourth, anxietyItemProperties.work.y.fourth,
         anxietyItemProperties.work.scale, { sound: sounds.writing, rotation: anxietyItemProperties.work.rotation }));
+    
     anxietyItems.push(createAnxietyItem(anxietyImg.reminderPurple, anxietyItemProperties.reminderPurple.x.second, anxietyItemProperties.reminderPurple.y.second,
         anxietyItemProperties.reminderPurple.scale, { sound: sounds.stickyNote, rotation: anxietyItemProperties.reminderPurple.rotation }));
+    
     anxietyItems.push(createAnxietyItem(anxietyImg.reminderBlue, anxietyItemProperties.reminderBlue.x, anxietyItemProperties.reminderBlue.y,
         anxietyItemProperties.reminderBlue.scale, { sound: sounds.stickyNote, rotation: anxietyItemProperties.reminderBlue.rotation }));
 }
@@ -181,7 +190,8 @@ function createAnxietyItem(img, x, y, scale, options = {}) {
             width: img.width * scale,
             height: img.height * scale,
             rotation: options.rotation || 0,
-            sound: options.sound || null,
+            rotationSpeed: options.rotationSpeed || 0,
+            sound: options.sound,
             dragging: false,
             onTop: false,
             offsetX: 0,
@@ -193,16 +203,28 @@ function createAnxietyItem(img, x, y, scale, options = {}) {
 }
 
 /**
- * Draws anxiety items
+ * Draws anxiety items with conditions for static and dynamic (spinning) item rotation
  */
 function drawAnxietyItem(item) {
-      // If the item has a rotation, then draw the image rotated
-        if (item.rotation !== 0) {
+    // Check if the item should spin
+    let itemSpin = item.sound && item.sound.isPlaying() && item.rotationSpeed !== 0;
+    
+    // If the item has a rotation, then draw the image rotated (static)
+    // If the item had a rotation speed, then make the object spin (dynamic)
+        if (item.rotation !== 0 || itemSpin) {
             push();
-            // New origin
+            // Move origin to centre of the item
             translate(item.x + item.width / 2, item.y + item.height / 2);
+            
+            // If sound is playing, spin the item
+            if (itemSpin) {
+                item.rotation += item.rotationSpeed;
+            }   
+            
+            // Apply rotation (static or spinning)
             rotate(item.rotation);
-            // Draw image centered relative to new origin
+            
+            // Draw image centered at the new origin
             imageMode(CENTER);
             image(item.img, 0, 0, item.width, item.height);
             pop();

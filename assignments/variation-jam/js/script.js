@@ -6,8 +6,8 @@
  * This project explores what the inside of my head looks like when I'm daydreaming, feeling anxious, or feeling stuck. 
  * Each version features a girl with a matching expression and experience. The images were hand-drawn and then coloured in Photoshop.
  * 
- * The daydreaming and anxious variations include draggable items. When an item is dragged, a thematic cursor trail appears–
- * randomized stars in daydreaming and randomized spirals in anxious. The items in the anxious state also slightly tremble.  
+ * The daydreaming and anxious variations include draggable items. When an item is dragged, a sound effect plays and a thematic cursor 
+ * trail appears–randomized stars in daydreaming and randomized spirals in anxious. The items in the anxious state also slightly tremble.  
  * 
  * There are no items at all in the stuck variation. Instead, the mouse becomes a pen, allowing you to draw all over the canvas, 
  * or do nothing at all. The drawings can be cleared by pressing (delete / backspace).
