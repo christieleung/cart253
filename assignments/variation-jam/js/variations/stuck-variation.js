@@ -60,7 +60,7 @@ const mouseDrawing = {
  * Initializes the background and mouse-drawing layer
  */
 function stuckSetup() {   
-    background(staticBg.fill.r, staticBg.fill.b, staticBg.fill.g); 
+    background(staticBg.fill.r, staticBg.fill.g, staticBg.fill.b); 
     // Creates a new layer
     // Learned how to use function from: https://www.youtube.com/watch?v=TaluaAD9MKA
     lineLayer = createGraphics(width, height);
@@ -88,17 +88,19 @@ function stuckDraw() {
  * Referenced code from: https://editor.p5js.org/Sekyi/sketches/rb6qBfKB3
  */
 function drawStatic() {
-    for (let rectX = staticBg.rect.startingPosition; rectX <= width; rectX = rectX += staticBg.rect.spacing) {
-        for (let rectY = staticBg.rect.startingPosition; rectY <= height; rectY = rectY += staticBg.rect.spacing) {
+    push();
+    for (let rectX = staticBg.rect.startingPosition; rectX <= width; rectX += staticBg.rect.spacing) {
+        for (let rectY = staticBg.rect.startingPosition; rectY <= height; rectY += staticBg.rect.spacing) {
             let staticGreyscale = random(
                 staticBg.rect.greyscale.lowerRange,
                 staticBg.rect.greyscale.upperRange);
             
-            fill(staticGreyscale, staticBg.rect.opacity);
             noStroke();
+            fill(staticGreyscale, staticBg.rect.opacity);
             rect(rectX, rectY, staticBg.rect.size, staticBg.rect.size);
         }
     }
+    pop();
 }
 
 /**
@@ -106,12 +108,14 @@ function drawStatic() {
  * Referenced code from: https://editor.p5js.org/brain/sketches/ojB-QN8Tv
  */
 function drawLines() {
+    push();
     lineLayer.stroke(mouseDrawing.stroke.fill.r, mouseDrawing.stroke.fill.g, mouseDrawing.stroke.fill.b);
     lineLayer.strokeWeight(mouseDrawing.strokeWeight);
     lineLayer.line(mouseX, mouseY, pmouseX, pmouseY);
     
     // Displays mouse-drawing layer (at the origin) above everything else
     image(lineLayer, 0, 0);
+    pop();
 }
 
 /**

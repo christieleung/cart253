@@ -67,7 +67,7 @@ function createAnxietyItem(img, x, y, scale) {
  * This will be called whenever a key is pressed while the anxious variation is active
  */
 function anxiousKeyPressed(event) {
-    if (event.keyCode === 27) {
+    if (event.keyCode === key.esc) {
         state = "menu";
     }
 }
@@ -185,13 +185,17 @@ function updateSpiralParticles() {
  * Draws the spiral particle cursor trail
  */
 function drawSpiralParticles() {
+    push();
     noFill();
     strokeWeight(1.5);
+    
     for (let spiralParticle of spirals) {
         stroke(spiralParticle.fill.r, spiralParticle.fill.g, spiralParticle.fill.b, spiralParticle.alpha);
         // Draws spirals using spiral helper function
         spiral(spiralParticle.x, spiralParticle.y, spiralParticle.size);
     }
+    
+    pop();
 }
 
 /**

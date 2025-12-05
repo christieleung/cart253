@@ -77,7 +77,7 @@ function createDaydreamItem(img, x, y, scale) {
  * This will be called whenever a key is pressed while the daydream variation is active
  */
 function daydreamingKeyPressed(event) {
-    if (event.keyCode === 27) {
+    if (event.keyCode === key.esc) {
         state = "menu";
     }
 }
@@ -190,12 +190,14 @@ function updateStarParticles() {
  * Draws the star particle cursor trail
  */
 function drawStarParticles() {
+    push();
     noStroke();
     for (let starParticle of stars) {
         fill(starParticle.fill.r, starParticle.fill.g, starParticle.fill.b, starParticle.alpha);
         // Draws stars using star helper function
         star(starParticle.x, starParticle.y, starParticle.size / 2, starParticle.size, 5);
     }
+    pop();
 }
 
 /**
