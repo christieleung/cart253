@@ -7,10 +7,13 @@
 
 "use strict";
 
-let state = "stuck-variation";
+let state = "menu";
 
 // Variable for key codes
 const key = {
+    one: 49,
+    two: 50,
+    three: 51,
     esc: 27
 }
 
