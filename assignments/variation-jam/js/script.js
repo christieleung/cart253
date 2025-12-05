@@ -32,7 +32,7 @@
 
 // Variable that allows for different states 
 // (states: menu, daydreaming - variation, anxious - variation, stuck - variation)
-let state = "menu";
+let state = "anxious-variation";
 
 // Variable for key codes
 const key = {
@@ -83,6 +83,10 @@ const sounds = {
     anxietySong: undefined,
     shimmering: undefined,
     ticking: undefined,
+    paperCrinkle: undefined,
+    stickyNote: undefined,
+    writing: undefined,
+    heartbeat: undefined,
     static: undefined,
 };
 
@@ -136,15 +140,31 @@ function preloadSounds() {
     
     // From Pixabay: https://pixabay.com/sound-effects/shimmering-object-79354/
     sounds.shimmering = loadSound("assets/sounds/shimmering.mp3");
-    sounds.shimmering.setVolume(0.30);
+    sounds.shimmering.setVolume(0.35);
     
     // From Pixabay: https://pixabay.com/sound-effects/clock-ticking-down-376897/
     sounds.ticking = loadSound("assets/sounds/clock_ticking.mp3");
-    sounds.ticking.setVolume(0.20);
+    sounds.ticking.setVolume(0.25);
+    
+    // From Pixabay: https://pixabay.com/sound-effects/paper-crinkle-291786/
+    sounds.paperCrinkle = loadSound("assets/sounds/paper_crinkle.mp3");
+    sounds.paperCrinkle.setVolume(0.20);
+    
+    // From Pixabay: https://pixabay.com/sound-effects/turning-book-page-79935/
+    sounds.stickyNote = loadSound("assets/sounds/page.mp3");
+    sounds.stickyNote.setVolume(0.40);
+    
+    // From Pixabay: https://pixabay.com/sound-effects/scribble-6144/
+    sounds.writing = loadSound("assets/sounds/writing.mp3");
+    sounds.writing.setVolume(0.40);
+    
+    // From Pixabay: https://pixabay.com/sound-effects/heartbeat-sound-effect-111218/
+    sounds.heartbeat = loadSound("assets/sounds/heartbeat.mp3");
+    sounds.heartbeat.setVolume(0.40);
     
     // From Pixabay: https://pixabay.com/sound-effects/tv-static-noise-291374/
     sounds.static = loadSound("assets/sounds/static.mp3");
-    sounds.static.setVolume(0.13); 
+    sounds.static.setVolume(0.10); 
 }    
 
 /**

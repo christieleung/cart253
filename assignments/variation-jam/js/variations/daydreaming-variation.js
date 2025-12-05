@@ -168,7 +168,7 @@ function daydreamingKeyPressed(event) {
 
 /**
  * This will be called whenever the mouse is pressed while the daydreaming variation is active
- * Checks if the cursor is over an item and enables dragging
+ * Checks if the cursor is over an item and enables dragging and sound
  */
 function daydreamingMousePressed() {
     for (let i = 0; i < daydreamItems.length; i++) {
@@ -187,7 +187,7 @@ function daydreamingMousePressed() {
             
             // Play sound only when drag starts
             if (item.sound) {
-            item.sound.play();
+                item.sound.loop();
             }
 
             // Removes item and adds it at the end of the array

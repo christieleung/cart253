@@ -113,23 +113,24 @@ function anxiousSetup() {
     anxietyItems.push(createAnxietyItem(anxietyImg.record, anxietyItemProperties.record.x, anxietyItemProperties.record.y,
         anxietyItemProperties.record.scale, { sound: sounds.anxietySong }));
     anxietyItems.push(createAnxietyItem(anxietyImg.work, anxietyItemProperties.work.x.first, anxietyItemProperties.work.y.first,
-        anxietyItemProperties.work.scale));
+        anxietyItemProperties.work.scale, { sound: sounds.paperCrinkle }));
     anxietyItems.push(createAnxietyItem(anxietyImg.work, anxietyItemProperties.work.x.second, anxietyItemProperties.work.y.second,
-        anxietyItemProperties.work.scale));
+        anxietyItemProperties.work.scale, { sound: sounds.paperCrinkle }));
     anxietyItems.push(createAnxietyItem(anxietyImg.reminderPurple, anxietyItemProperties.reminderPurple.x.first,
-        anxietyItemProperties.reminderPurple.y.first, anxietyItemProperties.reminderPurple.scale));
+        anxietyItemProperties.reminderPurple.y.first, anxietyItemProperties.reminderPurple.scale, { sound: sounds.stickyNote }));
     anxietyItems.push(createAnxietyItem(anxietyImg.time, anxietyItemProperties.time.x, anxietyItemProperties.time.y,
         anxietyItemProperties.time.scale, { sound: sounds.ticking }));
-    anxietyItems.push(createAnxietyItem(anxietyImg.health, anxietyItemProperties.health.x, anxietyItemProperties.health.y, anxietyItemProperties.health.scale));
+    anxietyItems.push(createAnxietyItem(anxietyImg.health, anxietyItemProperties.health.x, anxietyItemProperties.health.y,
+        anxietyItemProperties.health.scale, { sound: sounds.heartbeat }));
     anxietyItems.push(createAnxietyItem(anxietyImg.work, anxietyItemProperties.work.x.third, anxietyItemProperties.work.y.third,
-        anxietyItemProperties.work.scale));
+        anxietyItemProperties.work.scale, { sound: sounds.writing }));
     // Anxiety items with a slight rotation
     anxietyItems.push(createAnxietyItem(anxietyImg.work, anxietyItemProperties.work.x.fourth, anxietyItemProperties.work.y.fourth,
-        anxietyItemProperties.work.scale, { rotation: anxietyItemProperties.work.rotation }));
+        anxietyItemProperties.work.scale, { sound: sounds.writing, rotation: anxietyItemProperties.work.rotation }));
     anxietyItems.push(createAnxietyItem(anxietyImg.reminderPurple, anxietyItemProperties.reminderPurple.x.second, anxietyItemProperties.reminderPurple.y.second,
-        anxietyItemProperties.reminderPurple.scale, { rotation: anxietyItemProperties.reminderPurple.rotation }));
+        anxietyItemProperties.reminderPurple.scale, { sound: sounds.stickyNote, rotation: anxietyItemProperties.reminderPurple.rotation }));
     anxietyItems.push(createAnxietyItem(anxietyImg.reminderBlue, anxietyItemProperties.reminderBlue.x, anxietyItemProperties.reminderBlue.y,
-        anxietyItemProperties.reminderBlue.scale, { rotation: anxietyItemProperties.reminderBlue.rotation }));
+        anxietyItemProperties.reminderBlue.scale, { sound: sounds.stickyNote, rotation: anxietyItemProperties.reminderBlue.rotation }));
 }
 
 /**
@@ -212,7 +213,7 @@ function anxiousKeyPressed(event) {
 
 /**
  * This will be called whenever the mouse is pressed while the anxious variation is active
- * Checks if the cursor is over an item and enables dragging
+ * Checks if the cursor is over an item and enables dragging and sound
  */
 function anxiousMousePressed() {
     for (let i = 0; i < anxietyItems.length; i++) {
@@ -230,8 +231,12 @@ function anxiousMousePressed() {
             item.offsetY = mouseY - item.y;
             
             // Play sound only when drag starts
-            if (item.sound) {
-                item.sound.play();
+            // Loop sound for all items except stickyNote
+            if (item.sound && item.sound !== sounds.stickyNote) {
+                item.sound.loop();
+            } else if (item.sound === sounds.stickyNote) {
+                // Play once
+                item.sound.play(); 
             }
             
             // Removes item and adds it at the end of the array
