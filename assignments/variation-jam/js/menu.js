@@ -5,13 +5,14 @@
  */
 
 // Menu text with title and variation names
-const menuText = `
-a peek inside my head!
-
-press (number key) to enter each mind state:
-(1) daydreaming
-(2) anxious
-(3) stuck`
+const menuInstruction = [
+    "a peek inside my head!",
+    "",
+    "press (number key) to enter each mind state:",
+    "(1) daydreaming",
+    "(2) anxious",
+    "(3) stuck"
+]
 
 // Menu screen background colour
 const menuBg = {
@@ -45,16 +46,28 @@ const gingham = {
     }
 }
 
-// Colour, opacity, and size of the menu text panel
-const menuTextPanel = {
-    fill: {
-        r: 245,
-        g: 245,
-        b: 210
-    }, 
-    opacity: 200,
-    width: 530,
-    height: 430
+// Colour, opacity, and size of the menu panel background
+// Colour of the menu panel text
+const menuPanel = {
+    bg: {
+       fill: {
+            r: 245,
+            g: 245,
+            b: 210
+        }, 
+        opacity: 200,
+        width: 530,
+        height: 430  
+    },
+    text: {
+       fill: {
+            r: 55,
+            g: 55,
+            b: 55
+        },  
+        strokeWeight: 2
+    }
+   
 }
 
 /**
@@ -68,33 +81,8 @@ function menuDraw() {
     // Resets blend mode (colour mixing)
     blendMode(BLEND);
     
-    drawMenuTextPanel();
-    drawMenuText();
-}
-
-/**
- * Draws a translucent rectangle behind the menu text
- */
-function drawMenuTextPanel() {
-    push();
-    noStroke();
-    fill(menuTextPanel.fill.r, menuTextPanel.fill.g, menuTextPanel.fill.b, menuTextPanel.opacity);
-    rectMode(CENTER);
-    rect(width / 2, height / 2, menuTextPanel.width, menuTextPanel.height);
-    pop();
-}
-
-/**
- * Draws menu text in the center of the screen
- */
-function drawMenuText() {
-    push();
-    fill(76, 43, 32);
-    strokeWeight(2);
-    textSize(23);
-    textAlign(CENTER, CENTER);
-    text(menuText, width / 2, height / 2);
-    pop();
+    // Draw menu instructions with bigger font size
+    drawInstructionPanel(menuInstruction, 22);
 }
 
 /**

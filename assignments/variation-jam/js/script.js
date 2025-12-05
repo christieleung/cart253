@@ -32,7 +32,7 @@
 
 // Variable that allows for different states 
 // (states: menu, daydreaming - variation, anxious - variation, stuck - variation)
-let state = "anxious-variation";
+let state = "menu";
 
 // Variable for key codes
 const key = {
@@ -208,10 +208,11 @@ function draw() {
 
 /**
  * Draws the instruction panel
+ * Sets default font size to 20
  */
-function drawInstructionPanel(instructionArray) {
+function drawInstructionPanel(instructionArray, fontSize = 20) {
     drawInstructionPanelBg(instructionArray);
-    drawInstructionText(instructionArray);
+    drawInstructionText(instructionArray, fontSize);
 }
 
 /**
@@ -230,11 +231,11 @@ function drawInstructionPanelBg(instructionArray) {
 /**
  * Draws the instruction text inside the panel
  */
-function drawInstructionText(instructionArray) {
+function drawInstructionText(instructionArray, fontSize) {
     push();
     fill(instructionPanel.text.fill.r, instructionPanel.text.fill.g, instructionPanel.text.fill.b);
     textAlign(CENTER, CENTER);
-    textSize(20);
+    textSize(fontSize);
     let textStartingY = height / 2 - instructionPanel.bg.height / 2 + instructionPanel.text.offsetY;
 
     for (let i = 0; i < instructionArray.length; i++) {
