@@ -34,6 +34,7 @@ const stuckInstructions = [
     "• press (delete) to erase them",
     "• press (space) to toggle this instruction panel",
     "• press (esc) to return to the menu",
+    "• have your sound on!",
 ];
 
 // Shows and hides instruction panel
@@ -73,6 +74,11 @@ function stuckSetup() {
     lineLayer = createGraphics(width, height);
     // Makes the layer transparent
     lineLayer.clear();
+    
+    // Play static sound effect in the background
+    sounds.static.loop();
+    // Set volume to 15%
+    sounds.static.setVolume(0.15);
 }
 
 /**
@@ -138,6 +144,10 @@ function drawLines() {
 function stuckKeyPressed(event) {
     // Return to the main menu by pressing esc
     if (event.keyCode === key.esc) {
+        // Stop playing static sound
+        if (sounds.static.isPlaying()) {
+            sounds.static.stop();
+        }
         state = "menu";
     }
     
@@ -150,4 +160,11 @@ function stuckKeyPressed(event) {
     if (event.keyCode === key.delete) {
         lineLayer.clear();
     }
+}
+
+/**
+ * This will be called whenever the mouse is pressed while the stuck variation is active
+ */
+function stuckMousePressed() {
+
 }

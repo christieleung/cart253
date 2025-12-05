@@ -22,6 +22,8 @@
  * - Press (escape) to return to the menu
  * - Press (delete / backspace) to clear drawings in the stuck variation
  * 
+ * Have the sound on!
+ * 
  * Made with p5
  * https://p5js.org/
  */
@@ -47,16 +49,21 @@ const key = {
 const instructionPanel = {
     bg: {
         fill: {
-        r: 245,
-        g: 245,
-        b: 210
+            r: 245,
+            g: 245,
+            b: 210
         }, 
         opacity: 235,
         width: 530,
         height: 430, 
     },
     text: {
-        offsetY: 150,
+        fill: {
+            r: 55,
+            g: 55,
+            b: 55    
+        },
+        offsetY: 143,
         lineSpacing: 30 
     }
    
@@ -70,10 +77,27 @@ const girl = {
     height: 290
 }
 
+// Stores sound effects
+const sounds = {
+    daydreamingSong: undefined,
+    anxietySong: undefined,
+    shimmering: undefined,
+    ticking: undefined,
+    static: undefined,
+};
+
 /**
- * Preload images
+ * Preload images and sounds
  */
 function preload() {
+    preloadImages();
+    preloadSounds();
+}
+
+/**
+ * Preload image assets
+ */
+function preloadImages() {
     // Daydreaming variation
     daydreamImg.girl = loadImage('assets/images/girl_daydream.png');
     daydreamImg.bunny = loadImage('assets/images/bunny.png');
@@ -92,10 +116,36 @@ function preload() {
     anxietyImg.reminderBlue = loadImage('assets/images/reminder_1.png');
     anxietyImg.reminderPurple = loadImage('assets/images/reminder_2.png');
     
-    
     // Stuck variation
     stuckImg.girl = loadImage('assets/images/girl_think.png')
 }
+
+/**
+ * Preload sound assets and sets volume
+ */
+function preloadSounds() {
+    // MP3s
+    // Crimson and Clover, cover by The Shacks, downloaded from: https://www.youtube.com/watch?v=5sUeNgPLijE
+    sounds.daydreamingSong = loadSound("assets/sounds/crimson_and_clover_the_shacks.mp3");
+    // Sets volume to 10%
+    sounds.daydreamingSong.setVolume(0.10);
+    
+    // Who Knows, by Daniel Caesar, downloaded from: https://www.youtube.com/watch?v=glscfhJyZHo&list=RDglscfhJyZHo&start_radio=1
+    sounds.anxietySong = loadSound("assets/sounds/who_knows_daniel_caesar.mp3");
+    sounds.anxietySong.setVolume(0.10);
+    
+    // From Pixabay: https://pixabay.com/sound-effects/shimmering-object-79354/
+    sounds.shimmering = loadSound("assets/sounds/shimmering.mp3");
+    sounds.shimmering.setVolume(0.30);
+    
+    // From Pixabay: https://pixabay.com/sound-effects/clock-ticking-down-376897/
+    sounds.ticking = loadSound("assets/sounds/clock_ticking.mp3");
+    sounds.ticking.setVolume(0.20);
+    
+    // From Pixabay: https://pixabay.com/sound-effects/tv-static-noise-291374/
+    sounds.static = loadSound("assets/sounds/static.mp3");
+    sounds.static.setVolume(0.13); 
+}    
 
 /**
  * Create the canvas
@@ -162,7 +212,7 @@ function drawInstructionPanelBg(instructionArray) {
  */
 function drawInstructionText(instructionArray) {
     push();
-    fill(50);
+    fill(instructionPanel.text.fill.r, instructionPanel.text.fill.g, instructionPanel.text.fill.b);
     textAlign(CENTER, CENTER);
     textSize(20);
     let textStartingY = height / 2 - instructionPanel.bg.height / 2 + instructionPanel.text.offsetY;

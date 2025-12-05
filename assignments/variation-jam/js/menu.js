@@ -159,3 +159,10 @@ function menuKeyPressed(event) {
             break;
     }
 }
+
+/**
+ * This will be called whenever the mouse is pressed while the menu is active
+ */
+function menuMousePressed() {
+
+}

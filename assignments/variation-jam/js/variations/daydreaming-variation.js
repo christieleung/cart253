@@ -21,6 +21,7 @@ const daydreamInstructions = [
     "• click & drag items around",
     "• press (space) to toggle this instruction panel",
     "• press (esc) to return to the menu",
+    "• have your sound on!",
 ];
 
 // Shows and hides instruction panel
@@ -89,17 +90,19 @@ function daydreamingSetup() {
     // Resets daydream items
     daydreamItems = [];
     
-    // Create daydream items, each has a position and scale
+    // Create daydream items, each has a position, scale, and sound
     daydreamItems.push(createDaydreamItem(daydreamImg.bunny, daydreamItemProperties.bunny.x, daydreamItemProperties.bunny.y,
-        daydreamItemProperties.bunny.scale));
+        daydreamItemProperties.bunny.scale, sounds.shimmering));
     daydreamItems.push(createDaydreamItem(daydreamImg.sakuraLightPink, daydreamItemProperties.sakuraLightPink.x, daydreamItemProperties.sakuraLightPink.y,
-        daydreamItemProperties.sakuraLightPink.scale));
+        daydreamItemProperties.sakuraLightPink.scale, sounds.shimmering));
     daydreamItems.push(createDaydreamItem(daydreamImg.record, daydreamItemProperties.record.x, daydreamItemProperties.record.y,
-        daydreamItemProperties.record.scale));
-    daydreamItems.push(createDaydreamItem(daydreamImg.cat, daydreamItemProperties.cat.x, daydreamItemProperties.cat.y, daydreamItemProperties.cat.scale));
+        daydreamItemProperties.record.scale, sounds.daydreamingSong));
+    daydreamItems.push(createDaydreamItem(daydreamImg.cat, daydreamItemProperties.cat.x, daydreamItemProperties.cat.y,
+        daydreamItemProperties.cat.scale, sounds.shimmering));
     daydreamItems.push(createDaydreamItem(daydreamImg.sakuraDarkPink, daydreamItemProperties.sakuraDarkPink.x, daydreamItemProperties.sakuraDarkPink.y,
-        daydreamItemProperties.sakuraDarkPink.scale));
-    daydreamItems.push(createDaydreamItem(daydreamImg.orchid, daydreamItemProperties.orchid.x, daydreamItemProperties.orchid.y, daydreamItemProperties.orchid.scale));
+        daydreamItemProperties.sakuraDarkPink.scale, sounds.shimmering));
+    daydreamItems.push(createDaydreamItem(daydreamImg.orchid, daydreamItemProperties.orchid.x, daydreamItemProperties.orchid.y,
+        daydreamItemProperties.orchid.scale, sounds.shimmering));
 }
 
 /**
@@ -131,7 +134,7 @@ function daydreamingDraw() {
  * Creates an item with a positon, and size in the daydreaming variation
  * Also tracks dragging state and mouse offset
  */
-function createDaydreamItem(img, x, y, scale) {
+function createDaydreamItem(img, x, y, scale, sound) {
     let item = {
             img: img,
             x: x,
@@ -140,7 +143,8 @@ function createDaydreamItem(img, x, y, scale) {
             height: img.height * scale,
             dragging: false,
             offsetX: 0,
-            offsetY: 0
+            offsetY: 0, 
+            sound: sound
     };
     
     return item;
@@ -180,6 +184,11 @@ function daydreamingMousePressed() {
             // Keeps item under mouse cursor
             item.offsetX = mouseX - item.x;
             item.offsetY = mouseY - item.y;
+            
+            // Play sound only when drag starts
+            if (item.sound) {
+            item.sound.play();
+            }
 
             // Removes item and adds it at the end of the array
             // Makes dragged item appear on top
@@ -215,7 +224,11 @@ function daydreamingMouseDragged() {
  */
 function daydreamingMouseReleased() {
     for (let item of daydreamItems) {
-    item.dragging = false;
+             // Stops playing sound
+        if (item.sound) {
+            item.sound.stop();  
+        }
+        item.dragging = false;
     }
 }
 

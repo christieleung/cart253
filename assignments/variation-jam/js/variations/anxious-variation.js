@@ -21,6 +21,7 @@ const anxiousInstructions = [
     "• click & drag items around",
     "• press (space) to toggle this instruction panel",
     "• press (esc) to return to the menu",
+    "• have your sound on!",
 ];
 
 // Shows and hides instruction panel
@@ -108,25 +109,27 @@ function anxiousSetup() {
     anxietyItems = [];
     
     // Create anxiety items, each has a position and scale
+    // Some items have sound and rotation
     anxietyItems.push(createAnxietyItem(anxietyImg.record, anxietyItemProperties.record.x, anxietyItemProperties.record.y,
-        anxietyItemProperties.record.scale));
+        anxietyItemProperties.record.scale, { sound: sounds.anxietySong }));
     anxietyItems.push(createAnxietyItem(anxietyImg.work, anxietyItemProperties.work.x.first, anxietyItemProperties.work.y.first,
         anxietyItemProperties.work.scale));
     anxietyItems.push(createAnxietyItem(anxietyImg.work, anxietyItemProperties.work.x.second, anxietyItemProperties.work.y.second,
         anxietyItemProperties.work.scale));
     anxietyItems.push(createAnxietyItem(anxietyImg.reminderPurple, anxietyItemProperties.reminderPurple.x.first,
         anxietyItemProperties.reminderPurple.y.first, anxietyItemProperties.reminderPurple.scale));
-    anxietyItems.push(createAnxietyItem(anxietyImg.time, anxietyItemProperties.time.x, anxietyItemProperties.time.y, anxietyItemProperties.time.scale));
+    anxietyItems.push(createAnxietyItem(anxietyImg.time, anxietyItemProperties.time.x, anxietyItemProperties.time.y,
+        anxietyItemProperties.time.scale, { sound: sounds.ticking }));
     anxietyItems.push(createAnxietyItem(anxietyImg.health, anxietyItemProperties.health.x, anxietyItemProperties.health.y, anxietyItemProperties.health.scale));
     anxietyItems.push(createAnxietyItem(anxietyImg.work, anxietyItemProperties.work.x.third, anxietyItemProperties.work.y.third,
         anxietyItemProperties.work.scale));
     // Anxiety items with a slight rotation
     anxietyItems.push(createAnxietyItem(anxietyImg.work, anxietyItemProperties.work.x.fourth, anxietyItemProperties.work.y.fourth,
-        anxietyItemProperties.work.scale, anxietyItemProperties.work.rotation));
+        anxietyItemProperties.work.scale, { rotation: anxietyItemProperties.work.rotation }));
     anxietyItems.push(createAnxietyItem(anxietyImg.reminderPurple, anxietyItemProperties.reminderPurple.x.second, anxietyItemProperties.reminderPurple.y.second,
-        anxietyItemProperties.reminderPurple.scale, anxietyItemProperties.reminderPurple.rotation));
+        anxietyItemProperties.reminderPurple.scale, { rotation: anxietyItemProperties.reminderPurple.rotation }));
     anxietyItems.push(createAnxietyItem(anxietyImg.reminderBlue, anxietyItemProperties.reminderBlue.x, anxietyItemProperties.reminderBlue.y,
-        anxietyItemProperties.reminderBlue.scale, anxietyItemProperties.reminderBlue.rotation));
+        anxietyItemProperties.reminderBlue.scale, { rotation: anxietyItemProperties.reminderBlue.rotation }));
 }
 
 /**
@@ -171,18 +174,20 @@ function anxiousDraw() {
 /**
  * Creates an item with a positon, and size in the anxious variation
  * Also tracks dragging state and mouse offset
+ * Some items have a rotation and sound
  */
-function createAnxietyItem(img, x, y, scale, rotation = 0) {
+function createAnxietyItem(img, x, y, scale, options = {}) {
     let item = {
             img: img,
             x: x,
             y: y,
             width: img.width * scale,
             height: img.height * scale,
-            rotation: rotation,
             dragging: false,
             offsetX: 0,
-            offsetY: 0
+            offsetY: 0,
+            rotation: options.rotation || 0,
+            sound: options.sound || null
     };
     
     return item;
@@ -223,7 +228,12 @@ function anxiousMousePressed() {
             // Keeps item under mouse cursor
             item.offsetX = mouseX - item.x;
             item.offsetY = mouseY - item.y;
-
+            
+            // Play sound only when drag starts
+            if (item.sound) {
+                item.sound.play();
+            }
+            
             // Removes item and adds it at the end of the array
             // Makes dragged item appear on top
             anxietyItems.push(anxietyItems.splice(i, 1)[0]);
@@ -245,7 +255,7 @@ function anxiousMouseDragged() {
             item.y = mouseY - item.offsetY;
             
             // Trembling effect
-            let tremors = 2;
+            let tremors = 3;
             item.x += random(-tremors, tremors);
             item.y += random(-tremors, tremors);
         }
@@ -263,7 +273,11 @@ function anxiousMouseDragged() {
  */
 function anxiousMouseReleased() {
     for (let item of anxietyItems) {
-    item.dragging = false;
+        // Stops playing sound
+        if (item.sound) {
+            item.sound.stop();  
+        }
+        item.dragging = false;
     }
 }
 
