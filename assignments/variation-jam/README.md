@@ -18,11 +18,17 @@ Christie Leung
 
 > The project is also controlled using the keyboard, as pressing (1), (2), or (3) allows you to enter the daydreaming, anxious, or stuck variations, and pressing (space) toggles the visibility of each state's instruction panel. Pressing (escape) allows you to return to the menu. And lastly, the drawings in the stuck variation can be cleared by pressing the (delete / backspace) key. 
 
-## Screenshot(s)
+## Screenshots
 
-This bit should have some images of the program running so that the reader has a sense of what it looks like. For example:
+> ![Image of the menu screen](./assets/images/var_jam_menu.png)
 
-> ![Image of a clown face](./assets/images/clown.png)
+> ![Image of the daydreaming variation](./assets/images/var_jam_daydreaming.png)
+
+> ![Image of the anxious variation with items dragged around](./assets/images/var_jam_anxious.png)
+
+> ![Image of the stuck variation instructions panel](./assets/images/var_jam_stuck_instructions.png)
+
+> ![Image of the stuck variation with a spiral scribble](./assets/images/var_jam_stuck.png)
 
 ## Attribution
 

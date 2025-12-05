@@ -152,5 +152,5 @@ function menuKeyPressed(event) {
  * This will be called whenever the mouse is pressed while the menu is active
  */
 function menuMousePressed() {
-
+  // Didn't end up using it but keeping it here in case I want to add to it!
 }

@@ -27,7 +27,7 @@ const anxiousInstructions = [
 // Shows and hides instruction panel
 let showAnxiousInstructions = true;
 
-// Image placeholders for the anxious girl and what she's thinking about
+// Stores images of the anxious girl and what she's thinking about
 let anxietyImg = {
     girl: undefined,
     record: undefined,
@@ -180,7 +180,6 @@ function anxiousDraw() {
  * Creates an anxiety item with a positon, size, and sound
  * Some items also have a rotation
  * Tracks dragging state and mouse offset
-
  */
 function createAnxietyItem(img, x, y, scale, options = {}) {
     let item = {
@@ -195,8 +194,7 @@ function createAnxietyItem(img, x, y, scale, options = {}) {
             dragging: false,
             onTop: false,
             offsetX: 0,
-            offsetY: 0,
-           
+            offsetY: 0, 
     };
     
     return item;
@@ -240,7 +238,6 @@ function drawAnxietyItem(item) {
  * Handles returning to the menu and showing/hiding the instruction panel
  */
 function anxiousKeyPressed(event) {
-    
     // Return to the main menu by pressing esc
     if (event.keyCode === key.esc) {
         state = "menu";
@@ -318,7 +315,7 @@ function anxiousMouseDragged() {
 }
 
 /**
- * Stops dragging items once mouse is released in the anxious variation
+ * Stops dragging items and playing sound once mouse is released in the anxious variation
  */
 function anxiousMouseReleased() {
     for (let item of anxietyItems) {

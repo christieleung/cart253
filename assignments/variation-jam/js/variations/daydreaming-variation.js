@@ -27,7 +27,7 @@ const daydreamInstructions = [
 // Shows and hides instruction panel
 let showDaydreamInstructions = true;
 
-// Image placeholders of daydreaming girl and what she's thinking about
+// Stores images of daydreaming girl and what she's thinking about
 let daydreamImg = {
     girl: undefined,
     bunny: undefined,
@@ -142,7 +142,6 @@ function daydreamingDraw() {
     if (showDaydreamInstructions) {
         drawInstructionPanel(daydreamInstructions);
     }
-
 }
 
 /**
@@ -277,7 +276,7 @@ function daydreamingMouseDragged() {
 }
 
 /**
- * Stops dragging items once mouse is released in the daydreaming variation
+ * Stops dragging items and playing sound once mouse is released in the daydreaming variation
  */
 function daydreamingMouseReleased() {
     for (let item of daydreamItems) {

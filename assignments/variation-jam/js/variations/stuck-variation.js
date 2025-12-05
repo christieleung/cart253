@@ -40,7 +40,7 @@ const stuckInstructions = [
 // Shows and hides instruction panel
 let showStuckInstructions = true;
 
-// Image placeholder of a girl who feels stuck
+// Stores image of a girl who feels stuck
 let stuckImg = {
     girl: undefined
 }
@@ -166,5 +166,5 @@ function stuckKeyPressed(event) {
  * This will be called whenever the mouse is pressed while the stuck variation is active
  */
 function stuckMousePressed() {
-
+    // Didn't end up using it but keeping it here in case I want to add to it!
 }
