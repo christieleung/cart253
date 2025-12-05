@@ -1,6 +1,6 @@
 /**
- * This file contains the code to run *only* the blue variation part of the program.
- * Note how it has its own draw, blueDraw(), and its own keyPressed, blueKeyPressed().
+ * This file contains the code to run *only* the stuck variation part of the program.
+ * Note how it has its own draw, stuckDraw(), and its own keyPressed, stuckKeyPressed().
  * This keeps the stuff the menu needs to do *separate* from the rest of the program.
  */
 
@@ -25,6 +25,19 @@ const staticBg = {
         opacity: 120
     }    
 }
+
+// Array for instruction text in the stuck variation
+const stuckInstructions = [
+    "꩜ feeling stuck! ꩜",
+    "",
+    "• draw messy webs of thoughts using the mouse",
+    "• press (delete) to erase them",
+    "• press (space) to toggle this instruction panel",
+    "• press (esc) to return to the menu",
+];
+
+// Shows and hides instruction panel
+let showStuckInstructions = true;
 
 // Image placeholder of a girl who feels stuck
 let stuckImg = {
@@ -52,6 +65,9 @@ const mouseDrawing = {
  * Initializes the background and mouse-drawing layer
  */
 function stuckSetup() {   
+    // Resets instruction panel to visible
+    showStuckInstructions = true;
+    
     background(staticBg.fill.r, staticBg.fill.g, staticBg.fill.b); 
     // Creates a new layer
     // Learned how to use function from: https://www.youtube.com/watch?v=TaluaAD9MKA
@@ -73,6 +89,11 @@ function stuckDraw() {
     
     // Draws the lines in the mouse-drawing layer
     drawLines();
+    
+    // Draw instruction panel only if active
+    if (showStuckInstructions) {
+        drawInstructionPanel(stuckInstructions);
+    }
 }
 
 /**
@@ -112,11 +133,17 @@ function drawLines() {
 
 /**
  * This will be called whenever a key is pressed while the stuck variation is active
- * Returns to the main menu by pressing esc
+ * Handles returning to the menu and showing/hiding the instruction panel
  */
 function stuckKeyPressed(event) {
+    // Return to the main menu by pressing esc
     if (event.keyCode === key.esc) {
         state = "menu";
+    }
+    
+    // Toggle instructions by pressing space
+    if (event.keyCode === key.space) {
+        showStuckInstructions = !showStuckInstructions;
     }
 }
 

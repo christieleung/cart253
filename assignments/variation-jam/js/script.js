@@ -7,14 +7,35 @@
 
 "use strict";
 
-let state = "daydreaming-variation";
+let state = "menu";
 
 // Variable for key codes
 const key = {
     one: 49,
     two: 50,
     three: 51,
-    esc: 27
+    esc: 27,
+    space: 32
+}
+
+// Colour and size of the instruction panel background
+// Positioning and spacing of the instruction text
+const instructionPanel = {
+    bg: {
+        fill: {
+        r: 245,
+        g: 245,
+        b: 210
+        }, 
+        opacity: 235,
+        width: 530,
+        height: 430, 
+    },
+    text: {
+        offsetY: 150,
+        lineSpacing: 30 
+    }
+   
 }
 
 // Position and size of the girl image
@@ -89,6 +110,44 @@ function draw() {
             stuckDraw();
             break;
     }
+}
+
+/**
+ * Draws the instruction panel
+ */
+function drawInstructionPanel(instructionArray) {
+    drawInstructionPanelBg(instructionArray);
+    drawInstructionText(instructionArray);
+}
+
+/**
+ * Draws the background rectangle for the instruction panel
+ */
+function drawInstructionPanelBg(instructionArray) {
+    push();
+    noStroke();
+    fill(instructionPanel.bg.fill.r, instructionPanel.bg.fill.g, instructionPanel.bg.fill.b,
+        instructionPanel.bg.opacity);
+    rectMode(CENTER);
+    rect(width / 2, height / 2, instructionPanel.bg.width, instructionPanel.bg.height);
+    pop();   
+}
+ 
+/**
+ * Draws the instruction text inside the panel
+ */
+function drawInstructionText(instructionArray) {
+    push();
+    fill(50);
+    textAlign(CENTER, CENTER);
+    textSize(20);
+    let textStartingY = height / 2 - instructionPanel.bg.height / 2 + instructionPanel.text.offsetY;
+
+    for (let i = 0; i < instructionArray.length; i++) {
+        text(instructionArray[i], width / 2, textStartingY + i * instructionPanel.text.lineSpacing);
+    }
+
+    pop();
 }
 
 /**

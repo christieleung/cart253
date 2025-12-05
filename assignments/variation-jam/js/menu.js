@@ -49,9 +49,9 @@ const menuTextPanel = {
     fill: {
         r: 245,
         g: 245,
-        b: 220
+        b: 210
     }, 
-    opacity: 175,
+    opacity: 200,
     width: 530,
     height: 430
 }

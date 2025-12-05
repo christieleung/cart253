@@ -14,6 +14,18 @@ const anxiousBg = {
     }
 }
 
+// Array for the instruction text in the anxious variation
+const anxiousInstructions = [
+    "⊹ feeling anxious! ⊹",
+    "",
+    "• click & drag items around",
+    "• press (space) to toggle this instruction panel",
+    "• press (esc) to return to the menu",
+];
+
+// Shows and hides instruction panel
+let showAnxiousInstructions = true;
+
 // Image placeholders for the anxious girl and what she's thinking about
 let anxietyImg = {
     girl: undefined,
@@ -89,6 +101,9 @@ let spirals = [];
  * Initializes and positions the anxiety items
  */
 function anxiousSetup() {
+    // Resets instruction panel to visible
+    showAnxiousInstructions = true;
+    
     // Resets anxiety items
     anxietyItems = [];
     
@@ -146,6 +161,11 @@ function anxiousDraw() {
     // Draw the spiral particle cursor trail
     drawSpiralParticles();
     updateSpiralParticles();
+    
+     // Draw instruction panel only if active
+    if (showAnxiousInstructions) {
+        drawInstructionPanel(anxiousInstructions);
+    }
 }
 
 /**
@@ -170,11 +190,18 @@ function createAnxietyItem(img, x, y, scale, rotation = 0) {
 
 /**
  * This will be called whenever a key is pressed while the anxious variation is active
- * Returns to the main menu by pressing esc
+ * Handles returning to the menu and showing/hiding the instruction panel
  */
 function anxiousKeyPressed(event) {
+    
+    // Return to the main menu by pressing esc
     if (event.keyCode === key.esc) {
         state = "menu";
+    }
+    
+    // Toggle instructions by pressing space
+    if (event.keyCode === key.space) {
+        showAnxiousInstructions = !showAnxiousInstructions;
     }
 }
 

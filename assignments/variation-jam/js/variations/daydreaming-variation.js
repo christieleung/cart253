@@ -13,6 +13,19 @@ const daydreamBg = {
         b: 182
     }
 }
+
+// Array for the instruction text in the daydreaming variation
+const daydreamInstructions = [
+    "✿ daydreaming! ✿",
+    "",
+    "• click & drag items around",
+    "• press (space) to toggle this instruction panel",
+    "• press (esc) to return to the menu",
+];
+
+// Shows and hides instruction panel
+let showDaydreamInstructions = true;
+
 // Image placeholders of daydreaming girl and what she's thinking about
 let daydreamImg = {
     girl: undefined,
@@ -70,6 +83,9 @@ let stars = [];
  * Initializes and positions the daydream items
  */
 function daydreamingSetup() {
+    // Resets instruction panel to visible
+    showDaydreamInstructions = true;
+    
     // Resets daydream items
     daydreamItems = [];
     
@@ -104,6 +120,11 @@ function daydreamingDraw() {
     // Draw the star particle cursor trail
     drawStarParticles();
     updateStarParticles();
+    
+    // Draw instruction panel only if active
+    if (showDaydreamInstructions) {
+        drawInstructionPanel(daydreamInstructions);
+    }
 }
 
 /**
@@ -127,11 +148,17 @@ function createDaydreamItem(img, x, y, scale) {
 
 /**
  * This will be called whenever a key is pressed while the daydreaming variation is active
- * Returns to the main menu by pressing esc
+ * Handles returning to the menu and showing/hiding the instruction panel
  */
 function daydreamingKeyPressed(event) {
+    // Return to the main menu by pressing esc
     if (event.keyCode === key.esc) {
         state = "menu";
+    }
+    
+    // Toggle instructions by pressing space
+    if (event.keyCode === key.space) {
+        showDaydreamInstructions = !showDaydreamInstructions;
     }
 }
 
