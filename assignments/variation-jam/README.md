@@ -2,7 +2,7 @@
 
 Christie Leung
 
-[View this project online](christieleung.github.io/cart253/assignments/variation-jam)
+[View this project online](christieleung.github.io/cart253/assignments/variation-jam/)
 
 ## Description
 

@@ -77,8 +77,6 @@ function stuckSetup() {
     
     // Play static sound effect in the background
     sounds.static.loop();
-    // Set volume to 15%
-    sounds.static.setVolume(0.15);
 }
 
 /**

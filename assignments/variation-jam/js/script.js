@@ -164,7 +164,7 @@ function preloadSounds() {
     
     // From Pixabay: https://pixabay.com/sound-effects/tv-static-noise-291374/
     sounds.static = loadSound("assets/sounds/static.mp3");
-    sounds.static.setVolume(0.10); 
+    sounds.static.setVolume(0.11); 
 }    
 
 /**
