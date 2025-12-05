@@ -4,11 +4,6 @@
  * This keeps the stuff the menu needs to do *separate* from the rest of the program.
  */
 
-// Image of a girl who feels stuck
-let stuckImg = {
-    girl: undefined
-}
-
 // Background colour and rectangle (square) starting position, spacing (between), size, 
 // greyscale values, and opacity for the animated static background
 const staticBg = {
@@ -29,6 +24,11 @@ const staticBg = {
         },
         opacity: 120
     }    
+}
+
+// Image placeholder of a girl who feels stuck
+let stuckImg = {
+    girl: undefined
 }
 
 // Variable for mouse-drawing layer

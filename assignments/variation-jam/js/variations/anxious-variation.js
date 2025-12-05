@@ -180,6 +180,7 @@ function anxiousKeyPressed(event) {
 
 /**
  * This will be called whenever the mouse is pressed while the anxious variation is active
+ * Checks if the cursor is over an item and enables dragging
  */
 function anxiousMousePressed() {
     for (let i = 0; i < anxietyItems.length; i++) {

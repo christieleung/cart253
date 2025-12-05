@@ -1,10 +1,19 @@
 /**
- * This file contains the code to run *only* the red variation part of the program.
- * Note how it has its own draw, redDraw(), and its own keyPressed, redKeyPressed().
+ * This file contains the code to run *only* the daydreaming variation part of the program.
+ * Note how it has its own draw, daydreamingDraw(), and its own keyPressed, daydreamingKeyPressed().
  * This keeps the stuff the menu needs to do *separate* from the rest of the program.
  */
 
-// Images of daydreaming girl and what she's thinking about
+// Daydreaming variation background colour
+const daydreamBg = {
+    fill: {
+        // Light green
+        r: 181,
+        g: 208,
+        b: 182
+    }
+}
+// Image placeholders of daydreaming girl and what she's thinking about
 let daydreamImg = {
     girl: undefined,
     bunny: undefined,
@@ -15,6 +24,41 @@ let daydreamImg = {
     record: undefined
 }
 
+// Position, scale, and rotation of daydream items
+const daydreamItemProperties = {
+    bunny: {
+        x: 208,
+        y: 148,
+        scale: 0.13
+    },
+    sakuraLightPink: {
+        x: 269,
+        y: 170,
+        scale: 0.14
+    }, 
+    sakuraDarkPink: {
+        x: 380,
+        y: 180,
+        scale: 0.14
+    }, 
+    record: {
+        x: 303,
+        y: 158, 
+        scale: 0.16
+    },
+    cat: {
+        x: 400,
+        y: 170,
+        scale: 0.13
+    },
+    orchid: {
+        x: 448,
+        y: 143,
+        scale: 0.165
+    }
+    
+}
+
 // Array for the daydream items
 let daydreamItems = [];
 
@@ -23,25 +67,31 @@ let stars = [];
 
 /**
  * This will be called just before the daydream variation starts
+ * Initializes and positions the daydream items
  */
 function daydreamingSetup() {
     // Resets daydream items
     daydreamItems = [];
     
     // Create daydream items, each has a position and scale
-    daydreamItems.push(createDaydreamItem(daydreamImg.bunny, 208, 148, 0.13));
-    daydreamItems.push(createDaydreamItem(daydreamImg.sakuraLightPink, 269, 170, 0.14));
-    daydreamItems.push(createDaydreamItem(daydreamImg.record, 303, 158, 0.16));
-    daydreamItems.push(createDaydreamItem(daydreamImg.cat, 400, 170, 0.13));
-    daydreamItems.push(createDaydreamItem(daydreamImg.sakuraDarkPink, 380, 180, 0.14));
-    daydreamItems.push(createDaydreamItem(daydreamImg.orchid, 448, 143, 0.165));
+    daydreamItems.push(createDaydreamItem(daydreamImg.bunny, daydreamItemProperties.bunny.x, daydreamItemProperties.bunny.y,
+        daydreamItemProperties.bunny.scale));
+    daydreamItems.push(createDaydreamItem(daydreamImg.sakuraLightPink, daydreamItemProperties.sakuraLightPink.x, daydreamItemProperties.sakuraLightPink.y,
+        daydreamItemProperties.sakuraLightPink.scale));
+    daydreamItems.push(createDaydreamItem(daydreamImg.record, daydreamItemProperties.record.x, daydreamItemProperties.record.y,
+        daydreamItemProperties.record.scale));
+    daydreamItems.push(createDaydreamItem(daydreamImg.cat, daydreamItemProperties.cat.x, daydreamItemProperties.cat.y, daydreamItemProperties.cat.scale));
+    daydreamItems.push(createDaydreamItem(daydreamImg.sakuraDarkPink, daydreamItemProperties.sakuraDarkPink.x, daydreamItemProperties.sakuraDarkPink.y,
+        daydreamItemProperties.sakuraDarkPink.scale));
+    daydreamItems.push(createDaydreamItem(daydreamImg.orchid, daydreamItemProperties.orchid.x, daydreamItemProperties.orchid.y, daydreamItemProperties.orchid.scale));
 }
 
 /**
- * This will be called every frame when the daydream variation is active
+ * This will be called every frame when the daydreaming variation is active
+ * Draws the background, the daydream items, the girl, and the star particle trail
  */
 function daydreamingDraw() {
-    background('silver');
+    background(daydreamBg.fill.r, daydreamBg.fill.g, daydreamBg.fill.b);
     
     // Draw each item
     for (let item of daydreamItems) {
@@ -49,14 +99,16 @@ function daydreamingDraw() {
     }    
     
     // Display image of girl
-    image(daydreamImg.girl, 140, 180, 440, 290);
+    image(daydreamImg.girl, girl.x, girl.y, girl.width, girl.height);
     
+    // Draw the star particle cursor trail
     drawStarParticles();
     updateStarParticles();
 }
 
 /**
- * Displays the item image, positon, and size in the daydream variation
+ * Creates an item with a positon, and size in the daydreaming variation
+ * Also tracks dragging state and mouse offset
  */
 function createDaydreamItem(img, x, y, scale) {
     let item = {
@@ -74,7 +126,8 @@ function createDaydreamItem(img, x, y, scale) {
 }
 
 /**
- * This will be called whenever a key is pressed while the daydream variation is active
+ * This will be called whenever a key is pressed while the daydreaming variation is active
+ * Returns to the main menu by pressing esc
  */
 function daydreamingKeyPressed(event) {
     if (event.keyCode === key.esc) {
@@ -83,7 +136,8 @@ function daydreamingKeyPressed(event) {
 }
 
 /**
- * This will be called whenever the mouse is pressed while the daydream variation is active
+ * This will be called whenever the mouse is pressed while the daydreaming variation is active
+ * Checks if the cursor is over an item and enables dragging
  */
 function daydreamingMousePressed() {
     for (let i = 0; i < daydreamItems.length; i++) {
@@ -111,7 +165,8 @@ function daydreamingMousePressed() {
 }
 
 /**
- * Updates position of items being dragged by the mouse in the daydream variation
+ * Updates position of items being dragged by the mouse in the daydreaming variation
+ * Also adds star particles!
  */
 function daydreamingMouseDragged() {
     for (let item of daydreamItems) {
@@ -129,7 +184,7 @@ function daydreamingMouseDragged() {
 }
 
 /**
- * Stops dragging items once mouse is released in the daydream variation
+ * Stops dragging items once mouse is released in the daydreaming variation
  */
 function daydreamingMouseReleased() {
     for (let item of daydreamItems) {
@@ -145,7 +200,7 @@ function createStarParticles(x, y) {
         // Creates particles scattered around the drag position (x, y)
         x: x + random(-6, 6),
         y: y + random(-6, 6),
-        size: random(5, 9),
+        size: random(6, 10),
         // Makes the trail go slightly upwards
         speed: {
             x: random(-0.2, 0.2), 
@@ -157,8 +212,10 @@ function createStarParticles(x, y) {
             g: random(100, 255),
             b: random(100, 255),
         },
-         // Fully opaque
-        alpha: 255
+        // Fully opaque
+        opacity: 255,
+        // Number of points
+        npoints: 5
     };
     
     return starParticle;
@@ -177,10 +234,10 @@ function updateStarParticles() {
         star.y += star.speed.y;
         
         // Fades star out (increases transparency)
-        star.alpha -= 10;
+        star.opacity -= 10;
 
         // Removes the star once it's completely transparent
-        if (star.alpha <= 0) {
+        if (star.opacity <= 0) {
             stars.splice(i, 1);
         }
     }
@@ -193,9 +250,9 @@ function drawStarParticles() {
     push();
     noStroke();
     for (let starParticle of stars) {
-        fill(starParticle.fill.r, starParticle.fill.g, starParticle.fill.b, starParticle.alpha);
+        fill(starParticle.fill.r, starParticle.fill.g, starParticle.fill.b, starParticle.opacity);
         // Draws stars using star helper function
-        star(starParticle.x, starParticle.y, starParticle.size / 2, starParticle.size, 5);
+        star(starParticle.x, starParticle.y, starParticle.size / 2, starParticle.size, starParticle.npoints);
     }
     pop();
 }

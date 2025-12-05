@@ -7,7 +7,7 @@
 
 "use strict";
 
-let state = "anxious-variation";
+let state = "daydreaming-variation";
 
 // Variable for key codes
 const key = {
