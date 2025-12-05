@@ -9,14 +9,6 @@ let stuckImg = {
     girl: undefined
 }
 
-// Position and size of the girl image
-const stuckGirl = {
-    x: 140,
-    y: 180,
-    width: 440,
-    height: 290
-}
-
 // Background colour and rectangle (square) starting position, spacing (between), size, 
 // greyscale values, and opacity for the animated static background
 const staticBg = {
@@ -77,7 +69,7 @@ function stuckDraw() {
     drawStatic();
   
     // Displays the image of the girl
-    image(stuckImg.girl, stuckGirl.x, stuckGirl.y, stuckGirl.width, stuckGirl.height);
+    image(stuckImg.girl, girl.x, girl.y, girl.width, girl.height);
     
     // Draws the lines in the mouse-drawing layer
     drawLines();

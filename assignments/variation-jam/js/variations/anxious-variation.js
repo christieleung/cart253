@@ -1,10 +1,20 @@
 /**
- * This file contains the code to run *only* the green variation part of the program.
- * Note how it has its own draw, greenDraw(), and its own keyPressed, greenKeyPressed().
+ * This file contains the code to run *only* the anxious variation part of the program.
+ * Note how it has its own draw, anxiousDraw(), and its own keyPressed, anxiousKeyPressed().
  * This keeps the stuff the menu needs to do *separate* from the rest of the program.
  */
 
-// Images of anxious girl and what she's thinking about
+// Anxious variation background colour
+const anxiousBg = {
+    fill: {
+        // Blue-grey
+        r: 127,
+        g: 146,
+        b: 163
+    }
+}
+
+// Image placeholders for the anxious girl and what she's thinking about
 let anxietyImg = {
     girl: undefined,
     record: undefined,
@@ -15,38 +25,101 @@ let anxietyImg = {
     health: undefined
 }
 
+// Position, scale, and rotation of anxiety items
+const anxietyItemProperties = {
+    record: {
+        x: 213,
+        y: 155,
+        scale: 0.16
+    },
+    work: {
+        x: {
+            first: 260,
+            second: 280,
+            third: 410,
+            fourth: 415
+        },
+        y: {
+            first: 163,
+            second: 170,
+            third: 172,
+            fourth: 163
+        },
+        scale: 0.20,
+        rotation: Math.PI / 27
+    },
+    reminderPurple: {
+        x: {
+            first: 300,
+            second: 427
+        },
+        y: {
+            first: 186,
+            second: 173
+        },
+        scale: 0.16,
+        rotation: Math.PI / 20
+    },
+    reminderBlue: {
+        x: 443,
+        y: 183,
+        scale: 0.16,
+        rotation: Math.PI / 20
+    },
+    time: {
+        x: 350,
+        y: 158,
+        scale: 0.18
+    },
+    health: {
+        x: 330,
+        y: 176,
+        scale: 0.21
+    }
+}
+
 // Array for the anxiety items
 let anxietyItems = [];
 
-// Array for the spiral particle cursor trail
+// Array for the spiral particle cursor trail while dragging
 let spirals = [];
 
 /**
  * This will be called just before the anxious variation starts
+ * Initializes and positions the anxiety items
  */
 function anxiousSetup() {
     // Resets anxiety items
     anxietyItems = [];
     
     // Create anxiety items, each has a position and scale
-    anxietyItems.push(createAnxietyItem(anxietyImg.record, 213, 155, 0.16));
-    anxietyItems.push(createAnxietyItem(anxietyImg.work, 270, 163, 0.20));
-    anxietyItems.push(createAnxietyItem(anxietyImg.work, 280, 170, 0.20));
-    anxietyItems.push(createAnxietyItem(anxietyImg.reminderPurple, 300, 186, 0.16));
-    anxietyItems.push(createAnxietyItem(anxietyImg.time, 350, 158, 0.18));
-    anxietyItems.push(createAnxietyItem(anxietyImg.health, 330, 176, 0.21));
-    anxietyItems.push(createAnxietyItem(anxietyImg.work, 410, 172, 0.20));
+    anxietyItems.push(createAnxietyItem(anxietyImg.record, anxietyItemProperties.record.x, anxietyItemProperties.record.y,
+        anxietyItemProperties.record.scale));
+    anxietyItems.push(createAnxietyItem(anxietyImg.work, anxietyItemProperties.work.x.first, anxietyItemProperties.work.y.first,
+        anxietyItemProperties.work.scale));
+    anxietyItems.push(createAnxietyItem(anxietyImg.work, anxietyItemProperties.work.x.second, anxietyItemProperties.work.y.second,
+        anxietyItemProperties.work.scale));
+    anxietyItems.push(createAnxietyItem(anxietyImg.reminderPurple, anxietyItemProperties.reminderPurple.x.first,
+        anxietyItemProperties.reminderPurple.y.first, anxietyItemProperties.reminderPurple.scale));
+    anxietyItems.push(createAnxietyItem(anxietyImg.time, anxietyItemProperties.time.x, anxietyItemProperties.time.y, anxietyItemProperties.time.scale));
+    anxietyItems.push(createAnxietyItem(anxietyImg.health, anxietyItemProperties.health.x, anxietyItemProperties.health.y, anxietyItemProperties.health.scale));
+    anxietyItems.push(createAnxietyItem(anxietyImg.work, anxietyItemProperties.work.x.third, anxietyItemProperties.work.y.third,
+        anxietyItemProperties.work.scale));
     // Anxiety items with a slight rotation
-    anxietyItems.push(createAnxietyItem(anxietyImg.work, 415, 163, 0.20, Math.PI / 27));
-    anxietyItems.push(createAnxietyItem(anxietyImg.reminderPurple, 427, 173, 0.16, Math.PI / 20));
-    anxietyItems.push(createAnxietyItem(anxietyImg.reminderBlue, 443, 183, 0.16, Math.PI / 20));
+    anxietyItems.push(createAnxietyItem(anxietyImg.work, anxietyItemProperties.work.x.fourth, anxietyItemProperties.work.y.fourth,
+        anxietyItemProperties.work.scale, anxietyItemProperties.work.rotation));
+    anxietyItems.push(createAnxietyItem(anxietyImg.reminderPurple, anxietyItemProperties.reminderPurple.x.second, anxietyItemProperties.reminderPurple.y.second,
+        anxietyItemProperties.reminderPurple.scale, anxietyItemProperties.reminderPurple.rotation));
+    anxietyItems.push(createAnxietyItem(anxietyImg.reminderBlue, anxietyItemProperties.reminderBlue.x, anxietyItemProperties.reminderBlue.y,
+        anxietyItemProperties.reminderBlue.scale, anxietyItemProperties.reminderBlue.rotation));
 }
 
 /**
  * This will be called every frame when the anxious variation is active
+ * Draws the background, the anxiety items, the girl, and the spiral particle trail
  */
 function anxiousDraw() {
-    background("silver");
+    background(anxiousBg.fill.r, anxiousBg.fill.g, anxiousBg.fill.b);
     
     // Draw each item
     for (let item of anxietyItems) {
@@ -68,14 +141,16 @@ function anxiousDraw() {
         }
     }
     // Display image of girl
-    image(anxietyImg.girl, 140, 180, 440, 290);
+    image(anxietyImg.girl, girl.x, girl.y, girl.width, girl.height);
     
+    // Draw the spiral particle cursor trail
     drawSpiralParticles();
     updateSpiralParticles();
 }
 
 /**
- * Displays the item image, positon, and size in the anxious variation
+ * Creates an item with a positon, and size in the anxious variation
+ * Also tracks dragging state and mouse offset
  */
 function createAnxietyItem(img, x, y, scale, rotation = 0) {
     let item = {
@@ -95,6 +170,7 @@ function createAnxietyItem(img, x, y, scale, rotation = 0) {
 
 /**
  * This will be called whenever a key is pressed while the anxious variation is active
+ * Returns to the main menu by pressing esc
  */
 function anxiousKeyPressed(event) {
     if (event.keyCode === key.esc) {
@@ -132,6 +208,7 @@ function anxiousMousePressed() {
 
 /**
  * Updates position of items being dragged by the mouse in the anxious variation
+ * Also adds spiral particles!
  */
 function anxiousMouseDragged() {
     for (let item of anxietyItems) {
@@ -183,14 +260,15 @@ function createSpiralParticles(x, y) {
             b: random(30, 50)
         },
          // Fully opaque
-        alpha: 255
+        opacity: 255, 
+        strokeWeight: 1.5
     };
     
     return spiralParticle;
 }
 
 /**
- * Updates the position and transparency of the spiral particles
+ * Updates the position and opacity of the spiral particles
  */
 function updateSpiralParticles() {
     // Loops through spiral array in reverse to remove spiral
@@ -202,10 +280,10 @@ function updateSpiralParticles() {
         spiral.y += spiral.speed.y;
         
         // Fades spiral out (increases transparency)
-        spiral.alpha -= 5;
+        spiral.opacity -= 5;
 
         // Removes the star once it's completely transparent
-        if (spiral.alpha <= 0) {
+        if (spiral.opacity <= 0) {
             spirals.splice(i, 1);
         }
     }
@@ -217,10 +295,10 @@ function updateSpiralParticles() {
 function drawSpiralParticles() {
     push();
     noFill();
-    strokeWeight(1.5);
     
     for (let spiralParticle of spirals) {
-        stroke(spiralParticle.fill.r, spiralParticle.fill.g, spiralParticle.fill.b, spiralParticle.alpha);
+        stroke(spiralParticle.fill.r, spiralParticle.fill.g, spiralParticle.fill.b, spiralParticle.opacity);
+        strokeWeight(spiralParticle.strokeWeight);
         // Draws spirals using spiral helper function
         spiral(spiralParticle.x, spiralParticle.y, spiralParticle.size);
     }

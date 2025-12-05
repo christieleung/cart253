@@ -17,6 +17,14 @@ const key = {
     esc: 27
 }
 
+// Position and size of the girl image
+const girl = {
+    x: 140,
+    y: 180,
+    width: 440,
+    height: 290
+}
+
 /**
  * Preload images
  */
