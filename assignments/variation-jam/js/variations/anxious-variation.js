@@ -16,7 +16,7 @@ const anxiousBg = {
 
 // Array for the instruction text in the anxious variation
 const anxiousInstructions = [
-    "✴︎ when i'm feeling anxious! ✴︎",
+    "꩜ when i'm feeling anxious! ꩜",
     "",
     "• click & drag items around",
     "• press (space) to toggle this instruction panel",

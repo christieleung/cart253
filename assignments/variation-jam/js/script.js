@@ -31,8 +31,8 @@
 "use strict";
 
 // Variable that allows for different states 
-// (states: menu, daydreaming - variation, anxious - variation, stuck - variation)
-let state = "daydreaming-variation";
+// (states: menu, daydreaming-variation, anxious-variation, stuck-variation)
+let state = "menu";
 
 // Variable for key codes
 const key = {

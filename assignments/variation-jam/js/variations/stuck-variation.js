@@ -28,7 +28,7 @@ const staticBg = {
 
 // Array for instruction text in the stuck variation
 const stuckInstructions = [
-    "꩜ when i'm feeling stuck! ꩜",
+    "✴︎ when i'm feeling stuck! ✴︎",
     "",
     "• draw messy webs of thoughts using the mouse",
     "• press (delete) to erase them",
