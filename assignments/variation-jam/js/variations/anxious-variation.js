@@ -10,7 +10,7 @@ const anxiousBg = {
         // Blue-grey
         r: 127,
         g: 146,
-        b: 163
+        b: 160
     }
 }
 
@@ -86,8 +86,8 @@ const anxietyItemProperties = {
     },
     health: {
         x: 330,
-        y: 176,
-        scale: 0.21
+        y: 179,
+        scale: 0.22
     }
 }
 
@@ -140,10 +140,63 @@ function anxiousSetup() {
 function anxiousDraw() {
     background(anxiousBg.fill.r, anxiousBg.fill.g, anxiousBg.fill.b);
     
-    // Draw each item
+    // Draw non-dragged items (behind girl)
     for (let item of anxietyItems) {
+        if (!item.dragging && !item.onTop) {
+            drawAnxietyItem(item);
+        }
+    }   
         
-        // If the item has a rotation, then draw the image rotated
+    // Display image of girl
+    image(anxietyImg.girl, girl.x, girl.y, girl.width, girl.height);
+
+    // Draw dragged items (on top of girl)
+    for (let item of anxietyItems) {
+        if (item.dragging || item.onTop) {
+            drawAnxietyItem(item);
+        }
+    }
+
+    // Draw the spiral particle cursor trail
+    drawSpiralParticles();
+    updateSpiralParticles();
+    
+    // Draw instruction panel only if active
+    if (showAnxiousInstructions) {
+        drawInstructionPanel(anxiousInstructions);
+    }
+}
+
+/**
+ * Creates an anxiety item with a positon, size, and sound
+ * Some items also have a rotation
+ * Tracks dragging state and mouse offset
+
+ */
+function createAnxietyItem(img, x, y, scale, options = {}) {
+    let item = {
+            img: img,
+            x: x,
+            y: y,
+            width: img.width * scale,
+            height: img.height * scale,
+            rotation: options.rotation || 0,
+            sound: options.sound || null,
+            dragging: false,
+            onTop: false,
+            offsetX: 0,
+            offsetY: 0,
+           
+    };
+    
+    return item;
+}
+
+/**
+ * Draws anxiety items
+ */
+function drawAnxietyItem(item) {
+      // If the item has a rotation, then draw the image rotated
         if (item.rotation !== 0) {
             push();
             // New origin
@@ -158,40 +211,6 @@ function anxiousDraw() {
         } else {
             image(item.img, item.x, item.y, item.width, item.height);
         }
-    }
-    // Display image of girl
-    image(anxietyImg.girl, girl.x, girl.y, girl.width, girl.height);
-    
-    // Draw the spiral particle cursor trail
-    drawSpiralParticles();
-    updateSpiralParticles();
-    
-     // Draw instruction panel only if active
-    if (showAnxiousInstructions) {
-        drawInstructionPanel(anxiousInstructions);
-    }
-}
-
-/**
- * Creates an item with a positon, and size in the anxious variation
- * Also tracks dragging state and mouse offset
- * Some items have a rotation and sound
- */
-function createAnxietyItem(img, x, y, scale, options = {}) {
-    let item = {
-            img: img,
-            x: x,
-            y: y,
-            width: img.width * scale,
-            height: img.height * scale,
-            dragging: false,
-            offsetX: 0,
-            offsetY: 0,
-            rotation: options.rotation || 0,
-            sound: options.sound || null
-    };
-    
-    return item;
 }
 
 /**
@@ -229,6 +248,9 @@ function anxiousMousePressed() {
             // Keeps item under mouse cursor
             item.offsetX = mouseX - item.x;
             item.offsetY = mouseY - item.y;
+            
+            // Keep dragged item on top
+            item.onTop = true;
             
             // Play sound only when drag starts
             // Loop sound for all items except stickyNote

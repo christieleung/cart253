@@ -8,9 +8,9 @@
 const daydreamBg = {
     fill: {
         // Light green
-        r: 181,
-        g: 208,
-        b: 182
+        r: 156,
+        g: 175,
+        b: 136
     }
 }
 
@@ -112,13 +112,22 @@ function daydreamingSetup() {
 function daydreamingDraw() {
     background(daydreamBg.fill.r, daydreamBg.fill.g, daydreamBg.fill.b);
     
-    // Draw each item
+    // Draw non-dragged items (behind girl)
     for (let item of daydreamItems) {
-        image(item.img, item.x, item.y, item.width, item.height);
-    }    
+        if (!item.dragging && !item.onTop) {
+            drawDaydreamItem(item);
+        }
+    }      
     
     // Display image of girl
     image(daydreamImg.girl, girl.x, girl.y, girl.width, girl.height);
+    
+    // Draw dragged items (on top of girl)
+    for (let item of daydreamItems) {
+        if (item.dragging || item.onTop) {
+            drawDaydreamItem(item);
+        }
+    }
     
     // Draw the star particle cursor trail
     drawStarParticles();
@@ -128,11 +137,12 @@ function daydreamingDraw() {
     if (showDaydreamInstructions) {
         drawInstructionPanel(daydreamInstructions);
     }
+
 }
 
 /**
- * Creates an item with a positon, and size in the daydreaming variation
- * Also tracks dragging state and mouse offset
+ * Creates a daydreaming item with a positon, size, and sound
+ * Tracks dragging state and mouse offset
  */
 function createDaydreamItem(img, x, y, scale, sound) {
     let item = {
@@ -141,13 +151,21 @@ function createDaydreamItem(img, x, y, scale, sound) {
             y: y,
             width: img.width * scale,
             height: img.height * scale,
+            sound: sound,
             dragging: false,
+            onTop: false,
             offsetX: 0,
-            offsetY: 0, 
-            sound: sound
+            offsetY: 0,
     };
     
     return item;
+}
+
+/**
+ * Draws daydream items
+ */
+function drawDaydreamItem(item) {
+    image(item.img, item.x, item.y, item.width, item.height);
 }
 
 /**
@@ -184,6 +202,9 @@ function daydreamingMousePressed() {
             // Keeps item under mouse cursor
             item.offsetX = mouseX - item.x;
             item.offsetY = mouseY - item.y;
+            
+            // Keep dragged item on top
+            item.onTop = true;
             
             // Play sound only when drag starts
             if (item.sound) {

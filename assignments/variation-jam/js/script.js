@@ -32,7 +32,7 @@
 
 // Variable that allows for different states 
 // (states: menu, daydreaming - variation, anxious - variation, stuck - variation)
-let state = "menu";
+let state = "daydreaming-variation";
 
 // Variable for key codes
 const key = {
